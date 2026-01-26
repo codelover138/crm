@@ -149,6 +149,7 @@ $(document).ready(function() {
     });
     $("#add_item").autocomplete({
         source: function(request, response) {
+            console.log($('#slcustomer').val());
             if (!$('#slcustomer').val()) {
                 $('#add_item').val('').removeClass('ui-autocomplete-loading');
                 bootbox.alert('<?=lang('select_above');?>');
@@ -352,21 +353,6 @@ $(document).ready(function() {
                                             <i class="fa fa-2x fa-barcode addIcon"></i></a>
                                         </div>
                                         <?php echo form_input('add_item', '', 'class="form-control input-lg" id="add_item" placeholder="' . lang("add_product_to_order") . '"'); ?>
-                                        <?php if ($Owner || $Admin || $GP['products-add']) { ?>
-                                        <div class="input-group-addon" style="padding-left: 10px; padding-right: 10px;">
-                                            <a href="#" id="addManually" class="tip"
-                                                title="<?= lang('add_product_manually') ?>">
-                                                <i class="fa fa-2x fa-plus-circle addIcon" id="addIcon"></i>
-                                            </a>
-                                        </div>
-                                        <?php } if ($Owner || $Admin || $GP['sales-add_gift_card']) { ?>
-                                        <div class="input-group-addon" style="padding-left: 10px; padding-right: 10px;">
-                                            <a href="#" id="sellGiftCard" class="tip"
-                                                title="<?= lang('sell_gift_card') ?>">
-                                                <i class="fa fa-2x fa-credit-card addIcon" id="addIcon"></i>
-                                            </a>
-                                        </div>
-                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -430,28 +416,6 @@ $(document).ready(function() {
                         echo form_hidden('staff_note', '');
                         ?>
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <?= lang("document", "document") ?>
-                                <input id="document" type="file" data-browse-label="<?= lang('browse'); ?>"
-                                    name="document[]" multiple data-show-upload="false" data-show-preview="false"
-                                    class="form-control file">
-                            </div>
-                        </div>
-                        <?php if ($Owner || $Admin || $GP['sales-payments']) { ?>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <?= lang("payment_status", "slpayment_status"); ?>
-                                <?php $pst = array('pending' => lang('pending'), 'due' => lang('due'), 'partial' => lang('partial'), 'paid' => lang('paid'));
-                                echo form_dropdown('payment_status', $pst, '', 'class="form-control input-tip" required="required" id="slpayment_status"'); ?>
-
-                            </div>
-                        </div>
-                        <?php
-                        } else {
-                            echo form_hidden('payment_status', 'pending');
-                        }
-                        ?>
                         <?php if(isset($assign_provider) || isset($assign_marketing_officer) || isset($users)) { ?>
                         <div class="clearfix"></div>
                         <!-- <div class="row"> -->
@@ -506,6 +470,22 @@ $(document).ready(function() {
                         <?php }?>
                         <!--   </div> -->
                         <?php }?>
+
+
+                        <?php if ($Owner || $Admin || $GP['sales-payments']) { ?>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <?= lang("payment_status", "slpayment_status"); ?>
+                                <?php $pst = array('pending' => lang('pending'), 'due' => lang('due'), 'partial' => lang('partial'), 'paid' => lang('paid'));
+                                echo form_dropdown('payment_status', $pst, '', 'class="form-control input-tip" required="required" id="slpayment_status"'); ?>
+
+                            </div>
+                        </div>
+                        <?php
+                        } else {
+                            echo form_hidden('payment_status', 'pending');
+                        }
+                        ?>
 
                         <div class="clearfix"></div>
                         <div id="payments" style="display: none;">
@@ -1024,20 +1004,22 @@ $(document).ready(function() {
                     $('#quickCustomerModal').modal('hide');
                     // Clear any previous error
                     $('.qcerror-con').hide();
-                    
+
                     // Store customer ID in localStorage for persistence
                     localStorage.setItem('slcustomer', data.customer_id);
-                    
+
                     // Get the customer field
                     var $customerField = $('#slcustomer');
-                    
+
                     // Create new option with customer data
-                    var newOption = new Option(data.customer_name, data.customer_id, true, true);
-                    
+                    var newOption = new Option(data.customer_name, data.customer_id, true,
+                        true);
+
                     // If Select2 is initialized, use Select2 API
                     if ($customerField.data('select2')) {
                         // Add option if it doesn't exist
-                        if ($customerField.find('option[value="' + data.customer_id + '"]').length === 0) {
+                        if ($customerField.find('option[value="' + data.customer_id + '"]')
+                            .length === 0) {
                             $customerField.append(newOption);
                         }
                         // Select the option using Select2
@@ -1047,7 +1029,7 @@ $(document).ready(function() {
                         $customerField.append(newOption);
                         $customerField.val(data.customer_id);
                     }
-                    
+
                     // Reset form
                     $('#quick-customer-form')[0].reset();
                     // Show success message
