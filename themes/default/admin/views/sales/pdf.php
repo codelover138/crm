@@ -39,7 +39,7 @@
                         echo $customer->address . '<br />' . $customer->city . ' ' . $customer->postal_code . ' ' . $customer->state . '<br />' . $customer->country;
                         echo '<p>';
                         if ($customer->vat_no != "-" && $customer->vat_no != "") {
-                            echo "<br>" . lang("vat_no") . ": " . $customer->vat_no;
+                            echo "<br>" . lang("Customer code", "Customer code") . ": " . $customer->vat_no;
                         }
                         if ($customer->gst_no != "-" && $customer->gst_no != "") {
                             echo "<br>" . lang("dob") . ": " . $customer->gst_no;
@@ -77,6 +77,14 @@
                     <?php
                     if(isset($service_provider)){ ?>
                         <br><span><?=lang('assign_service_provider')?>: <?php echo $service_provider->first_name.' '.$service_provider->last_name;?></span>
+                    <?php } ?>
+                    <?php
+                    if(isset($assign_marketing_officers) && $assign_marketing_officers){ ?>
+                        <br><span><?=lang('marketing_officer')?>: <?php echo $assign_marketing_officers->first_name.' '.$assign_marketing_officers->last_name;?></span>
+                    <?php } ?>
+                    <?php
+                    if(isset($agent) && $agent){ ?>
+                        <br><span><?=lang('Agent', 'Agent')?>: <?php echo $agent->first_name.' '.$agent->last_name;?></span>
                     <?php } ?>
                     <div class="bold">
                         <?= lang('date'); ?>: <?= $this->sma->hrld($inv->date); ?><br>

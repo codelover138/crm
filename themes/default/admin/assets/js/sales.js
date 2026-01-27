@@ -1212,7 +1212,9 @@ function loadItems() {
 
     if (count == 1) {
         slitems = {};
-        if ($('#slwarehouse').val() && $('#slcustomer').val()) {
+       console.log(('#slwarehouse'));
+        console.log($('#slcustomer').val());
+        if ($('#slcustomer').val()) {
             $('#slcustomer').select2("readonly", true);
             $('#slwarehouse').select2("readonly", true);
         } else {

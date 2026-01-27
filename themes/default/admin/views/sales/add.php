@@ -416,64 +416,59 @@ $(document).ready(function() {
                         echo form_hidden('staff_note', '');
                         ?>
 
-                        <?php if(isset($assign_provider) || isset($assign_marketing_officer) || isset($users)) { ?>
+                        <?php if(isset($assign_provider) || isset($assign_marketing_officer)) { ?>
                         <div class="clearfix"></div>
-                        <!-- <div class="row"> -->
-                        <?php if(isset($assign_provider)){ ?>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label
-                                    for="assign_service_provider"><?= lang('Technical_Support', 'Technical Support'); ?></label>
-                                <?php
-                                    $ts[''] = lang('select').' Technical Support';
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <?php if(isset($assign_provider)){ ?>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label
+                                            for="assign_service_provider"><?= lang('Tech_Person', 'Tech Person'); ?></label>
+                                        <?php
+                                    $ts[''] = lang('select').' Tech Person';
                                     foreach ($assign_provider as $provider) {
                                         $ts[$provider->id] = $provider->first_name. ' '.$provider->last_name;
                                     }
                                     $service_provider_value = isset($inv->service_provider) ? $inv->service_provider : '';
                                     echo form_dropdown('assign_service_provider', $ts, $service_provider_value, 'class="form-control input-tip select" id="assign_service_provider" style="width:100%;"');
                                     ?>
-                            </div>
-                        </div>
-                        <?php }?>
-                        <?php if(isset($assign_marketing_officer)){ ?>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label
-                                    for="assign_marketing_officers"><?= lang('Sales_Officer', 'Sales Officer'); ?></label>
-                                <?php
-                                    $so[''] = lang('select').' Sales Officer';
+                                    </div>
+                                </div>
+                                <?php }?>
+                                <?php if(isset($assign_marketing_officer)){ ?>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label
+                                            for="assign_marketing_officers"><?= lang('Sales_Person', 'Sales Person'); ?></label>
+                                        <?php
+                                    $so[''] = lang('select').' Sales Person';
                                     foreach ($assign_marketing_officer as $officer) {
                                         $so[$officer->id] = $officer->first_name. ' '.$officer->last_name;
                                     }
                                     $marketing_officer_value = isset($inv->assign_marketing_officers) ? $inv->assign_marketing_officers : '';
                                     echo form_dropdown('assign_marketing_officers', $so, $marketing_officer_value, 'class="form-control input-tip select" id="assign_marketing_officers" style="width:100%;"');
                                     ?>
+                                    </div>
+                                </div>
+                                <?php }?>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label
+                                            for="support_duration"><?= lang('Support_duration', 'Support Duration'); ?>
+                                            (<?= lang('days', 'days'); ?>)</label>
+                                        <input type="number" name="support_duration" id="support_duration" min="0"
+                                            step="1" class="form-control input-tip"
+                                            value="<?= isset($_POST['support_duration']) ? $_POST['support_duration'] : '' ?>" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <?php }?>
-                        <?php 
-                            // Use $users if available, otherwise use $assign_provider or $assign_marketing_officer
-                            $agent_users = isset($users) ? $users : (isset($assign_provider) ? $assign_provider : (isset($assign_marketing_officer) ? $assign_marketing_officer : array()));
-                            if (!empty($agent_users)){ ?>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="agent"><?= lang('Agent', 'Agent'); ?></label>
-                                <?php
-                                    $agent_options[''] = lang('select').' Agent';
-                                    foreach ($agent_users as $user) {
-                                        $agent_options[$user->id] = $user->first_name. ' '.$user->last_name;
-                                    }
-                                    echo form_dropdown('agent', $agent_options, (isset($_POST['agent']) ? $_POST['agent'] : ''), 'class="form-control input-tip select" id="agent" style="width:100%;"');
-                                    ?>
-                            </div>
-                        </div>
-                        <?php }?>
-                        <!--   </div> -->
-                        <?php }?>
 
-
+                        <div class="clearfix"></div>
                         <?php if ($Owner || $Admin || $GP['sales-payments']) { ?>
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <?= lang("payment_status", "slpayment_status"); ?>
                                 <?php $pst = array('pending' => lang('pending'), 'due' => lang('due'), 'partial' => lang('partial'), 'paid' => lang('paid'));

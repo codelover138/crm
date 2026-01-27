@@ -417,7 +417,7 @@ class Customers extends MY_Controller
             
             // Generate unique 10-digit random number for vat_no
             do {
-                $vat_no = str_pad(rand(10000000, 99999999), 8, '0', STR_PAD_LEFT);
+                $vat_no = str_pad(rand(100000000, 999999999), 8, '0', STR_PAD_LEFT);
                 $exists = $this->db->where('vat_no', $vat_no)->get('companies')->num_rows();
             } while ($exists > 0);
             

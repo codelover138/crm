@@ -5,22 +5,23 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 <i class="fa fa-2x">&times;</i>
             </button>
-            <button type="button" class="btn btn-xs btn-default no-print pull-right" style="margin-right:15px;" onclick="window.print();">
+            <button type="button" class="btn btn-xs btn-default no-print pull-right" style="margin-right:15px;"
+                onclick="window.print();">
                 <i class="fa fa-print"></i> <?= lang('print'); ?>
             </button>
             <?php if ($logo) { ?>
-                <div class="text-center" style="margin-bottom:20px;">
-                    <img src="<?= base_url() . 'assets/uploads/logos/' . $biller->logo; ?>"
-                         alt="<?= $biller->company != '-' ? $biller->company : $biller->name; ?>">
-                </div>
+            <div class="text-center" style="margin-bottom:20px;">
+                <img src="<?= base_url() . 'assets/uploads/logos/' . $biller->logo; ?>"
+                    alt="<?= $biller->company != '-' ? $biller->company : $biller->name; ?>">
+            </div>
             <?php } ?>
             <div class="well well-sm">
                 <div class="row bold">
                     <div class="col-xs-5">
-                    <p class="bold">
-                        <?= lang("date"); ?>: <?= $this->sma->hrld($inv->date); ?><br>
-                        <?= lang("ref"); ?>: <?= $inv->reference_no; ?><br>
-                        <?php if (!empty($inv->return_sale_ref)) {
+                        <p class="bold">
+                            <?= lang("date"); ?>: <?= $this->sma->hrld($inv->date); ?><br>
+                            <?= lang("ref"); ?>: <?= $inv->reference_no; ?><br>
+                            <?php if (!empty($inv->return_sale_ref)) {
                             echo lang("return_ref").': '.$inv->return_sale_ref;
                             if ($inv->return_id) {
                                 echo ' <a data-target="#myModal2" data-toggle="modal" href="'.admin_url('sales/modal_view/'.$inv->return_id).'"><i class="fa fa-external-link no-print"></i></a><br>';
@@ -28,12 +29,12 @@
                                 echo '<br>';
                             }
                         } ?>
-                        <?= lang("sale_status"); ?>: <?= lang($inv->sale_status); ?><br>
-                        <?= lang("payment_status"); ?>: <?= lang($inv->payment_status); ?>
-                        <?php /*if ($inv->payment_status != 'paid') {
+                            <?= lang("sale_status"); ?>: <?= lang($inv->sale_status); ?><br>
+                            <?= lang("payment_status"); ?>: <?= lang($inv->payment_status); ?>
+                            <?php /*if ($inv->payment_status != 'paid') {
                             echo '<br>'.lang('due_date').': '.$this->sma->hrsd($inv->due_date);
                         } */?>
-                    </p>
+                        </p>
                     </div>
                     <div class="col-xs-7 text-right order_barcodes">
                         <?= $this->sma->qrcode('link', urlencode(admin_url('sales/view/' . $inv->id)), 2); ?>
@@ -46,13 +47,13 @@
             <div class="row" style="margin-bottom:15px;">
 
                 <?php if ($Settings->invoice_view == 1) { ?>
-                    <div class="col-xs-12 text-center">
-                        <h1><?= lang('tax_invoice'); ?></h1>
-                    </div>
+                <div class="col-xs-12 text-center">
+                    <h1><?= lang('tax_invoice'); ?></h1>
+                </div>
                 <?php } ?>
 
                 <div class="col-xs-6">
-                    <?php echo $this->lang->line("to"); ?>:<br/>
+                    <?php echo $this->lang->line("to"); ?>:<br />
                     <h2 style="margin-top:10px;"><?= $customer->name.' '.$customer->last_name; ?></h2>
                     <?= $customer->company && $customer->company != '-' ? "" : "Attn: " . $customer->name ?>
 
@@ -62,7 +63,7 @@
                     echo "<p>";
 
                     if ($customer->vat_no != "-" && $customer->vat_no != "") {
-                        echo "<br>" . lang("vat_no") . ": " . $customer->vat_no;
+                        echo "<br>" . lang("Customer code", "Customer code") . ": " . $customer->vat_no;
                     }
                     if ($customer->gst_no != "-" && $customer->gst_no != "") {
                         echo "<br>" . lang("dob") . ": " . $customer->gst_no;
@@ -100,11 +101,17 @@
                     ?>
                     <?php
                     if(isset($service_provider)){ ?>
-                        <br><span><?=lang('assign_service_provider')?>: <?php echo $service_provider->first_name.' '.$service_provider->last_name;?></span>
+                    <br><span><?=lang('assign_service_provider')?>:
+                        <?php echo $service_provider->first_name.' '.$service_provider->last_name;?></span>
                     <?php } ?>
                     <?php
                     if(isset($assign_marketing_officers)){ ?>
-                        <br><span><?=lang('marketing_officer')?>: <?php echo $assign_marketing_officers->first_name.' '.$assign_marketing_officers->last_name;?></span>
+                    <br><span><?=lang('marketing_officer')?>:
+                        <?php echo $assign_marketing_officers->first_name.' '.$assign_marketing_officers->last_name;?></span>
+                    <?php } ?>
+                    <?php
+                    if(isset($agent) && $agent){ ?>
+                    <br><span><?=lang('Agent', 'Agent')?>: <?php echo $agent->first_name.' '.$agent->last_name;?></span>
                     <?php } ?>
                     <div class="clearfix"></div>
                 </div>
@@ -116,15 +123,15 @@
 
                     <thead>
 
-                    <tr>
-                        <th><?= lang("no."); ?></th>
-                        <th><?= lang("description"); ?></th>
-                        <?php if ($Settings->indian_gst) { ?>
+                        <tr>
+                            <th><?= lang("no."); ?></th>
+                            <th><?= lang("description"); ?></th>
+                            <?php if ($Settings->indian_gst) { ?>
                             <th><?= lang("hsn_code"); ?></th>
-                        <?php } ?>
-                        <th><?= lang("quantity"); ?></th>
-                        <th><?= lang("unit_price"); ?></th>
-                        <?php
+                            <?php } ?>
+                            <th><?= lang("quantity"); ?></th>
+                            <th><?= lang("unit_price"); ?></th>
+                            <?php
                         if ($Settings->tax1 && $inv->product_tax > 0) {
                             echo '<th>' . lang("tax") . '</th>';
                         }
@@ -132,14 +139,14 @@
                             echo '<th>' . lang("discount") . '</th>';
                         }
                         ?>
-                        <th><?= lang("subtotal"); ?></th>
-                    </tr>
+                            <th><?= lang("subtotal"); ?></th>
+                        </tr>
 
                     </thead>
 
                     <tbody>
 
-                    <?php $r = 1;
+                        <?php $r = 1;
                     foreach ($rows as $row):
                     ?>
                         <tr>
@@ -151,10 +158,13 @@
                                 <?= $row->serial_no ? '<br>' . $row->serial_no : ''; ?>
                             </td>
                             <?php if ($Settings->indian_gst) { ?>
-                            <td style="width: 80px; text-align:center; vertical-align:middle;"><?= $row->hsn_code; ?></td>
+                            <td style="width: 80px; text-align:center; vertical-align:middle;"><?= $row->hsn_code; ?>
+                            </td>
                             <?php } ?>
-                            <td style="width: 80px; text-align:center; vertical-align:middle;"><?= $this->sma->formatQuantity($row->unit_quantity).' '.$row->product_unit_code; ?></td>
-                            <td style="text-align:right; width:100px;"><?= $this->sma->formatMoney($row->unit_price); ?></td>
+                            <td style="width: 80px; text-align:center; vertical-align:middle;">
+                                <?= $this->sma->formatQuantity($row->unit_quantity).' '.$row->product_unit_code; ?></td>
+                            <td style="text-align:right; width:100px;"><?= $this->sma->formatMoney($row->unit_price); ?>
+                            </td>
                             <?php
                             if ($Settings->tax1 && $inv->product_tax > 0) {
                                 echo '<td style="width: 100px; text-align:right; vertical-align:middle;">' . ($row->item_tax != 0 ? '<small>('.($Settings->indian_gst ? $row->tax : $row->tax_code).')</small>' : '') . ' ' . $this->sma->formatMoney($row->item_tax) . '</td>';
@@ -163,7 +173,8 @@
                                 echo '<td style="width: 100px; text-align:right; vertical-align:middle;">' . ($row->discount != 0 ? '<small>(' . $row->discount . ')</small> ' : '') . $this->sma->formatMoney($row->item_discount) . '</td>';
                             }
                             ?>
-                            <td style="text-align:right; width:120px;"><?= $this->sma->formatMoney($row->subtotal); ?></td>
+                            <td style="text-align:right; width:120px;"><?= $this->sma->formatMoney($row->subtotal); ?>
+                            </td>
                         </tr>
                         <?php
                         $r++;
@@ -172,20 +183,23 @@
                         echo '<tr class="warning"><td colspan="100%" class="no-border"><strong>'.lang('returned_items').'</strong></td></tr>';
                         foreach ($return_rows as $row):
                         ?>
-                            <tr class="warning">
-                                <td style="text-align:center; width:40px; vertical-align:middle;"><?= $r; ?></td>
-                                <td style="vertical-align:middle;">
-                                    <?= $row->product_code.' - '.$row->product_name . ($row->variant ? ' (' . $row->variant . ')' : ''); ?>
-                                    <?= $row->second_name ? '<br>' . $row->second_name : ''; ?>
-                                    <?= $row->details ? '<br>' . $row->details : ''; ?>
-                                    <?= $row->serial_no ? '<br>' . $row->serial_no : ''; ?>
-                                </td>
-                                <?php if ($Settings->indian_gst) { ?>
-                                <td style="width: 80px; text-align:center; vertical-align:middle;"><?= $row->hsn_code; ?></td>
-                                <?php } ?>
-                                <td style="width: 80px; text-align:center; vertical-align:middle;"><?= $this->sma->formatQuantity($row->quantity).' '.$row->product_unit_code; ?></td>
-                                <td style="text-align:right; width:100px;"><?= $this->sma->formatMoney($row->unit_price); ?></td>
-                                <?php
+                        <tr class="warning">
+                            <td style="text-align:center; width:40px; vertical-align:middle;"><?= $r; ?></td>
+                            <td style="vertical-align:middle;">
+                                <?= $row->product_code.' - '.$row->product_name . ($row->variant ? ' (' . $row->variant . ')' : ''); ?>
+                                <?= $row->second_name ? '<br>' . $row->second_name : ''; ?>
+                                <?= $row->details ? '<br>' . $row->details : ''; ?>
+                                <?= $row->serial_no ? '<br>' . $row->serial_no : ''; ?>
+                            </td>
+                            <?php if ($Settings->indian_gst) { ?>
+                            <td style="width: 80px; text-align:center; vertical-align:middle;"><?= $row->hsn_code; ?>
+                            </td>
+                            <?php } ?>
+                            <td style="width: 80px; text-align:center; vertical-align:middle;">
+                                <?= $this->sma->formatQuantity($row->quantity).' '.$row->product_unit_code; ?></td>
+                            <td style="text-align:right; width:100px;"><?= $this->sma->formatMoney($row->unit_price); ?>
+                            </td>
+                            <?php
                                 if ($Settings->tax1 && $inv->product_tax > 0) {
                                     echo '<td style="width: 100px; text-align:right; vertical-align:middle;">' . ($row->item_tax != 0 ? '<small>('.($Settings->indian_gst ? $row->tax : $row->tax_code).')</small>' : '') . ' ' . $this->sma->formatMoney($row->item_tax) . '</td>';
                                 }
@@ -193,16 +207,17 @@
                                     echo '<td style="width: 100px; text-align:right; vertical-align:middle;">' . ($row->discount != 0 ? '<small>(' . $row->discount . ')</small> ' : '') . $this->sma->formatMoney($row->item_discount) . '</td>';
                                 }
                                 ?>
-                                <td style="text-align:right; width:120px;"><?= $this->sma->formatMoney($row->subtotal); ?></td>
-                            </tr>
-                            <?php
+                            <td style="text-align:right; width:120px;"><?= $this->sma->formatMoney($row->subtotal); ?>
+                            </td>
+                        </tr>
+                        <?php
                             $r++;
                         endforeach;
                     }
                     ?>
                     </tbody>
                     <tfoot>
-                    <?php
+                        <?php
                     $col = $Settings->indian_gst ? 5 : 4;
                     if ($Settings->product_discount && $inv->product_discount != 0) {
                         $col++;
@@ -220,10 +235,10 @@
                         $tcol = $col;
                     }
                     ?>
-                    <?php if ($inv->grand_total != $inv->total) { ?>
+                        <?php if ($inv->grand_total != $inv->total) { ?>
                         <tr>
-                            <td colspan="<?= $tcol; ?>"
-                                style="text-align:right; padding-right:10px;"><?= lang("total"); ?>
+                            <td colspan="<?= $tcol; ?>" style="text-align:right; padding-right:10px;">
+                                <?= lang("total"); ?>
                                 (<?= $default_currency->code; ?>)
                             </td>
                             <?php
@@ -234,10 +249,12 @@
                                 echo '<td style="text-align:right;">' . $this->sma->formatMoney($return_sale ? ($inv->product_discount+$return_sale->product_discount) : $inv->product_discount) . '</td>';
                             }
                             ?>
-                            <td style="text-align:right; padding-right:10px;"><?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax)+($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)); ?></td>
+                            <td style="text-align:right; padding-right:10px;">
+                                <?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax)+($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)); ?>
+                            </td>
                         </tr>
-                    <?php } ?>
-                    <?php
+                        <?php } ?>
+                        <?php
                     if ($return_sale) {
                         echo '<tr><td colspan="' . $col . '" style="text-align:right; padding-right:10px;;">' . lang("return_total") . ' (' . $default_currency->code . ')</td><td style="text-align:right; padding-right:10px;">' . $this->sma->formatMoney($return_sale->grand_total) . '</td></tr>';
                     }
@@ -248,39 +265,44 @@
 
 
 
-                    <?php if ($inv->order_discount != 0) {
+                        <?php if ($inv->order_discount != 0) {
                         echo '<tr><td colspan="' . $col . '" style="text-align:right; padding-right:10px;;">' . lang("order_discount") . ' (' . $default_currency->code . ')</td><td style="text-align:right; padding-right:10px;">'.($inv->order_discount_id ? '<small>('.$inv->order_discount_id.')</small> ' : '') . $this->sma->formatMoney($return_sale ? ($inv->order_discount+$return_sale->order_discount) : $inv->order_discount) . '</td></tr>';
                     }
                     ?>
-                    <?php if ($Settings->tax2 && $inv->order_tax != 0) {
+                        <?php if ($Settings->tax2 && $inv->order_tax != 0) {
                         echo '<tr><td colspan="' . $col . '" style="text-align:right; padding-right:10px;">' . lang("order_tax") . ' (' . $default_currency->code . ')</td><td style="text-align:right; padding-right:10px;">' . $this->sma->formatMoney($return_sale ? ($inv->order_tax+$return_sale->order_tax) : $inv->order_tax) . '</td></tr>';
                     }
                     ?>
-                    <?php if ($inv->shipping != 0) {
+                        <?php if ($inv->shipping != 0) {
                         echo '<tr><td colspan="' . $col . '" style="text-align:right; padding-right:10px;;">' . lang("shipping") . ' (' . $default_currency->code . ')</td><td style="text-align:right; padding-right:10px;">' . $this->sma->formatMoney($inv->shipping) . '</td></tr>';
                     }
                     ?>
-                    <tr>
-                        <td colspan="<?= $col; ?>"
-                            style="text-align:right; font-weight:bold;"><?= lang("total_amount"); ?>
-                            (<?= $default_currency->code; ?>)
-                        </td>
-                        <td style="text-align:right; padding-right:10px; font-weight:bold;"><?= $this->sma->formatMoney($return_sale ? ($inv->grand_total+$return_sale->grand_total) : $inv->grand_total); ?></td>
-                    </tr>
-                    <tr>
-                        <td colspan="<?= $col; ?>"
-                            style="text-align:right; font-weight:bold;"><?= lang("paid"); ?>
-                            (<?= $default_currency->code; ?>)
-                        </td>
-                        <td style="text-align:right; font-weight:bold;"><?= $this->sma->formatMoney($return_sale ? ($inv->paid+$return_sale->paid) : $inv->paid); ?></td>
-                    </tr>
-                    <tr>
-                        <td colspan="<?= $col; ?>"
-                            style="text-align:right; font-weight:bold;"><?= lang("balance"); ?>
-                            (<?= $default_currency->code; ?>)
-                        </td>
-                        <td style="text-align:right; font-weight:bold;"><?= $this->sma->formatMoney(($return_sale ? ($inv->grand_total+$return_sale->grand_total) : $inv->grand_total) - ($return_sale ? ($inv->paid+$return_sale->paid) : $inv->paid)); ?></td>
-                    </tr>
+                        <tr>
+                            <td colspan="<?= $col; ?>" style="text-align:right; font-weight:bold;">
+                                <?= lang("total_amount"); ?>
+                                (<?= $default_currency->code; ?>)
+                            </td>
+                            <td style="text-align:right; padding-right:10px; font-weight:bold;">
+                                <?= $this->sma->formatMoney($return_sale ? ($inv->grand_total+$return_sale->grand_total) : $inv->grand_total); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="<?= $col; ?>" style="text-align:right; font-weight:bold;"><?= lang("paid"); ?>
+                                (<?= $default_currency->code; ?>)
+                            </td>
+                            <td style="text-align:right; font-weight:bold;">
+                                <?= $this->sma->formatMoney($return_sale ? ($inv->paid+$return_sale->paid) : $inv->paid); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="<?= $col; ?>" style="text-align:right; font-weight:bold;">
+                                <?= lang("balance"); ?>
+                                (<?= $default_currency->code; ?>)
+                            </td>
+                            <td style="text-align:right; font-weight:bold;">
+                                <?= $this->sma->formatMoney(($return_sale ? ($inv->grand_total+$return_sale->grand_total) : $inv->grand_total) - ($return_sale ? ($inv->paid+$return_sale->paid) : $inv->paid)); ?>
+                            </td>
+                        </tr>
 
                     </tfoot>
                 </table>
@@ -292,18 +314,18 @@
                 <div class="col-xs-12">
                     <?php
                         if ($inv->note || $inv->note != "") { ?>
-                            <div class="well well-sm">
-                                <p class="bold"><?= lang("note"); ?>:</p>
-                                <div><?= $this->sma->decode_html($inv->note); ?></div>
-                            </div>
-                        <?php
+                    <div class="well well-sm">
+                        <p class="bold"><?= lang("note"); ?>:</p>
+                        <div><?= $this->sma->decode_html($inv->note); ?></div>
+                    </div>
+                    <?php
                         }
                         if ($inv->staff_note || $inv->staff_note != "") { ?>
-                            <div class="well well-sm staff_note">
-                                <p class="bold"><?= lang("staff_note"); ?>:</p>
-                                <div><?= $this->sma->decode_html($inv->staff_note); ?></div>
-                            </div>
-                        <?php } ?>
+                    <div class="well well-sm staff_note">
+                        <p class="bold"><?= lang("staff_note"); ?>:</p>
+                        <div><?= $this->sma->decode_html($inv->staff_note); ?></div>
+                    </div>
+                    <?php } ?>
                 </div>
 
                 <?php if ($customer->award_points != 0 && $Settings->each_spent > 0) { ?>
@@ -320,12 +342,15 @@
                 <div class="col-xs-5 pull-right">
                     <div class="well well-sm">
                         <p>
-                            <?= lang("created_by"); ?>: <?= $inv->created_by ? $created_by->first_name . ' ' . $created_by->last_name : $customer->name; ?> <br>
+                            <?= lang("created_by"); ?>:
+                            <?= $inv->created_by ? $created_by->first_name . ' ' . $created_by->last_name : $customer->name; ?>
+                            <br>
                             <?= lang("date"); ?>: <?= $this->sma->hrld($inv->date); ?>
                         </p>
                         <?php if ($inv->updated_by) { ?>
                         <p>
-                            <?= lang("updated_by"); ?>: <?= $updated_by->first_name . ' ' . $updated_by->last_name;; ?><br>
+                            <?= lang("updated_by"); ?>:
+                            <?= $updated_by->first_name . ' ' . $updated_by->last_name;; ?><br>
                             <?= lang("update_at"); ?>: <?= $this->sma->hrld($inv->updated_at); ?>
                         </p>
                         <?php } ?>
@@ -333,66 +358,72 @@
                 </div>
             </div>
             <?php if (!$Supplier || !$Customer) { ?>
-                <div class="buttons">
-                    <div class="btn-group btn-group-justified">
-                        <div class="btn-group">
-                            <a href="<?= admin_url('sales/add_payment/' . $inv->id) ?>" class="tip btn btn-primary" title="<?= lang('add_payment') ?>" data-toggle="modal" data-target="#myModal2">
-                                <i class="fa fa-dollar"></i>
-                                <span class="hidden-sm hidden-xs"><?= lang('payment') ?></span>
-                            </a>
-                        </div>
-
-                        <?php if ($inv->attachment) { ?>
-                            <div class="btn-group">
-                                <form action="<?= admin_url('sales/download_multiple') ?>" method="post">
-                                    <input type="hidden" name="attachments" value="<?= $inv->attachment ?>">
-                                    <!-- Add the CSRF token manually -->
-                                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
-
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-chain"></i>
-                                        <span class="hidden-sm hidden-xs"><?= lang('attachment') ?></span>
-                                    </button>
-                                </form>
-
-                            </div>
-                        <?php } ?>
-                        <div class="btn-group">
-                            <a href="<?= admin_url('sales/email/' . $inv->id) ?>" data-toggle="modal" data-target="#myModal2" class="tip btn btn-primary" title="<?= lang('email') ?>">
-                                <i class="fa fa-envelope-o"></i>
-                                <span class="hidden-sm hidden-xs"><?= lang('email') ?></span>
-                            </a>
-                        </div>
-                        <div class="btn-group">
-                            <a href="<?= admin_url('sales/pdf/' . $inv->id) ?>" class="tip btn btn-primary" title="<?= lang('download_pdf') ?>">
-                                <i class="fa fa-download"></i>
-                                <span class="hidden-sm hidden-xs"><?= lang('pdf') ?></span>
-                            </a>
-                        </div>
-                        <?php if ( ! $inv->sale_id) { ?>
-                        <div class="btn-group">
-                            <a href="<?= admin_url('sales/edit/' . $inv->id) ?>" class="tip btn btn-warning sledit" title="<?= lang('edit') ?>">
-                                <i class="fa fa-edit"></i>
-                                <span class="hidden-sm hidden-xs"><?= lang('edit') ?></span>
-                            </a>
-                        </div>
-                        <div class="btn-group">
-                            <a href="#" class="tip btn btn-danger bpo" title="<b><?= $this->lang->line("delete_sale") ?></b>"
-                                data-content="<div style='width:150px;'><p><?= lang('r_u_sure') ?></p><a class='btn btn-danger' href='<?= admin_url('sales/delete/' . $inv->id) ?>'><?= lang('i_m_sure') ?></a> <button class='btn bpo-close'><?= lang('no') ?></button></div>"
-                                data-html="true" data-placement="top">
-                                <i class="fa fa-trash-o"></i>
-                                <span class="hidden-sm hidden-xs"><?= lang('delete') ?></span>
-                            </a>
-                        </div>
-                        <?php } ?>
+            <div class="buttons">
+                <div class="btn-group btn-group-justified">
+                    <div class="btn-group">
+                        <a href="<?= admin_url('sales/add_payment/' . $inv->id) ?>" class="tip btn btn-primary"
+                            title="<?= lang('add_payment') ?>" data-toggle="modal" data-target="#myModal2">
+                            <i class="fa fa-dollar"></i>
+                            <span class="hidden-sm hidden-xs"><?= lang('payment') ?></span>
+                        </a>
                     </div>
+
+                    <?php if ($inv->attachment) { ?>
+                    <div class="btn-group">
+                        <form action="<?= admin_url('sales/download_multiple') ?>" method="post">
+                            <input type="hidden" name="attachments" value="<?= $inv->attachment ?>">
+                            <!-- Add the CSRF token manually -->
+                            <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                                value="<?= $this->security->get_csrf_hash(); ?>" />
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-chain"></i>
+                                <span class="hidden-sm hidden-xs"><?= lang('attachment') ?></span>
+                            </button>
+                        </form>
+
+                    </div>
+                    <?php } ?>
+                    <div class="btn-group">
+                        <a href="<?= admin_url('sales/email/' . $inv->id) ?>" data-toggle="modal"
+                            data-target="#myModal2" class="tip btn btn-primary" title="<?= lang('email') ?>">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="hidden-sm hidden-xs"><?= lang('email') ?></span>
+                        </a>
+                    </div>
+                    <div class="btn-group">
+                        <a href="<?= admin_url('sales/pdf/' . $inv->id) ?>" class="tip btn btn-primary"
+                            title="<?= lang('download_pdf') ?>">
+                            <i class="fa fa-download"></i>
+                            <span class="hidden-sm hidden-xs"><?= lang('pdf') ?></span>
+                        </a>
+                    </div>
+                    <?php if ( ! $inv->sale_id) { ?>
+                    <div class="btn-group">
+                        <a href="<?= admin_url('sales/edit/' . $inv->id) ?>" class="tip btn btn-warning sledit"
+                            title="<?= lang('edit') ?>">
+                            <i class="fa fa-edit"></i>
+                            <span class="hidden-sm hidden-xs"><?= lang('edit') ?></span>
+                        </a>
+                    </div>
+                    <div class="btn-group">
+                        <a href="#" class="tip btn btn-danger bpo"
+                            title="<b><?= $this->lang->line("delete_sale") ?></b>"
+                            data-content="<div style='width:150px;'><p><?= lang('r_u_sure') ?></p><a class='btn btn-danger' href='<?= admin_url('sales/delete/' . $inv->id) ?>'><?= lang('i_m_sure') ?></a> <button class='btn bpo-close'><?= lang('no') ?></button></div>"
+                            data-html="true" data-placement="top">
+                            <i class="fa fa-trash-o"></i>
+                            <span class="hidden-sm hidden-xs"><?= lang('delete') ?></span>
+                        </a>
+                    </div>
+                    <?php } ?>
                 </div>
+            </div>
             <?php } ?>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready( function() {
-        $('.tip').tooltip();
-    });
+$(document).ready(function() {
+    $('.tip').tooltip();
+});
 </script>

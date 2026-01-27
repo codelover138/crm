@@ -147,6 +147,7 @@ class Sales extends MY_Controller
         $this->data['rows'] = $this->sales_model->getAllInvoiceItems($id);
         $this->data['service_provider'] = $this->site->getUserById($inv->service_provider);
         $this->data['assign_marketing_officers'] = $this->site->getUserById($inv->assign_marketing_officers);
+        $this->data['agent'] = $this->site->getUserById($inv->agent);
         $this->data['return_sale'] = $inv->return_id ? $this->sales_model->getInvoiceByID($inv->return_id) : NULL;
         $this->data['return_rows'] = $inv->return_id ? $this->sales_model->getAllInvoiceItems($inv->return_id) : NULL;
 
@@ -210,6 +211,8 @@ class Sales extends MY_Controller
         $this->data['return_sale'] = $inv->return_id ? $this->sales_model->getInvoiceByID($inv->return_id) : NULL;
         $this->data['return_rows'] = $inv->return_id ? $this->sales_model->getAllInvoiceItems($inv->return_id) : NULL;
         $this->data['service_provider'] = $this->site->getUserById($inv->service_provider);
+        $this->data['assign_marketing_officers'] = $this->site->getUserById($inv->assign_marketing_officers);
+        $this->data['agent'] = $this->site->getUserById($inv->agent);
         //$this->data['paypal'] = $this->sales_model->getPaypalSettings();
         //$this->data['skrill'] = $this->sales_model->getSkrillSettings();
 
@@ -591,6 +594,7 @@ class Sales extends MY_Controller
                 'service_provider' => $this->input->post('assign_service_provider'),
                 'assign_marketing_officers' => $this->input->post('assign_marketing_officers'),
                 'agent' => $this->input->post('agent'),
+                'support_duration' => $this->input->post('support_duration'),
                 'staff_note' => $staff_note,
                 'total' => $total,
                 'product_discount' => $product_discount,
@@ -996,6 +1000,8 @@ class Sales extends MY_Controller
                 'order_discount_id' => $this->input->post('order_discount'),
                 'order_discount' => $order_discount,
                 'service_provider' => $this->input->post('assign_service_provider'),
+                'agent' => $this->input->post('agent'),
+                'support_duration' => $this->input->post('support_duration'),
                 'assign_marketing_officers' => $this->input->post('assign_marketing_officers'),
                 'total_discount' => $total_discount,
                 'product_tax' => $product_tax,
@@ -2221,7 +2227,7 @@ class Sales extends MY_Controller
                         }
                     }
                 }
-                if ($this->sma->isPromo($row)) {
+               /*  if ($this->sma->isPromo($row)) {
                     $row->price = $row->promo_price;
                 } elseif ($customer->price_group_id) {
                     if ($pr_group_price = $this->site->getProductGroupPrice($row->id, $customer->price_group_id)) {
@@ -2231,7 +2237,7 @@ class Sales extends MY_Controller
                     if ($pr_group_price = $this->site->getProductGroupPrice($row->id, $warehouse->price_group_id)) {
                         $row->price = $pr_group_price->price;
                     }
-                }
+                } */
                 $row->price = $row->price + (($row->price * $customer_group->percent) / 100);
                 $row->real_unit_price = $row->price;
                 $row->base_quantity = 1;
