@@ -136,6 +136,7 @@ $lang['orientation']                        = "Orientation";
 $lang['portrait']                           = "Portrait";
 $lang['landscape']                          = "Landscape";
 $lang['promotion']                          = "Promotion";
+$lang['show_customer_dashboard']            = "Show customer dashboard";
 $lang['set_promotion']                      = "Set Promotion";
 $lang['promo_price']                        = "Promotion Price";
 $lang['start_date']                         = "Start Date";

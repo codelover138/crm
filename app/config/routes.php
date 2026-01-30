@@ -5,6 +5,10 @@ $route['default_controller'] = 'main';
 $route['404_override'] = 'notify/error_404';
 $route['translate_uri_dashes'] = TRUE;
 
+// Customer dashboard (no login) - access by customer code or id: base_url/customers/{code}
+$route['customers/(:any)'] = 'customer_dashboard/view/$1';
+$route['crm/customers/(:any)'] = 'customer_dashboard/view/$1';
+
 // Shop routes
 $route['shop'] = 'main';
 $route['shop/search'] = 'shop/shop/search';

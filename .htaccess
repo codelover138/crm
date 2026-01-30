@@ -3,7 +3,8 @@ DirectoryIndex index.php index.html
 <IfModule mod_rewrite.c>
 
 RewriteEngine On
-# RewriteBase /basepath/
+# Required when app is in a subfolder (e.g. /crm/) so /crm/customers/123 works
+RewriteBase /crm/
 RewriteCond $1 !^(index\.php|assets|install|update)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

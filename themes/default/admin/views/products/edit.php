@@ -162,28 +162,11 @@ $(document).ready(function() {
                     </div>
 
                     <div class="form-group">
-                        <input type="checkbox" class="checkbox" value="1" name="promotion" id="promotion"
-                            <?= $this->input->post('promotion') ? 'checked="checked"' : ''; ?>>
-                        <label for="promotion" class="padding05">
-                            <?= lang('promotion'); ?>
+                        <input type="checkbox" class="checkbox" value="1" name="show_customer_dashboard" id="show_customer_dashboard"
+                            <?= ($this->input->post('show_customer_dashboard') || !empty($product->feature)) ? 'checked="checked"' : ''; ?>>
+                        <label for="show_customer_dashboard" class="padding05">
+                            <?= lang('show_customer_dashboard'); ?>
                         </label>
-                    </div>
-
-                    <div id="promo" <?= $product->promotion ? '' : ' style="display:none;"'; ?>>
-                        <div class="well well-sm">
-                            <div class="form-group">
-                                <?= lang('promo_price', 'promo_price'); ?>
-                                <?= form_input('promo_price', set_value('promo_price', $product->promo_price ? $this->sma->formatDecimal($product->promo_price) : ''), 'class="form-control tip" id="promo_price"'); ?>
-                            </div>
-                            <div class="form-group">
-                                <?= lang('start_date', 'start_date'); ?>
-                                <?= form_input('start_date', set_value('start_date', $product->start_date ? $this->sma->hrsd($product->start_date) : ''), 'class="form-control tip date" id="start_date"'); ?>
-                            </div>
-                            <div class="form-group">
-                                <?= lang('end_date', 'end_date'); ?>
-                                <?= form_input('end_date', set_value('end_date', $product->end_date ? $this->sma->hrsd($product->end_date) : ''), 'class="form-control tip date" id="end_date"'); ?>
-                            </div>
-                        </div>
                     </div>
 
                     <?php if ($Settings->invoice_view == 2) { ?>
@@ -339,14 +322,6 @@ $(document).ready(function() {
     });
     $('#extras').on('ifUnchecked', function() {
         $('#extras-con').slideUp();
-    });
-
-    <?= isset($_POST['promotion']) || $product->promotion ? '$("#promotion").iCheck("check");': '' ?>
-    $('#promotion').on('ifChecked', function(e) {
-        $('#promo').slideDown();
-    });
-    $('#promotion').on('ifUnchecked', function(e) {
-        $('#promo').slideUp();
     });
 
     $('.attributes').on('ifChecked', function(event) {

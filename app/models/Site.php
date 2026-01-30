@@ -122,6 +122,21 @@ class Site extends CI_Model
         return FALSE;
     }
 
+    /**
+     * Get customer (company) by customer code or id for public dashboard access.
+     * URL: base_url/customers/{code} - code can be numeric id or customer_code.
+     */
+    public function getCompanyByCustomerCode($code) {
+        if ($code === '' || $code === NULL) {
+            return FALSE;
+        }
+        $code = is_string($code) ? trim($code) : $code;
+        if (is_numeric($code)) {
+            $q = $this->db->get_where('companies', array('vat_no' => $code, 'group_name' => 'customer'), 1);
+        } else  return FALSE;
+        return $q->num_rows() > 0 ? $q->row() : FALSE;
+    }
+
     public function getInvoiceProductByProductCodeAndId($id = NULL,$code=null) {
         $q = $this->db->get_where('sale_items', array('sale_id' => $id,'product_code'=>$code), 1);
         if ($q->num_rows() > 0) {

@@ -69,6 +69,76 @@ class Reports_model extends CI_Model
         return $this->db->count_all_results();
     }
 
+    public function getCustomerSalesList($customer_id, $limit = 15)
+    {
+        $this->db->select('id, date, reference_no, grand_total, paid, (COALESCE(grand_total,0) - COALESCE(paid,0)) as balance, sale_status')
+            ->where('customer_id', $customer_id)
+            ->order_by('date', 'DESC')
+            ->limit($limit);
+        $q = $this->db->get('sales');
+        if ($q->num_rows() > 0) {
+            return $q->result();
+        }
+        return array();
+    }
+
+    public function getCustomerQuotesList($customer_id, $limit = 10)
+    {
+        $this->db->select('id, date, reference_no, grand_total, status')
+            ->where('customer_id', $customer_id)
+            ->order_by('date', 'DESC')
+            ->limit($limit);
+        $q = $this->db->get('quotes');
+        if ($q->num_rows() > 0) {
+            return $q->result();
+        }
+        return array();
+    }
+
+    /**
+     * Get featured products sold to customer (products.featured = 1), ordered by sale id desc.
+     * Returns sale items with sale date and support_duration. Remaining days = (sale_date + support_duration) to current date.
+     */
+    public function getCustomerDashboardProducts($customer_id, $limit = 3)
+    {
+        $sales = $this->db->dbprefix('sales');
+        $sale_items = $this->db->dbprefix('sale_items');
+        $products = $this->db->dbprefix('products');
+        $support_col = $this->db->field_exists('support_duration', 'sales') ? ", {$sales}.support_duration" : ", NULL as support_duration";
+        $sales_rep_col = $this->db->field_exists('assign_marketing_officers', 'sales') ? ", {$sales}.assign_marketing_officers" : ", NULL as assign_marketing_officers";
+        $tech_col = $this->db->field_exists('service_provider', 'sales') ? ", {$sales}.service_provider" : ", NULL as service_provider";
+        $this->db->select("{$sale_items}.product_id, {$sale_items}.product_name, {$sale_items}.product_code, {$sales}.id as sale_id, {$sales}.reference_no, {$sales}.date as sale_date {$support_col}{$sales_rep_col}{$tech_col}", FALSE)
+            ->from($sale_items)
+            ->join($sales, "{$sales}.id = {$sale_items}.sale_id", 'inner')
+            ->join($products, "{$products}.id = {$sale_items}.product_id", 'inner')
+            ->where($sales . '.customer_id', (int)$customer_id)
+            ->where($products . '.featured', 1)
+            ->order_by($sales . '.id', 'DESC')
+            ->limit($limit);
+        $q = $this->db->get();
+        if ($q->num_rows() > 0) {
+            return $q->result();
+        }
+        return array();
+    }
+
+    /**
+     * Get assign_marketing_officers and service_provider from customer's most recent sale (for dashboard associates).
+     */
+    public function getCustomerLatestSaleAssociates($customer_id)
+    {
+        $sales = $this->db->dbprefix('sales');
+        $sales_rep_col = $this->db->field_exists('assign_marketing_officers', 'sales') ? ", {$sales}.assign_marketing_officers" : ", NULL as assign_marketing_officers";
+        $tech_col = $this->db->field_exists('service_provider', 'sales') ? ", {$sales}.service_provider" : ", NULL as service_provider";
+        $this->db->select("{$sales}.id{$sales_rep_col}{$tech_col}", FALSE)
+            ->from($sales)
+            ->where('customer_id', (int)$customer_id)
+            ->order_by($sales . '.id', 'DESC')
+            ->limit(1);
+        $q = $this->db->get();
+        return $q->num_rows() > 0 ? $q->row() : null;
+    }
+
     public function getStockValue()
     {
         $q = $this->db->query("SELECT SUM(by_price) as stock_by_price, SUM(by_cost) as stock_by_cost FROM ( Select COALESCE(sum(" . $this->db->dbprefix('warehouses_products') . ".quantity), 0)*price as by_price, COALESCE(sum(" . $this->db->dbprefix('warehouses_products') . ".quantity), 0)*cost as by_cost FROM " . $this->db->dbprefix('products') . " JOIN " . $this->db->dbprefix('warehouses_products') . " ON " . $this->db->dbprefix('warehouses_products') . ".product_id=" . $this->db->dbprefix('products') . ".id GROUP BY " . $this->db->dbprefix('products') . ".id )a");
