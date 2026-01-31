@@ -49,7 +49,7 @@ class Customers extends CI_Controller {
         $sales_list = $this->reports_model->getCustomerSalesList($customer_id, 15);
         $quotes_list = $this->reports_model->getCustomerQuotesList($customer_id, 10);
 
-        // Featured products (order by sale id desc); remaining days = (sale_date + support_duration) to current date
+        // Active support: last 3 featured products (by product id desc); only if customer has a sale; use latest sale's support duration
         $dashboard_products_raw = $this->reports_model->getCustomerDashboardProducts($customer_id, 3);
         $dashboard_products = array();
         $today = new DateTime('today');

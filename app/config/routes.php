@@ -6,7 +6,11 @@ $route['404_override'] = 'notify/error_404';
 $route['translate_uri_dashes'] = TRUE;
 
 // Customer dashboard (no login) - access by customer code or id: base_url/customers/{code}
+$route['customers/submit_case/(:any)'] = 'customer_dashboard/submit_case/$1';
+$route['customers/submit_appointment/(:any)'] = 'customer_dashboard/submit_appointment/$1';
 $route['customers/(:any)'] = 'customer_dashboard/view/$1';
+$route['crm/customers/submit_case/(:any)'] = 'customer_dashboard/submit_case/$1';
+$route['crm/customers/submit_appointment/(:any)'] = 'customer_dashboard/submit_appointment/$1';
 $route['crm/customers/(:any)'] = 'customer_dashboard/view/$1';
 
 // Shop routes

@@ -96,14 +96,30 @@ class Reports_model extends CI_Model
     }
 
     /**
-     * Get featured products sold to customer (products.featured = 1), ordered by sale id desc.
-     * Returns sale items with sale date and support_duration. Remaining days = (sale_date + support_duration) to current date.
+     * Get active support products for customer dashboard.
+     * Logic: (1) Take last 3 featured products (product id order by desc where featured=1).
+     * (2) For each of those products, show only if the customer has at least one sale containing it;
+     *     use the latest sale's support duration. If no sales for that product, do not show it.
      */
     public function getCustomerDashboardProducts($customer_id, $limit = 3)
     {
         $sales = $this->db->dbprefix('sales');
         $sale_items = $this->db->dbprefix('sale_items');
         $products = $this->db->dbprefix('products');
+
+        // 1. Last N featured product IDs (order by product id desc)
+        $this->db->select('id')
+            ->from($products)
+            ->where('featured', 1)
+            ->order_by('id', 'DESC')
+            ->limit($limit);
+        $q = $this->db->get();
+        $product_ids = array_column($q->result_array(), 'id');
+        if (empty($product_ids)) {
+            return array();
+        }
+
+        // 2. All sale items for this customer where product_id is in those featured IDs (order by sale id desc = latest first)
         $support_col = $this->db->field_exists('support_duration', 'sales') ? ", {$sales}.support_duration" : ", NULL as support_duration";
         $sales_rep_col = $this->db->field_exists('assign_marketing_officers', 'sales') ? ", {$sales}.assign_marketing_officers" : ", NULL as assign_marketing_officers";
         $tech_col = $this->db->field_exists('service_provider', 'sales') ? ", {$sales}.service_provider" : ", NULL as service_provider";
@@ -112,14 +128,27 @@ class Reports_model extends CI_Model
             ->join($sales, "{$sales}.id = {$sale_items}.sale_id", 'inner')
             ->join($products, "{$products}.id = {$sale_items}.product_id", 'inner')
             ->where($sales . '.customer_id', (int)$customer_id)
-            ->where($products . '.featured', 1)
-            ->order_by($sales . '.id', 'DESC')
-            ->limit($limit);
+            ->where_in($sale_items . '.product_id', $product_ids)
+            ->order_by($sales . '.id', 'DESC');
         $q = $this->db->get();
-        if ($q->num_rows() > 0) {
-            return $q->result();
+        $rows = $q->num_rows() > 0 ? $q->result() : array();
+
+        // 3. Keep one row per product_id = latest sale per product (first occurrence due to order by sale id desc)
+        $by_product = array();
+        foreach ($rows as $row) {
+            if (!isset($by_product[$row->product_id])) {
+                $by_product[$row->product_id] = $row;
+            }
         }
-        return array();
+
+        // 4. Return in order of featured product ids; only products the customer has bought
+        $result = array();
+        foreach ($product_ids as $pid) {
+            if (isset($by_product[$pid])) {
+                $result[] = $by_product[$pid];
+            }
+        }
+        return $result;
     }
 
     /**
