@@ -80,6 +80,16 @@ if (slpayment_status = localStorage.getItem('slpayment_status')) {
     $('#slpayment_status').select2("val", slpayment_status);
     var ps = slpayment_status;
     if (ps == 'partial' || ps == 'paid') {
+        // Recalculate amount if paid and no stored amount or amount is 0
+        if (ps == 'paid') {
+            var storedAmount = localStorage.getItem('amount_1');
+            if (!storedAmount || parseFloat(storedAmount) == 0) {
+                var calculatedAmount = formatDecimal(parseFloat(((total + invoice_tax) - order_discount) + shipping));
+                if (!isNaN(calculatedAmount) && calculatedAmount > 0) {
+                    $('#amount_1').val(calculatedAmount);
+                }
+            }
+        }
         $('#payments').slideDown();
         $('#pcc_no_1').focus();
     } else {
@@ -91,7 +101,7 @@ $(document).on('change', '.paid_by', function () {
     var p_val = $(this).val();
     localStorage.setItem('paid_by', p_val);
     $('#rpaidby').val(p_val);
-    if (p_val == 'cash' ||  p_val == 'other') {
+    if (p_val == 'cash' || p_val == 'other' || p_val == 'paypal') {
         $('.pcheque_1').hide();
         $('.pcc_1').hide();
         $('.pcash_1').show();
@@ -126,7 +136,7 @@ if (paid_by = localStorage.getItem('paid_by')) {
     var p_val = paid_by;
     $('.paid_by').select2("val", paid_by);
     $('#rpaidby').val(p_val);
-    if (p_val == 'cash' ||  p_val == 'other') {
+    if (p_val == 'cash' || p_val == 'other' || p_val == 'paypal') {
         $('.pcheque_1').hide();
         $('.pcc_1').hide();
         $('.pcash_1').show();
@@ -146,23 +156,7 @@ if (paid_by = localStorage.getItem('paid_by')) {
         $('.pcc_1').hide();
         $('.pcash_1').hide();
     }
-    if (p_val == 'gift_card') {
-        $('.gc').show();
-        $('.ngc').hide();
-        $('#gift_card_no').focus();
-    } else {
-        $('.ngc').show();
-        $('.gc').hide();
-        $('#gc_details').html('');
-    }
 }
-
-if (gift_card_no = localStorage.getItem('gift_card_no')) {
-    $('#gift_card_no').val(gift_card_no);
-}
-$('#gift_card_no').change(function (e) {
-    localStorage.setItem('gift_card_no', $(this).val());
-});
 
 if (amount_1 = localStorage.getItem('amount_1')) {
     $('#amount_1').val(amount_1);
@@ -290,6 +284,26 @@ if (slshipping = localStorage.getItem('slshipping')) {
     shipping = 0;
 }
 $('#add_sale, #edit_sale').attr('disabled', true);
+
+// Ensure payment fields are populated before submit when payment_status is paid/partial
+$(document).on('submit', 'form', function () {
+    if ($(this).find('#add_sale').length && $('#slpayment_status').length) {
+        var ps = $('#slpayment_status').val();
+        if (ps == 'paid' || ps == 'partial') {
+            var amt = parseFloat($('#amount_1').val());
+            if (isNaN(amt) || amt <= 0) {
+                var gtotal = parseFloat(((total + invoice_tax) - order_discount) + shipping);
+                if (!isNaN(gtotal) && gtotal >= 0) {
+                    $('#amount_1').val(formatDecimal(gtotal));
+                }
+            }
+            if (!$('#paid_by_1').val()) {
+                $('#paid_by_1').val('cash');
+            }
+        }
+    }
+});
+
 $(document).on('change', '.rserial', function () {
     var item_id = $(this).closest('tr').attr('data-item-id');
     slitems[item_id].row.serial = $(this).val();
@@ -343,9 +357,6 @@ if (localStorage.getItem('slitems')) {
                 }
                 if (localStorage.getItem('slbiller')) {
                     localStorage.removeItem('slbiller');
-                }
-                if (localStorage.getItem('gift_card_no')) {
-                    localStorage.removeItem('gift_card_no');
                 }
 
                 $('#modal-loading').show();
@@ -1191,6 +1202,16 @@ function loadItems() {
         }
         $('#tship').text(formatMoney(shipping));
         $('#gtotal').text(formatMoney(gtotal));
+        
+        // Update payment amount if payment status is 'paid' and amount is empty or 0
+        var currentPaymentStatus = $('#slpayment_status').val();
+        if (currentPaymentStatus == 'paid') {
+            var currentAmount = parseFloat($('#amount_1').val());
+            if (isNaN(currentAmount) || currentAmount == 0) {
+                $('#amount_1').val(formatDecimal(gtotal));
+            }
+        }
+        
         if (an > parseInt(site.settings.bc_fix) && parseInt(site.settings.bc_fix) > 0) {
             $("html, body").animate({scrollTop: $('#sticker').offset().top}, 500);
             $(window).scrollTop($(window).scrollTop() + 1);

@@ -651,11 +651,17 @@ class Sales extends MY_Controller
                         'gc_balance' => $gc_balance,
                     );
                 } else {
+                    $amount_paid = $this->input->post('amount-paid');
+                    $amount_formatted = $this->sma->formatDecimal($amount_paid);
+                    // Ensure amount is not null - default to grand_total if empty
+                    if ($amount_formatted === null || $amount_formatted === '') {
+                        $amount_formatted = $this->sma->formatDecimal($grand_total);
+                    }
                     $payment = array(
                         'date' => $date,
                         'reference_no' => $this->input->post('payment_reference_no'),
-                        'amount' => $this->sma->formatDecimal($this->input->post('amount-paid')),
-                        'paid_by' => $this->input->post('paid_by'),
+                        'amount' => $amount_formatted,
+                        'paid_by' => $this->input->post('paid_by') ? $this->input->post('paid_by') : 'cash',
                         'cheque_no' => $this->input->post('cheque_no'),
                         'cc_no' => $this->input->post('pcc_no'),
                         'cc_holder' => $this->input->post('pcc_holder'),
@@ -740,6 +746,12 @@ class Sales extends MY_Controller
 
 
             // $this->sma->print_arrays($data, $products, $payment);
+            
+            // Debug: Log payment data
+            log_message('debug', 'Sales Add - Payment Status: ' . $payment_status);
+            log_message('debug', 'Sales Add - Paid By: ' . $this->input->post('paid_by'));
+            log_message('debug', 'Sales Add - Amount Paid: ' . $this->input->post('amount-paid'));
+            log_message('debug', 'Sales Add - Payment Array: ' . print_r($payment, true));
         }
 
         if ($this->form_validation->run() == true && $this->sales_model->addSale($data, $products, $payment)) {
@@ -1177,6 +1189,8 @@ class Sales extends MY_Controller
             $this->data['warehouses'] = $this->site->getAllWarehouses();
             $this->data['assign_marketing_officer'] = $this->site->getAllUser();
             $this->data['assign_provider'] = $this->site->getAllUser();
+            $this->data['payment_ref'] = $this->site->getReference('pay');
+            $this->data['allow_discount'] = ($this->Owner || $this->Admin || $this->session->userdata('allow_discount'));
             $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => admin_url('sales'), 'page' => lang('sales')), array('link' => '#', 'page' => lang('edit_sale')));
             $meta = array('page_title' => lang('edit_sale'), 'bc' => $bc);
             $this->page_construct('sales/edit', $meta, $this->data);

@@ -234,17 +234,10 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="payment">
-                                                    <div class="form-group ngc">
+                                                    <div class="form-group">
                                                         <?= lang("amount", "amount_1"); ?>
                                                         <input name="amount-paid" type="text" id="amount_1"
                                                                class="pa form-control kb-pad amount"/>
-                                                    </div>
-                                                    <div class="form-group gc" style="display: none;">
-                                                        <?= lang("gift_card_no", "gift_card_no"); ?>
-                                                        <input name="gift_card_no" type="text" id="gift_card_no"
-                                                               class="pa form-control kb-pad"/>
-
-                                                        <div id="gc_details"></div>
                                                     </div>
                                                 </div>
                                             </div>

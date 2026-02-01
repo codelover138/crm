@@ -101,7 +101,7 @@
                     </tr>
                     <tr>
                         <td><strong><?= lang("paid_by"); ?></strong></td>
-                        <td class="text-right"><strong class="text-right"><?php echo lang($payment->paid_by);
+                        <td class="text-right"><strong class="text-right"><?php echo $this->sma->get_paid_by_label($payment->paid_by);
                                 if ($payment->paid_by == 'gift_card' || $payment->paid_by == 'CC' || $payment->paid_by == 'ppp' || $payment->paid_by == 'stripe' || $payment->paid_by == 'authorize') {
                                     echo ' (' . substr($payment->cc_no, -4) . ')';
                                 } elseif ($payment->paid_by == 'Cheque') {

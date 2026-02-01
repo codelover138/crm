@@ -56,12 +56,6 @@
 
                         </div>
                         <div class="clearfix"></div>
-                        <div class="form-group gc" style="display: none;">
-                            <?= lang("gift_card_no", "gift_card_no"); ?>
-                            <input name="gift_card_no" type="text" id="gift_card_no" class="pa form-control kb-pad"/>
-
-                            <div id="gc_details"></div>
-                        </div>
                         <div class="pcc_1" style="display:none;">
                             <div class="row">
                                 <div class="col-md-6">
@@ -144,37 +138,10 @@
 <?= $modal_js ?>
 <script type="text/javascript" charset="UTF-8">
     $(document).ready(function () {
-        $(document).on('change', '#gift_card_no', function () {
-            var cn = $(this).val() ? $(this).val() : '';
-            if (cn != '') {
-                $.ajax({
-                    type: "get", async: false,
-                    url: site.base_url + "sales/validate_gift_card/" + cn,
-                    dataType: "json",
-                    success: function (data) {
-                        if (data === false) {
-                            $('#gift_card_no').parent('.form-group').addClass('has-error');
-                            bootbox.alert('<?=lang('incorrect_gift_card')?>');
-                        } else if (data.customer_id !== null && data.customer_id != <?=$inv->customer_id?>) {
-                            $('#gift_card_no').parent('.form-group').addClass('has-error');
-                            bootbox.alert('<?=lang('gift_card_not_for_customer')?>');
-
-                        } else {
-                            var due = <?=$inv->grand_total-$inv->paid?>;
-                            if (due > data.balance) {
-                                $('#amount_1').val(formatDecimal(data.balance));
-                            }
-                            $('#gc_details').html('<small>Card No: <span style="max-width:60%;float:right;">' + data.card_no + '</span><br>Value: <span style="max-width:60%;float:right;">' + currencyFormat(data.value) + '</span><br>Balance: <span style="max-width:60%;float:right;">' + currencyFormat(data.balance) + '</span></small>');
-                            $('#gift_card_no').parent('.form-group').removeClass('has-error');
-                        }
-                    }
-                });
-            }
-        });
         $(document).on('change', '.paid_by', function () {
             var p_val = $(this).val();
             $('#rpaidby').val(p_val);
-            if (p_val == 'cash') {
+            if (p_val == 'cash' || p_val == 'other' || p_val == 'paypal') {
                 $('.pcheque_1').hide();
                 $('.pcc_1').hide();
                 $('.pcash_1').show();
@@ -193,12 +160,6 @@
                 $('.pcheque_1').hide();
                 $('.pcc_1').hide();
                 $('.pcash_1').hide();
-            }
-            if (p_val == 'gift_card') {
-                $('.gc').show();
-                $('#gift_card_no').focus();
-            } else {
-                $('.gc').hide();
             }
         });
         $('#pcc_no_1').change(function (e) {

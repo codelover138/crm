@@ -41,12 +41,62 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         padding: 0;
     }
 
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes titleGlow {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.85; }
+    }
+    @keyframes underlineSlide {
+        from { transform: scaleX(0); opacity: 0; }
+        to { transform: scaleX(1); opacity: 1; }
+    }
+
     body {
         font-family: 'DM Sans', -apple-system, sans-serif;
-        background: var(--bg);
+        background: linear-gradient(160deg, #0f172a 0%, #0c1222 35%, #0d1324 60%, #0f172a 100%);
+        background-attachment: fixed;
         color: var(--text);
         min-height: 100vh;
         line-height: 1.5;
+        position: relative;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
+                    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(139, 92, 246, 0.06), transparent),
+                    radial-gradient(ellipse 50% 30% at 0% 80%, rgba(59, 130, 246, 0.05), transparent);
+        pointer-events: none;
+        z-index: 0;
     }
 
     .dashboard-wrap {
@@ -57,6 +107,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         padding: 1.5rem;
         gap: 1.5rem;
         align-items: flex-start;
+        position: relative;
+        z-index: 1;
     }
 
     .dashboard-sidebar {
@@ -68,6 +120,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         padding: 1.35rem;
         position: sticky;
         top: 1.5rem;
+        animation: slideInLeft 0.5s ease-out;
     }
 
     .sidebar-logo-wrap {
@@ -172,39 +225,42 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         min-width: 0;
         max-width: 1100px;
         padding: 0;
+        animation: fadeInUp 0.5s ease-out 0.1s backwards;
     }
 
     .header {
         text-align: center;
         margin-bottom: 2rem;
-        padding: 2rem 1rem;
-        background: linear-gradient(145deg, var(--surface) 0%, var(--surface2) 100%);
+        padding: 2rem 1.5rem;
+        background: var(--surface);
         border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: var(--radius);
+        border-left: 4px solid var(--accent);
+        animation: fadeInUp 0.5s ease-out;
     }
 
     .header-badge {
         display: inline-block;
-        background: linear-gradient(135deg, var(--accent), #8b5cf6);
-        color: #fff;
         font-size: 0.7rem;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.12em;
-        padding: 0.35rem 0.9rem;
-        border-radius: 100px;
-        margin-bottom: 0.75rem;
+        letter-spacing: 0.1em;
+        color: var(--accent-light);
+        margin-bottom: 0.5rem;
     }
 
     .header h1 {
-        font-size: 1.65rem;
+        font-size: 1.6rem;
         font-weight: 600;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.5rem;
+        color: var(--text);
     }
 
     .header p {
         color: var(--text-muted);
         font-size: 0.9rem;
+        margin: 0;
+        line-height: 1.5;
     }
 
     .header-logo-wrap {
@@ -245,6 +301,42 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         color: var(--accent);
     }
 
+    /* My active Products section – highlighted title */
+    .section-title--products {
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.25rem;
+        position: relative;
+        padding-bottom: 0.75rem;
+        animation: fadeInUp 0.6s ease-out 0.15s backwards;
+    }
+
+    .section-title--products i {
+        color: var(--accent-light);
+        font-size: 1.1rem;
+        animation: titleGlow 3s ease-in-out infinite;
+    }
+
+    .section-title--products .section-title-text {
+        background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #94a3b8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .section-title--products::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), #8b5cf6);
+        border-radius: 2px;
+        animation: underlineSlide 0.6s ease-out 0.4s backwards;
+    }
+
     /* License / Support cards */
     .licenses-grid {
         display: grid;
@@ -258,20 +350,27 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: 16px;
         padding: 1.5rem;
-        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        animation: fadeInUp 0.5s ease-out backwards;
     }
 
+    .licenses-grid .license-card:nth-child(1) { animation-delay: 0.1s; }
+    .licenses-grid .license-card:nth-child(2) { animation-delay: 0.2s; }
+    .licenses-grid .license-card:nth-child(3) { animation-delay: 0.3s; }
+
     .license-card:hover {
-        transform: translateY(-3px);
+        transform: translateY(-4px);
         border-color: rgba(99, 102, 241, 0.2);
         box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
     }
 
-    .license-card-header {
+    .license-gauge-top {
         margin-bottom: 1.25rem;
-        padding-bottom: 1.1rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .license-card-header {
+        padding-top: 1.25rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .license-card .product-name {
@@ -614,10 +713,14 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.12em;
-        color: var(--text-muted);
         margin-top: 0.35rem;
-        opacity: 0.85;
+        opacity: 0.9;
     }
+
+    .gauge-value-wrap .gauge-value-sublabel { color: var(--text-muted); }
+    .gauge-value-wrap .gauge-value.green + .gauge-value-sublabel { color: #34d399; }
+    .gauge-value-wrap .gauge-value.yellow + .gauge-value-sublabel { color: #fbbf24; }
+    .gauge-value-wrap .gauge-value.red + .gauge-value-sublabel { color: #f87171; }
 
     .gauge-value {
         display: inline-block;
@@ -633,19 +736,28 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
     }
 
+    .gauge-value.green,
+    .gauge-value.green * {
+        color: #34d399 !important;
+    }
     .gauge-value.green {
-        color: #4ade80;
-        box-shadow: 0 0 28px rgba(34, 197, 94, 0.12), 0 2px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 0 28px rgba(52, 211, 153, 0.2), 0 2px 12px rgba(0, 0, 0, 0.15);
     }
 
+    .gauge-value.yellow,
+    .gauge-value.yellow * {
+        color: #fbbf24 !important;
+    }
     .gauge-value.yellow {
-        color: #fcd34d;
-        box-shadow: 0 0 28px rgba(245, 158, 11, 0.12), 0 2px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 0 28px rgba(251, 191, 36, 0.2), 0 2px 12px rgba(0, 0, 0, 0.15);
     }
 
+    .gauge-value.red,
+    .gauge-value.red * {
+        color: #f87171 !important;
+    }
     .gauge-value.red {
-        color: #fca5a5;
-        box-shadow: 0 0 28px rgba(239, 68, 68, 0.12), 0 2px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 0 28px rgba(248, 113, 113, 0.2), 0 2px 12px rgba(0, 0, 0, 0.15);
     }
 
     .gauge-days {
@@ -795,6 +907,16 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         border-radius: var(--radius-sm);
         padding: 1rem;
         text-align: center;
+        animation: fadeInUp 0.4s ease-out backwards;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .stats-strip .stat-box:nth-child(1) { animation-delay: 0.05s; }
+    .stats-strip .stat-box:nth-child(2) { animation-delay: 0.1s; }
+    .stats-strip .stat-box:nth-child(3) { animation-delay: 0.15s; }
+    .stats-strip .stat-box:nth-child(4) { animation-delay: 0.2s; }
+    .stat-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
 
     .stat-box .label {
@@ -846,6 +968,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     .table-wrap {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     table {
@@ -927,6 +1050,12 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     /* Your team – Sales & Technical Associate */
     .associates-section {
         margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+        background: var(--surface);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--radius);
+        padding: 1.5rem;
     }
 
     .associates-section .section-title {
@@ -947,11 +1076,16 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         display: flex;
         align-items: flex-start;
         gap: 1rem;
-        transition: border-color 0.2s;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        animation: fadeInUp 0.4s ease-out backwards;
     }
+    .associates-grid .associate-card:nth-child(1) { animation-delay: 0.1s; }
+    .associates-grid .associate-card:nth-child(2) { animation-delay: 0.2s; }
 
     .associate-card:hover {
+        transform: translateY(-2px);
         border-color: rgba(99, 102, 241, 0.2);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
 
     .associate-card .icon-wrap {
@@ -1383,7 +1517,10 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         display: flex;
         flex-direction: column;
         align-items: center;
+        animation: fadeInUp 0.4s ease-out backwards;
     }
+    .charts-grid .chart-card:nth-child(1) { animation-delay: 0.1s; }
+    .charts-grid .chart-card:nth-child(2) { animation-delay: 0.2s; }
     .chart-card-title {
         font-size: 0.85rem;
         font-weight: 600;
@@ -1436,6 +1573,246 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         margin-bottom: 0.5rem;
         opacity: 0.5;
         display: block;
+    }
+
+    /* ========== Full responsive ========== */
+    @media (max-width: 1200px) {
+        .dashboard-wrap {
+            max-width: 100%;
+            padding: 1.25rem;
+        }
+        .dashboard {
+            max-width: 100%;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .dashboard-wrap {
+            flex-direction: column;
+            padding: 1rem;
+            gap: 1.25rem;
+        }
+        .dashboard-sidebar {
+            width: 100%;
+            position: static;
+            order: 1;
+        }
+        .dashboard {
+            order: 2;
+            width: 100%;
+        }
+        .licenses-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+        .associates-grid {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+    }
+
+    @media (max-width: 900px) {
+        .dashboard-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .dashboard-sidebar-title {
+            margin-top: 1rem;
+        }
+        .dashboard-sidebar-title:first-child {
+            margin-top: 0;
+        }
+        .appointment-btn-wrap {
+            margin-top: 1.25rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-wrap {
+            padding: 0.75rem;
+        }
+        .header {
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .header h1 {
+            font-size: 1.35rem;
+        }
+        .header p {
+            font-size: 0.85rem;
+        }
+        .section-title {
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+        }
+        .section-title--products {
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+        }
+        .licenses-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .license-card {
+            padding: 1.25rem;
+        }
+        .license-card .product-name {
+            font-size: 1.05rem;
+        }
+        .license-info {
+            grid-template-columns: 1fr;
+        }
+        .gauge-value {
+            font-size: 2rem;
+            padding: 0.4rem 1rem;
+        }
+        .gauge-container {
+            max-width: 200px;
+        }
+        .gauge-days .passed,
+        .gauge-days .remaining {
+            padding: 0.65rem 0.5rem;
+            font-size: 0.75rem;
+        }
+        .stats-strip {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-box {
+            padding: 0.85rem;
+        }
+        .stat-box .value {
+            font-size: 1.1rem;
+        }
+        .section-head,
+        th, td {
+            padding: 0.65rem 0.85rem;
+            font-size: 0.8rem;
+        }
+        .table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -0.75rem;
+            padding: 0 0.75rem;
+        }
+        table {
+            min-width: 400px;
+        }
+        .associates-section {
+            padding: 1.25rem;
+        }
+        .modal-container {
+            max-width: 100%;
+            margin: 0.5rem;
+            max-height: 85vh;
+        }
+        .modal-body {
+            padding: 1.25rem;
+        }
+        .modal-header {
+            padding: 1.25rem 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .dashboard-wrap {
+            padding: 0.5rem;
+        }
+        .header {
+            padding: 1.25rem 0.75rem;
+        }
+        .header h1 {
+            font-size: 1.2rem;
+        }
+        .section-title--products::after {
+            width: 40px;
+        }
+        .license-card {
+            padding: 1rem;
+        }
+        .gauge-value {
+            font-size: 1.75rem;
+        }
+        .gauge-container {
+            max-width: 180px;
+        }
+        .gauge-days {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+        .stats-strip {
+            grid-template-columns: 1fr;
+        }
+        .section-head {
+            font-size: 0.85rem;
+            padding: 0.75rem 1rem;
+        }
+        th, td {
+            padding: 0.5rem 0.65rem;
+            font-size: 0.75rem;
+        }
+        table {
+            min-width: 320px;
+        }
+        .chart-container {
+            max-width: 180px;
+            height: 180px;
+        }
+        .chart-legend {
+            gap: 0.5rem;
+        }
+        .chart-legend-item {
+            font-size: 0.7rem;
+        }
+        .appointment-form-submit-wrap {
+            flex-direction: column;
+        }
+        .appointment-form-submit,
+        .appointment-form-cancel {
+            width: 100%;
+        }
+        .appointment-btn {
+            padding: 0.85rem 1rem;
+            font-size: 0.9rem;
+        }
+        .case-form-submit {
+            width: 100%;
+        }
+        .sidebar-logo {
+            max-width: 120px;
+        }
+        .sidebar-site-name {
+            font-size: 0.85rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            font-size: 15px;
+        }
+        .header h1 {
+            font-size: 1.1rem;
+        }
+        .license-card-header {
+            padding-top: 1rem;
+        }
+        .gauge-value-wrap {
+            margin: 0.75rem 0;
+        }
+        .gauge-value {
+            font-size: 1.6rem;
+        }
+        .section-title--products {
+            font-size: 1rem;
+        }
+        .associate-card {
+            padding: 1rem;
+        }
+        .associate-card .icon-wrap {
+            width: 38px;
+            height: 38px;
+        }
     }
     </style>
 </head>
@@ -1540,43 +1917,110 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
         <div class="dashboard">
             <header class="header">
-                <div class="header-content">
-                    <span class="header-badge">Licenses &amp; Support</span>
-                    <h1>Welcome, <?= html_escape($customer_name) ?></h1>
-                    <p>Your active licenses, support status and invoices at a glance</p>
-                </div>
+                <span class="header-badge">Licenses &amp; Support</span>
+                <h1>Welcome, <?= html_escape($customer_name) ?></h1>
+                <p>Your active licenses, support status and invoices at a glance.</p>
             </header>
 
-            <section class="associates-section">
-                <h2 class="section-title"><i class="fas fa-users"></i> Your team</h2>
-                <div class="associates-grid">
-                    <div class="associate-card sales">
-                        <div class="icon-wrap"><i class="fas fa-user-tie"></i></div>
-                        <div>
-                            <div class="role">Sales Associate</div>
-                            <div class="name">
-                                <?= !empty($customer_sales_associate_name) ? html_escape($customer_sales_associate_name) : '—' ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="associate-card tech">
-                        <div class="icon-wrap"><i class="fas fa-user-cog"></i></div>
-                        <div>
-                            <div class="role">Technical Associate</div>
-                            <div class="name">
-                                <?= !empty($customer_tech_associate_name) ? html_escape($customer_tech_associate_name) : '—' ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <!-- My licenses / support (last 3 products with feature=1, support duration progress) -->
-            <h2 class="section-title"><i class="fas fa-shield-alt"></i> My active Products,licenses &amp; support</h2>
+            <h2 class="section-title section-title--products"><i class="fas fa-shield-alt"></i> <span class="section-title-text">My active Products, licenses &amp; support</span></h2>
             <?php if (!empty($dashboard_products)): ?>
             <div class="licenses-grid">
                 <?php foreach ($dashboard_products as $lic): ?>
                 <div class="license-card">
+                    <?php /* 1. GAUGE / STATUS FIRST */ ?>
+                    <?php if ($lic->status_class === 'no-expiry'): ?>
+                    <div class="license-gauge-top">
+                        <div class="progress-wrap">
+                            <div class="progress-label-row">
+                                <span class="label">Support status</span>
+                                <span class="pct no-expiry">Active</span>
+                            </div>
+                            <div class="progress-bar-outer">
+                                <div class="progress-bar-inner no-expiry" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="license-status no-expiry">No expiry set</div>
+                    </div>
+                    <?php elseif ($lic->status_class === 'expired'): ?>
+                    <div class="license-gauge-top">
+                        <div class="progress-wrap">
+                            <div class="progress-label-row">
+                                <span class="label">Support status</span>
+                                <span class="pct expired">Expired</span>
+                            </div>
+                            <div class="progress-bar-outer">
+                                <div class="progress-bar-inner expired" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="license-status expired">Expired <?= (int)abs($lic->remaining_days) ?> days ago</div>
+                    </div>
+                    <?php else:
+                    $passed_days = max(0, (int)$lic->support_duration - (int)$lic->remaining_days);
+                    $display_pct = min(100, max(0, (float)$lic->percent_remaining));
+                    $passed_pct = 100 - $display_pct;
+                    $needle_angle = ($passed_pct / 100) * 180 - 90;
+                    ?>
+                    <div class="license-gauge-top">
+                        <div class="gauge-wrap">
+                            <div class="gauge-title"><?= html_escape($lic->product_name) ?></div>
+                            <div class="gauge-container">
+                                <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="gaugeGrad-<?= $lic->sale_id ?>" x1="0%" y1="0%" x2="100%"
+                                            y2="0%">
+                                            <stop offset="0%" stop-color="#22c55e" />
+                                            <stop offset="35%" stop-color="#eab308" />
+                                            <stop offset="65%" stop-color="#f97316" />
+                                            <stop offset="100%" stop-color="#ef4444" />
+                                        </linearGradient>
+                                        <filter id="gaugeShadow-<?= $lic->sale_id ?>" x="-20%" y="-20%" width="140%"
+                                            height="140%">
+                                            <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000"
+                                                flood-opacity="0.25" />
+                                        </filter>
+                                    </defs>
+                                    <path d="M 35 95 A 65 65 0 0 1 165 95" fill="none" stroke="#1e293b" stroke-width="16"
+                                        stroke-linecap="round" />
+                                    <path d="M 35 95 A 65 65 0 0 1 165 95" fill="none"
+                                        stroke="url(#gaugeGrad-<?= $lic->sale_id ?>)" stroke-width="11"
+                                        stroke-linecap="round" filter="url(#gaugeShadow-<?= $lic->sale_id ?>)" />
+                                    <circle cx="100" cy="98" r="4" fill="#fff" stroke="rgba(0,0,0,0.15)"
+                                        stroke-width="0.5" />
+                                    <g class="gauge-needle" transform="rotate(<?= $needle_angle ?> 100 98)">
+                                        <line x1="100" y1="98" x2="100" y2="34" stroke="#fff" stroke-width="1.8"
+                                            stroke-linecap="round" />
+                                        <circle cx="100" cy="34" r="2.5" fill="#fff" />
+                                    </g>
+                                    <text x="36" y="111" fill="rgba(255,255,255,0.65)" font-size="9"
+                                        font-weight="600">0%</text>
+                                    <text x="164" y="111" fill="rgba(255,255,255,0.65)" font-size="9" font-weight="600"
+                                        text-anchor="end">100%</text>
+                                </svg>
+                            </div>
+                            <div class="gauge-value-wrap">
+                                <div class="gauge-value <?= $lic->status_class ?>"><?= number_format($display_pct, 1) ?>%
+                                </div>
+                                <div class="gauge-value-sublabel">remaining</div>
+                            </div>
+                            <div class="gauge-days">
+                                <span class="passed"><i class="fas fa-clock"></i> <?= $passed_days ?>
+                                    day<?= $passed_days != 1 ? 's' : '' ?> passed</span>
+                                <span class="remaining"><i class="fas fa-hourglass-half"></i>
+                                    <?= (int)$lic->remaining_days ?> day<?= (int)$lic->remaining_days != 1 ? 's' : '' ?>
+                                    remaining</span>
+                            </div>
+                            <?php if (!empty($lic->end_date)): ?>
+                            <div class="gauge-expires-wrap">
+                                <div class="gauge-expires">Expires <?= date($date_format, strtotime($lic->end_date)) ?>
+                                </div>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php /* 2. PRODUCT DETAIL SECTION */ ?>
                     <div class="license-card-header">
                         <div class="product-name">
                             <span class="license-badge"><i class="fas fa-id-card"></i> </span>
@@ -1607,105 +2051,16 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                             </div>
                             <?php endif; ?>
                         </div>
-                    </div>
-                    <?php if ($lic->status_class === 'no-expiry'): ?>
-                    <div class="progress-wrap">
-                        <div class="progress-label-row">
-                            <span class="label">Support status</span>
-                            <span class="pct no-expiry">Active</span>
-                        </div>
-                        <div class="progress-bar-outer">
-                            <div class="progress-bar-inner no-expiry" style="width: 100%;"></div>
-                        </div>
-                    </div>
-                    <div class="license-status no-expiry">No expiry set</div>
-                    <?php elseif ($lic->status_class === 'expired'): ?>
-                    <div class="progress-wrap">
-                        <div class="progress-label-row">
-                            <span class="label">Support status</span>
-                            <span class="pct expired">Expired</span>
-                        </div>
-                        <div class="progress-bar-outer">
-                            <div class="progress-bar-inner expired" style="width: 100%;"></div>
-                        </div>
-                    </div>
-                    <div class="license-status expired">Expired <?= (int)abs($lic->remaining_days) ?> days ago</div>
-                    <?php if ($lic->end_date): ?>
-                    <div class="license-info-item license-info-item-inline" style="margin-top: 0.5rem;">
-                        <div class="icon-wrap support"><i class="fas fa-calendar-alt"></i></div>
-                        <div class="content">
-                            <div class="label">End date</div>
-                            <div class="val"><?= date($date_format, strtotime($lic->end_date)) ?></div>
-                        </div>
-                    </div>
-                    <?php endif; ?>
-                    <?php else:
-                    $passed_days = max(0, (int)$lic->support_duration - (int)$lic->remaining_days);
-                    $display_pct = min(100, max(0, (float)$lic->percent_remaining));
-                    $passed_pct = 100 - $display_pct;
-                    $needle_angle = ($passed_pct / 100) * 180 - 90;
-                ?>
-                    <div class="gauge-wrap">
-                        <div class="gauge-title"><?= html_escape($lic->product_name) ?></div>
-                        <div class="gauge-container">
-                            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <linearGradient id="gaugeGrad-<?= $lic->sale_id ?>" x1="0%" y1="0%" x2="100%"
-                                        y2="0%">
-                                        <stop offset="0%" stop-color="#22c55e" />
-                                        <stop offset="35%" stop-color="#eab308" />
-                                        <stop offset="65%" stop-color="#f97316" />
-                                        <stop offset="100%" stop-color="#ef4444" />
-                                    </linearGradient>
-                                    <filter id="gaugeShadow-<?= $lic->sale_id ?>" x="-20%" y="-20%" width="140%"
-                                        height="140%">
-                                        <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000"
-                                            flood-opacity="0.25" />
-                                    </filter>
-                                </defs>
-                                <!-- Background arc (dark track) -->
-                                <path d="M 35 95 A 65 65 0 0 1 165 95" fill="none" stroke="#1e293b" stroke-width="16"
-                                    stroke-linecap="round" />
-                                <!-- Colored arc (red → orange → yellow → green) -->
-                                <path d="M 35 95 A 65 65 0 0 1 165 95" fill="none"
-                                    stroke="url(#gaugeGrad-<?= $lic->sale_id ?>)" stroke-width="11"
-                                    stroke-linecap="round" filter="url(#gaugeShadow-<?= $lic->sale_id ?>)" />
-                                <!-- Pivot: small solid white dot slightly below the arc base -->
-                                <circle cx="100" cy="98" r="4" fill="#fff" stroke="rgba(0,0,0,0.15)"
-                                    stroke-width="0.5" />
-                                <!-- Needle: tip ends at outer edge of arc (does not cross past gauge) -->
-                                <g class="gauge-needle" transform="rotate(<?= $needle_angle ?> 100 98)">
-                                    <line x1="100" y1="98" x2="100" y2="34" stroke="#fff" stroke-width="1.8"
-                                        stroke-linecap="round" />
-                                    <circle cx="100" cy="34" r="2.5" fill="#fff" />
-                                </g>
-                                <!-- Arc labels: left = 0% Remaining, right = 100% Passed -->
-                                <text x="36" y="111" fill="rgba(255,255,255,0.65)" font-size="9"
-                                    font-weight="600">0%</text>
-                                <text x="164" y="111" fill="rgba(255,255,255,0.65)" font-size="9" font-weight="600"
-                                    text-anchor="end">100%</text>
-                            </svg>
-                        </div>
-                        <div class="gauge-value-wrap">
-                            <div class="gauge-value <?= $lic->status_class ?>"><?= number_format($display_pct, 1) ?>%
-                            </div>
-                            <div class="gauge-value-sublabel">remaining</div>
-                        </div>
-                        <div class="gauge-days">
-                            <span class="passed"><i class="fas fa-clock"></i> <?= $passed_days ?>
-                                day<?= $passed_days != 1 ? 's' : '' ?> passed</span>
-                            <span class="remaining"><i class="fas fa-hourglass-half"></i>
-                                <?= (int)$lic->remaining_days ?> day<?= (int)$lic->remaining_days != 1 ? 's' : '' ?>
-                                remaining</span>
-                        </div>
-                        <?php if (!empty($lic->end_date)): ?>
-                        <div class="gauge-expires-wrap">
-                            <div class="gauge-expires">Expires <?= date($date_format, strtotime($lic->end_date)) ?>
+                        <?php if ($lic->status_class === 'expired' && !empty($lic->end_date)): ?>
+                        <div class="license-info-item license-info-item-inline" style="margin-top: 0.5rem;">
+                            <div class="icon-wrap support"><i class="fas fa-calendar-alt"></i></div>
+                            <div class="content">
+                                <div class="label">End date</div>
+                                <div class="val"><?= date($date_format, strtotime($lic->end_date)) ?></div>
                             </div>
                         </div>
                         <?php endif; ?>
                     </div>
-                    <?php endif; ?>
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -1716,6 +2071,31 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                 dashboard” will appear here with support remaining.
             </div>
             <?php endif; ?>
+
+            <!-- Your team section -->
+            <section class="associates-section">
+                <h2 class="section-title"><i class="fas fa-users"></i> Your team</h2>
+                <div class="associates-grid">
+                    <div class="associate-card sales">
+                        <div class="icon-wrap"><i class="fas fa-user-tie"></i></div>
+                        <div>
+                            <div class="role">Sales Associate</div>
+                            <div class="name">
+                                <?= !empty($customer_sales_associate_name) ? html_escape($customer_sales_associate_name) : '—' ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="associate-card tech">
+                        <div class="icon-wrap"><i class="fas fa-user-cog"></i></div>
+                        <div>
+                            <div class="role">Technical Associate</div>
+                            <div class="name">
+                                <?= !empty($customer_tech_associate_name) ? html_escape($customer_tech_associate_name) : '—' ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <!-- Summary stats -->
             <h2 class="section-title"><i class="fas fa-chart-pie"></i> Overview</h2>

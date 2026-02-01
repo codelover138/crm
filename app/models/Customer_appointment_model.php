@@ -178,4 +178,64 @@ class Customer_appointment_model extends CI_Model {
             120 => '2 hours',
         );
     }
+
+    /**
+     * Get a single appointment by ID (for admin).
+     */
+    public function getById($id) {
+        $q = $this->db->get_where(self::TABLE, array('id' => (int) $id), 1);
+        return $q->num_rows() > 0 ? $q->row() : null;
+    }
+
+    /**
+     * Get all appointments for admin list (with customer name).
+     */
+    public function getAllForAdmin() {
+        $this->db->select(self::TABLE . '.id, ' . self::TABLE . '.appointment_code, ' . self::TABLE . '.appointment_type, ' . self::TABLE . '.subject, ' . self::TABLE . '.preferred_date, ' . self::TABLE . '.preferred_time, ' . self::TABLE . '.duration_minutes, ' . self::TABLE . '.status, ' . self::TABLE . '.created_at, ' . self::TABLE . '.customer_id, companies.name as customer_name, companies.email as customer_email')
+            ->from(self::TABLE)
+            ->join('companies', 'companies.id = ' . self::TABLE . '.customer_id', 'left')
+            ->order_by(self::TABLE . '.preferred_date', 'DESC')
+            ->order_by(self::TABLE . '.created_at', 'DESC');
+        $q = $this->db->get();
+        return $q->num_rows() > 0 ? $q->result() : array();
+    }
+
+    /**
+     * Update an appointment (admin).
+     */
+    public function update($id, $data) {
+        $allowed = array('appointment_type', 'subject', 'description', 'preferred_date', 'preferred_time', 'duration_minutes', 'status', 'confirmed_date', 'confirmed_time');
+        $update = array();
+        foreach ($allowed as $key) {
+            if (array_key_exists($key, $data)) {
+                $update[$key] = is_string($data[$key]) ? trim($data[$key]) : $data[$key];
+            }
+        }
+        if (empty($update)) {
+            return false;
+        }
+        $this->db->where('id', (int) $id);
+        return $this->db->update(self::TABLE, $update);
+    }
+
+    /**
+     * Delete an appointment (admin).
+     */
+    public function delete($id) {
+        $this->db->where('id', (int) $id);
+        return $this->db->delete(self::TABLE);
+    }
+
+    /**
+     * Get status options for dropdown.
+     */
+    public function getStatusOptions() {
+        return array(
+            'pending'    => 'Pending',
+            'confirmed'  => 'Confirmed',
+            'rescheduled'=> 'Rescheduled',
+            'completed'  => 'Completed',
+            'cancelled'  => 'Cancelled',
+        );
+    }
 }

@@ -30,7 +30,7 @@
                                 <td><?= $this->sma->hrld($payment->date); ?></td>
                                 <td><?= $payment->reference_no; ?></td>
                                 <td><?= $this->sma->formatMoney($payment->amount) . ' ' . (($payment->attachment) ? '<a href="' . admin_url('welcome/download/' . $payment->attachment) . '"><i class="fa fa-chain"></i></a>' : ''); ?></td>
-                                <td><?= lang($payment->paid_by); ?></td>
+                                <td><?= $this->sma->get_paid_by_label($payment->paid_by); ?></td>
                                 <td>
                                     <div class="text-center">
                                         <a href="<?= admin_url('sales/payment_note/' . $payment->id) ?>"

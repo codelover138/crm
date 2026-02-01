@@ -85,15 +85,6 @@
                 $('.pcc_1').hide();
                 $('.pcash_1').hide();
             }
-            if (p_val == 'gift_card') {
-                $('.gc').show();
-                $('.ngc').hide();
-                $('#gift_card_no').focus();
-            } else {
-                $('.ngc').show();
-                $('.gc').hide();
-                $('#gc_details').html('');
-            }
         });
         /* ------------------------------
          * Sell Gift Card modal
@@ -646,23 +637,6 @@
                                                 <input name="cheque_no" type="text" id="cheque_no_1"
                                                        class="form-control cheque_no"/>
                                             </div>
-                                        </div>
-                                        <div class="gc" style="display: none;">
-                                            <div class="form-group">
-                                                <?= lang("gift_card_no", "gift_card_no"); ?>
-                                                <div class="input-group">
-
-                                                    <input name="gift_card_no" type="text" id="gift_card_no"
-                                                           class="pa form-control kb-pad"/>
-
-                                                    <div class="input-group-addon"
-                                                         style="padding-left: 10px; padding-right: 10px; height:25px;">
-                                                        <a href="#" id="sellGiftCard" class="tip"
-                                                           title="<?= lang('sell_gift_card') ?>"><i
-                                                                class="fa fa-credit-card"></i></a></div>
-                                                </div>
-                                            </div>
-                                            <div id="gc_details"></div>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>

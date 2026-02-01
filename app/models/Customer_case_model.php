@@ -84,4 +84,61 @@ class Customer_case_model extends CI_Model {
         $count = $this->db->count_all_results();
         return $count + 1;
     }
+
+    /**
+     * Get a single case by ID (for admin).
+     */
+    public function getById($id) {
+        $q = $this->db->get_where(self::TABLE, array('id' => (int) $id), 1);
+        return $q->num_rows() > 0 ? $q->row() : null;
+    }
+
+    /**
+     * Get all cases for admin list (with customer name).
+     */
+    public function getAllForAdmin() {
+        $this->db->select(self::TABLE . '.id, ' . self::TABLE . '.case_code, ' . self::TABLE . '.details, ' . self::TABLE . '.status, ' . self::TABLE . '.created_at, ' . self::TABLE . '.customer_id, companies.name as customer_name, companies.email as customer_email')
+            ->from(self::TABLE)
+            ->join('companies', 'companies.id = ' . self::TABLE . '.customer_id', 'left')
+            ->order_by(self::TABLE . '.created_at', 'DESC');
+        $q = $this->db->get();
+        return $q->num_rows() > 0 ? $q->result() : array();
+    }
+
+    /**
+     * Update a case (admin).
+     */
+    public function update($id, $data) {
+        $allowed = array('details', 'status');
+        $update = array();
+        foreach ($allowed as $key) {
+            if (isset($data[$key])) {
+                $update[$key] = $key === 'details' ? trim($data[$key]) : $data[$key];
+            }
+        }
+        if (empty($update)) {
+            return false;
+        }
+        $this->db->where('id', (int) $id);
+        return $this->db->update(self::TABLE, $update);
+    }
+
+    /**
+     * Delete a case (admin).
+     */
+    public function delete($id) {
+        $this->db->where('id', (int) $id);
+        return $this->db->delete(self::TABLE);
+    }
+
+    /**
+     * Get status options for dropdown.
+     */
+    public function getStatusOptions() {
+        return array(
+            'open'       => 'Open',
+            'in_progress'=> 'In Progress',
+            'closed'     => 'Closed',
+        );
+    }
 }

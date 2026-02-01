@@ -320,7 +320,13 @@ class Sales_model extends CI_Model
                 $this->db->update('sales', array('return_sale_ref' => $data['return_sale_ref'], 'surcharge' => $data['surcharge'],'return_sale_total' => $data['grand_total'], 'return_id' => $sale_id), array('id' => $data['sale_id']));
             }
 
-            if ($data['payment_status'] == 'partial' || $data['payment_status'] == 'paid' && !empty($payment)) {
+            // Debug: Log payment condition check
+            log_message('debug', 'Sales Model - Payment Status: ' . $data['payment_status']);
+            log_message('debug', 'Sales Model - Payment Empty Check: ' . (empty($payment) ? 'EMPTY' : 'NOT EMPTY'));
+            log_message('debug', 'Sales Model - Payment Array: ' . print_r($payment, true));
+            
+            if (($data['payment_status'] == 'partial' || $data['payment_status'] == 'paid') && !empty($payment)) {
+                log_message('debug', 'Sales Model - ENTERED payment block, inserting payment...');
                 if (empty($payment['reference_no'])) {
                     $payment['reference_no'] = $this->site->getReference('pay');
                 }
@@ -334,12 +340,18 @@ class Sales_model extends CI_Model
                         $customer = $this->site->getCompanyByID($data['customer_id']);
                         $this->db->update('companies', array('deposit_amount' => ($customer->deposit_amount-$payment['amount'])), array('id' => $customer->id));
                     }
-                    $this->db->insert('payments', $payment);
+                    $insert_result = $this->db->insert('payments', $payment);
+                    log_message('debug', 'Sales Model - Payment Insert Result: ' . ($insert_result ? 'SUCCESS' : 'FAILED'));
+                    if (!$insert_result) {
+                        log_message('error', 'Sales Model - Payment Insert Error: ' . $this->db->error()['message']);
+                    }
                 }
                 if ($this->site->getReference('pay') == $payment['reference_no']) {
                     $this->site->updateReference('pay');
                 }
                 $this->site->syncSalePayments($sale_id);
+            } else {
+                log_message('debug', 'Sales Model - DID NOT enter payment block. Condition failed.');
             }
 
             $this->site->syncQuantity($sale_id);

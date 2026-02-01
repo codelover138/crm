@@ -150,7 +150,7 @@
         $(document).on('change', '.paid_by', function () {
             var p_val = $(this).val();
             localStorage.setItem('paid_by', p_val);
-            if (p_val == 'cash') {
+            if (p_val == 'cash' || p_val == 'other' || p_val == 'paypal') {
                 $('.pcheque_1').hide();
                 $('.pcc_1').hide();
                 $('.pcash_1').show();
@@ -171,7 +171,7 @@
                 $('.pcash_1').hide();
             }
         });
-        var p_val = '<?=$payment->paid_by?>';
+        var p_val = '<?= $payment->paid_by == 'gift_card' ? 'cash' : $payment->paid_by ?>';
         localStorage.setItem('paid_by', p_val);
         if (p_val == 'cash') {
             $('.pcheque_1').hide();
@@ -211,6 +211,6 @@
 
             $('#pcc_type_1').select2("val", CardType);
         });
-        $('#paid_by_1').select2("val", '<?=$payment->paid_by?>');
+        $('#paid_by_1').select2("val", '<?= ($payment->paid_by == "other") ? "paypal" : (($payment->paid_by == "gift_card") ? "cash" : $payment->paid_by) ?>');
     });
 </script>

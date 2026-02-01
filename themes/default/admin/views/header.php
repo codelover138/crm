@@ -509,6 +509,48 @@
                                                     <?= lang('notifications'); ?></span>
                                             </a>
                                         </li>
+                                        <li class="mm_appointments">
+                                            <a class="dropmenu" href="#">
+                                                <i class="fa fa-calendar-check-o"></i>
+                                                <span class="text"> <?= lang('appointments'); ?> </span>
+                                                <span class="chevron closed"></span>
+                                            </a>
+                                            <ul>
+                                                <li id="appointments_index">
+                                                    <a class="submenu" href="<?= admin_url('appointments'); ?>">
+                                                        <i class="fa fa-list"></i>
+                                                        <span class="text"> <?= lang('list_appointments'); ?></span>
+                                                    </a>
+                                                </li>
+                                                <li id="appointments_add">
+                                                    <a class="submenu" href="<?= admin_url('appointments/add'); ?>">
+                                                        <i class="fa fa-plus-circle"></i>
+                                                        <span class="text"> <?= lang('add_appointment'); ?></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="mm_cases">
+                                            <a class="dropmenu" href="#">
+                                                <i class="fa fa-folder-open"></i>
+                                                <span class="text"> <?= lang('cases'); ?> </span>
+                                                <span class="chevron closed"></span>
+                                            </a>
+                                            <ul>
+                                                <li id="cases_index">
+                                                    <a class="submenu" href="<?= admin_url('cases'); ?>">
+                                                        <i class="fa fa-list"></i>
+                                                        <span class="text"> <?= lang('list_cases'); ?></span>
+                                                    </a>
+                                                </li>
+                                                <li id="cases_add">
+                                                    <a class="submenu" href="<?= admin_url('cases/add'); ?>">
+                                                        <i class="fa fa-plus-circle"></i>
+                                                        <span class="text"> <?= lang('add_case'); ?></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
                                         <li class="mm_document">
                                             <a class="dropmenu" href="#">
                                                 <i class="fa fa-list-alt"></i>
@@ -927,6 +969,56 @@
                                                         data-toggle="modal" data-target="#myModal">
                                                         <i class="fa fa-plus-circle"></i><span class="text">
                                                             <?= lang('add_customer'); ?></span>
+                                                    </a>
+                                                </li>
+                                                <?php } ?>
+                                            </ul>
+                                        </li>
+                                        <?php } ?>
+                                        <?php if (!empty($GP['appointments-index']) || !empty($GP['appointments-add'])) { ?>
+                                        <li class="mm_appointments">
+                                            <a class="dropmenu" href="#">
+                                                <i class="fa fa-calendar-check-o"></i>
+                                                <span class="text"> <?= lang('appointments'); ?> </span>
+                                                <span class="chevron closed"></span>
+                                            </a>
+                                            <ul>
+                                                <?php if (!empty($GP['appointments-index'])) { ?>
+                                                <li id="appointments_index">
+                                                    <a class="submenu" href="<?= admin_url('appointments'); ?>">
+                                                        <i class="fa fa-list"></i><span class="text"> <?= lang('list_appointments'); ?></span>
+                                                    </a>
+                                                </li>
+                                                <?php } ?>
+                                                <?php if (!empty($GP['appointments-add'])) { ?>
+                                                <li id="appointments_add">
+                                                    <a class="submenu" href="<?= admin_url('appointments/add'); ?>">
+                                                        <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_appointment'); ?></span>
+                                                    </a>
+                                                </li>
+                                                <?php } ?>
+                                            </ul>
+                                        </li>
+                                        <?php } ?>
+                                        <?php if (!empty($GP['cases-index']) || !empty($GP['cases-add'])) { ?>
+                                        <li class="mm_cases">
+                                            <a class="dropmenu" href="#">
+                                                <i class="fa fa-folder-open"></i>
+                                                <span class="text"> <?= lang('cases'); ?> </span>
+                                                <span class="chevron closed"></span>
+                                            </a>
+                                            <ul>
+                                                <?php if (!empty($GP['cases-index'])) { ?>
+                                                <li id="cases_index">
+                                                    <a class="submenu" href="<?= admin_url('cases'); ?>">
+                                                        <i class="fa fa-list"></i><span class="text"> <?= lang('list_cases'); ?></span>
+                                                    </a>
+                                                </li>
+                                                <?php } ?>
+                                                <?php if (!empty($GP['cases-add'])) { ?>
+                                                <li id="cases_add">
+                                                    <a class="submenu" href="<?= admin_url('cases/add'); ?>">
+                                                        <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_case'); ?></span>
                                                     </a>
                                                 </li>
                                                 <?php } ?>

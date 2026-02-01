@@ -108,33 +108,6 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on('change', '#gift_card_no', function() {
-        var cn = $(this).val() ? $(this).val() : '';
-        if (cn != '') {
-            $.ajax({
-                type: "get",
-                async: false,
-                url: site.base_url + "sales/validate_gift_card/" + cn,
-                dataType: "json",
-                success: function(data) {
-                    if (data === false) {
-                        $('#gift_card_no').parent('.form-group').addClass('has-error');
-                        bootbox.alert('<?=lang('incorrect_gift_card')?>');
-                    } else if (data.customer_id !== null && data.customer_id !== $(
-                            '#slcustomer').val()) {
-                        $('#gift_card_no').parent('.form-group').addClass('has-error');
-                        bootbox.alert('<?=lang('gift_card_not_for_customer')?>');
-
-                    } else {
-                        $('#gc_details').html('<small>Card No: ' + data.card_no +
-                            '<br>Value: ' + data.value + ' - Balance: ' + data.balance +
-                            '</small>');
-                        $('#gift_card_no').parent('.form-group').removeClass('has-error');
-                    }
-                }
-            });
-        }
-    });
 });
 </script>
 
@@ -403,17 +376,10 @@ $(document).ready(function() {
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="payment">
-                                                    <div class="form-group ngc">
+                                                    <div class="form-group">
                                                         <?= lang("amount", "amount_1"); ?>
                                                         <input name="amount-paid" type="text" id="amount_1"
                                                             class="pa form-control kb-pad amount" />
-                                                    </div>
-                                                    <div class="form-group gc" style="display: none;">
-                                                        <?= lang("gift_card_no", "gift_card_no"); ?>
-                                                        <input name="gift_card_no" type="text" id="gift_card_no"
-                                                            class="pa form-control kb-pad" />
-
-                                                        <div id="gc_details"></div>
                                                     </div>
                                                 </div>
                                             </div>

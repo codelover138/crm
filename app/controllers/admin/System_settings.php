@@ -810,6 +810,14 @@ class system_settings extends MY_Controller
                 'document-upload' => $this->input->post('document-upload'),
                 'document-file_delete' => $this->input->post('document-file_delete'),
                 'document-folder_create' => $this->input->post('document-folder_create'),
+                'appointments-index' => $this->input->post('appointments-index'),
+                'appointments-add' => $this->input->post('appointments-add'),
+                'appointments-edit' => $this->input->post('appointments-edit'),
+                'appointments-delete' => $this->input->post('appointments-delete'),
+                'cases-index' => $this->input->post('cases-index'),
+                'cases-add' => $this->input->post('cases-add'),
+                'cases-edit' => $this->input->post('cases-edit'),
+                'cases-delete' => $this->input->post('cases-delete'),
             );
 
             if (POS) {

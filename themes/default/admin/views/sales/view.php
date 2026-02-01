@@ -540,7 +540,7 @@
                                         <tr <?= $payment->type == 'returned' ? 'class="warning"' : ''; ?>>
                                             <td><?= $this->sma->hrld($payment->date) ?></td>
                                             <td><?= $payment->reference_no; ?></td>
-                                            <td><?= lang($payment->paid_by);
+                                            <td><?= $this->sma->get_paid_by_label($payment->paid_by);
                                                 if ($payment->paid_by == 'gift_card' || $payment->paid_by == 'CC') {
                                                     echo ' (' . $payment->cc_no . ')';
                                                 } elseif ($payment->paid_by == 'Cheque') {

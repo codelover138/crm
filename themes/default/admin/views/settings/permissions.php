@@ -167,6 +167,38 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td><?= lang("appointments"); ?></td>
+                                    <td class="text-center">
+                                        <input type="checkbox" value="1" class="checkbox" name="appointments-index" <?php echo !empty($p->{'appointments-index'}) ? "checked" : ''; ?>>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="checkbox" value="1" class="checkbox" name="appointments-add" <?php echo !empty($p->{'appointments-add'}) ? "checked" : ''; ?>>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="checkbox" value="1" class="checkbox" name="appointments-edit" <?php echo !empty($p->{'appointments-edit'}) ? "checked" : ''; ?>>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="checkbox" value="1" class="checkbox" name="appointments-delete" <?php echo !empty($p->{'appointments-delete'}) ? "checked" : ''; ?>>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><?= lang("cases"); ?></td>
+                                    <td class="text-center">
+                                        <input type="checkbox" value="1" class="checkbox" name="cases-index" <?php echo !empty($p->{'cases-index'}) ? "checked" : ''; ?>>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="checkbox" value="1" class="checkbox" name="cases-add" <?php echo !empty($p->{'cases-add'}) ? "checked" : ''; ?>>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="checkbox" value="1" class="checkbox" name="cases-edit" <?php echo !empty($p->{'cases-edit'}) ? "checked" : ''; ?>>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="checkbox" value="1" class="checkbox" name="cases-delete" <?php echo !empty($p->{'cases-delete'}) ? "checked" : ''; ?>>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
                                     <td><?= lang("File_Manager"); ?></td>
                                     <td class="text-center">
                                         <input type="checkbox" value="1" id="document-file_manager" class="checkbox" name="document-file_manager" <?php echo $p->{'document-file_manager'} ? "checked" : ''; ?>>
