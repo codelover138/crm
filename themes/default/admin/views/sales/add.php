@@ -206,6 +206,45 @@ $(document).ready(function() {
             }
         }
     });
+
+    $('#slpayment_status').change(function() {
+        var ps = $(this).val();
+        if (ps === 'partial' || ps === 'paid') {
+            $('#payments').slideDown();
+            if (ps === 'paid' && typeof gtotal !== 'undefined') {
+                $('#amount_1').val(formatDecimal(gtotal));
+            } else if (ps === 'paid' && $('#gtotal').length) {
+                var gt = parseFloat($('#gtotal').text().replace(/[^0-9.-]/g, '')) || 0;
+                $('#amount_1').val(formatDecimal(gt));
+            }
+            renderPaidBySection();
+        } else {
+            $('#payments').slideUp();
+        }
+    });
+    var psInit = $('#slpayment_status').val();
+    if (psInit === 'partial' || psInit === 'paid') {
+        $('#payments').show();
+        renderPaidBySection();
+    }
+
+    function renderPaidBySection() {
+        var p_val = $('#paid_by_1').val();
+        $('.pcc_1').hide();
+        $('.pcheque_1').hide();
+        if (p_val === 'CC') {
+            $('.pcc_1').show();
+            $('#pcc_no_1').focus();
+        } else if (p_val === 'Cheque') {
+            $('.pcheque_1').show();
+            $('#cheque_no_1').focus();
+        } else {
+            $('#payment_note_1').focus();
+        }
+    }
+    $('#paid_by_1').change(function() {
+        renderPaidBySection();
+    });
 });
 </script>
 
@@ -356,11 +395,9 @@ $(document).ready(function() {
                                                 echo '<th class="col-md-1">' . lang("discount") . '</th>';
                                             }
                                             ?>
-                                                <?php
-                                            <?php if (false && $Settings->tax1) {
+                                                <?php if (false && $Settings->tax1) {
                                                 echo '<th class="col-md-1">' . lang("product_tax") . '</th>';
                                             } ?>
-                                            ?>
                                                 <th>
                                                     <?= lang("subtotal"); ?>
                                                     (<span class="currency"><?= $default_currency->code ?></span>)
@@ -377,6 +414,9 @@ $(document).ready(function() {
                                 </div>
                             </div>
                         </div>
+
+                        <div class="clearfix"></div>
+
 
                         <?php
                         // Hidden fields for removed form fields (needed for backend compatibility)
@@ -440,7 +480,104 @@ $(document).ready(function() {
                         <?php }?>
 
                         <div class="clearfix"></div>
-                        <?php echo form_hidden('payment_status', 'pending'); ?>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="slpayment_status"><?= lang("payment_status"); ?> *</label>
+                                <?php
+                                $pst = array('pending' => lang('pending'), 'due' => lang('due'), 'partial' => lang('partial'), 'paid' => lang('paid'));
+                                echo form_dropdown('payment_status', $pst, isset($_POST['payment_status']) ? $_POST['payment_status'] : 'pending', 'class="form-control input-tip" required="required" id="slpayment_status"');
+                                ?>
+                            </div>
+                        </div>
+
+                        <div id="payments" class="col-md-12" style="display: none;">
+                            <div class="well well-sm">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label
+                                                for="payment_reference_no"><?= lang("payment_reference_no"); ?></label>
+                                            <?= form_input('payment_reference_no', isset($_POST['payment_reference_no']) ? $_POST['payment_reference_no'] : (isset($payment_ref) ? $payment_ref : ''), 'class="form-control" id="payment_reference_no"'); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="amount_1"><?= lang("amount"); ?></label>
+                                            <input name="amount-paid" type="text" id="amount_1"
+                                                class="form-control kb-pad amount" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="paid_by_1"><?= lang("paying_by", "paid_by_1"); ?></label>
+                                            <select name="paid_by" id="paid_by_1" class="form-control paid_by">
+                                                <?= $this->sma->paid_opts(isset($_POST['paid_by']) ? $_POST['paid_by'] : null, false, true); ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="pcc_1" style="display:none;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input name="pcc_no" type="text" id="pcc_no_1" class="form-control"
+                                                    placeholder="<?= lang('cc_no'); ?>" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input name="pcc_holder" type="text" id="pcc_holder_1"
+                                                    class="form-control" placeholder="<?= lang('cc_holder'); ?>" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select name="pcc_type" id="pcc_type_1" class="form-control">
+                                                    <option value="Visa"><?= lang('Visa'); ?></option>
+                                                    <option value="MasterCard"><?= lang('MasterCard'); ?></option>
+                                                    <option value="Amex"><?= lang('Amex'); ?></option>
+                                                    <option value="Discover"><?= lang('Discover'); ?></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input name="pcc_month" type="text" id="pcc_month_1"
+                                                    class="form-control" placeholder="<?= lang('month'); ?>" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input name="pcc_year" type="text" id="pcc_year_1" class="form-control"
+                                                    placeholder="<?= lang('year'); ?>" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input name="pcc_ccv" type="text" id="pcc_cvv2_1" class="form-control"
+                                                    placeholder="<?= lang('cvv2'); ?>" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pcheque_1" style="display:none;">
+                                    <div class="form-group">
+                                        <label for="cheque_no_1"><?= lang('cheque_no'); ?></label>
+                                        <input name="cheque_no" type="text" id="cheque_no_1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="payment_note_1"><?= lang('payment_note'); ?></label>
+                                            <textarea name="payment_note" id="payment_note_1" class="form-control"
+                                                rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <input type="hidden" name="total_items" value="" id="total_items" required="required" />
                         <div class="col-md-12">

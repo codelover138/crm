@@ -319,14 +319,6 @@
                                                         <span class="text"> <?= lang('add_sale'); ?></span>
                                                     </a>
                                                 </li>
-
-
-                                                <li id="sales_gift_cards">
-                                                    <a class="submenu" href="<?= admin_url('sales/gift_cards'); ?>">
-                                                        <i class="fa fa-gift"></i>
-                                                        <span class="text"> <?= lang('list_gift_cards'); ?></span>
-                                                    </a>
-                                                </li>
                                             </ul>
                                         </li>
 
@@ -726,14 +718,6 @@
                                                     <a class="submenu" href="<?= admin_url('sales/add'); ?>">
                                                         <i class="fa fa-plus-circle"></i><span class="text">
                                                             <?= lang('add_sale'); ?></span>
-                                                    </a>
-                                                </li>
-                                                <?php }
-                                   if ($GP['sales-gift_cards']) { ?>
-                                                <li id="sales_gift_cards">
-                                                    <a class="submenu" href="<?= admin_url('sales/gift_cards'); ?>">
-                                                        <i class="fa fa-gift"></i><span class="text">
-                                                            <?= lang('gift_cards'); ?></span>
                                                     </a>
                                                 </li>
                                                 <?php } ?>
