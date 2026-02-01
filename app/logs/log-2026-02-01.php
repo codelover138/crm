@@ -1668,3 +1668,32 @@ DEBUG - 2026-02-01 01:19:44 --> Config file loaded: D:\setup\xammp\htdocs\crm\ap
 ERROR - 2026-02-01 01:19:44 --> Could not find the language line "SMS"
 INFO - 2026-02-01 01:19:44 --> Final output sent to browser
 DEBUG - 2026-02-01 01:19:44 --> Total execution time: 0.1573
+INFO - 2026-02-01 02:15:36 --> Config Class Initialized
+INFO - 2026-02-01 02:15:36 --> Hooks Class Initialized
+DEBUG - 2026-02-01 02:15:36 --> UTF-8 Support Enabled
+INFO - 2026-02-01 02:15:36 --> Utf8 Class Initialized
+INFO - 2026-02-01 02:15:36 --> URI Class Initialized
+INFO - 2026-02-01 02:15:36 --> Router Class Initialized
+INFO - 2026-02-01 02:15:36 --> Output Class Initialized
+INFO - 2026-02-01 02:15:36 --> Security Class Initialized
+DEBUG - 2026-02-01 02:15:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 02:15:36 --> CSRF cookie sent
+INFO - 2026-02-01 02:15:36 --> Input Class Initialized
+INFO - 2026-02-01 02:15:36 --> Language Class Initialized
+INFO - 2026-02-01 02:15:36 --> Loader Class Initialized
+INFO - 2026-02-01 02:15:36 --> Helper loaded: url_helper
+INFO - 2026-02-01 02:15:36 --> Helper loaded: form_helper
+INFO - 2026-02-01 02:15:36 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 02:15:36 --> Helper loaded: language_helper
+INFO - 2026-02-01 02:15:36 --> Helper loaded: file_helper
+INFO - 2026-02-01 02:15:36 --> Helper loaded: date_helper
+INFO - 2026-02-01 02:15:36 --> Database Driver Class Initialized
+INFO - 2026-02-01 02:15:36 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 02:15:36 --> Parser Class Initialized
+INFO - 2026-02-01 02:15:36 --> Model "Site" initialized
+INFO - 2026-02-01 02:15:36 --> Controller Class Initialized
+INFO - 2026-02-01 02:15:36 --> Model "Customer_case_model" initialized
+INFO - 2026-02-01 02:15:36 --> Model "Customer_appointment_model" initialized
+INFO - 2026-02-01 02:15:36 --> File loaded: D:\setup\xammp\htdocs\crm\themes\customer_dashboard/dashboard.php
+INFO - 2026-02-01 02:15:36 --> Final output sent to browser
+DEBUG - 2026-02-01 02:15:36 --> Total execution time: 0.3380
