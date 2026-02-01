@@ -35,16 +35,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<?= admin_url('sales/payments/' . $inv->id) ?>" data-target="#myModal" data-toggle="modal">
-                                <i class="fa fa-money"></i> <?= lang('view_payments') ?>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?= admin_url('sales/add_payment/' . $inv->id) ?>" data-target="#myModal" data-toggle="modal">
-                                <i class="fa fa-dollar"></i> <?= lang('add_payment') ?>
-                            </a>
-                        </li>
-                        <li>
                             <a href="<?= admin_url('sales/email/' . $inv->id) ?>" data-target="#myModal" data-toggle="modal">
                                 <i class="fa fa-envelope-o"></i> <?= lang('send_email') ?>
                             </a>
@@ -520,44 +510,6 @@
                         <div class="clearfix"></div>
                     </div>
                 <?php } ?>
-                <?php if ($payments) { ?>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-condensed print-table">
-                                    <thead>
-                                    <tr>
-                                        <th><?= lang('date') ?></th>
-                                        <th><?= lang('payment_reference') ?></th>
-                                        <th><?= lang('paid_by') ?></th>
-                                        <th><?= lang('amount') ?></th>
-                                        <th><?= lang('created_by') ?></th>
-                                        <th><?= lang('type') ?></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php foreach ($payments as $payment) { ?>
-                                        <tr <?= $payment->type == 'returned' ? 'class="warning"' : ''; ?>>
-                                            <td><?= $this->sma->hrld($payment->date) ?></td>
-                                            <td><?= $payment->reference_no; ?></td>
-                                            <td><?= $this->sma->get_paid_by_label($payment->paid_by);
-                                                if ($payment->paid_by == 'gift_card' || $payment->paid_by == 'CC') {
-                                                    echo ' (' . $payment->cc_no . ')';
-                                                } elseif ($payment->paid_by == 'Cheque') {
-                                                    echo ' (' . $payment->cheque_no . ')';
-                                                }
-                                                ?></td>
-                                            <td><?= $this->sma->formatMoney($payment->amount); ?></td>
-                                            <td><?= $payment->first_name . ' ' . $payment->last_name; ?></td>
-                                            <td><?= lang($payment->type); ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
             </div>
         </div>
         <?php if (!$Supplier || !$Customer) { ?>
@@ -578,16 +530,6 @@
 
                         </div>
                     <?php } ?>
-                    <div class="btn-group">
-                        <a href="<?= admin_url('sales/payments/' . $inv->id) ?>" data-toggle="modal" data-target="#myModal" class="tip btn btn-primary tip" title="<?= lang('view_payments') ?>">
-                            <i class="fa fa-money"></i> <span class="hidden-sm hidden-xs"><?= lang('view_payments') ?></span>
-                        </a>
-                    </div>
-                    <div class="btn-group">
-                        <a href="<?= admin_url('sales/add_payment/' . $inv->id) ?>" data-toggle="modal" data-target="#myModal" class="tip btn btn-primary tip" title="<?= lang('add_payment') ?>">
-                            <i class="fa fa-money"></i> <span class="hidden-sm hidden-xs"><?= lang('add_payment') ?></span>
-                        </a>
-                    </div>
                     <div class="btn-group">
                         <a href="<?= admin_url('sales/email/' . $inv->id) ?>" data-toggle="modal" data-target="#myModal" class="tip btn btn-primary tip" title="<?= lang('email') ?>">
                             <i class="fa fa-envelope-o"></i> <span class="hidden-sm hidden-xs"><?= lang('email') ?></span>

@@ -1697,3 +1697,631 @@ INFO - 2026-02-01 02:15:36 --> Model "Customer_appointment_model" initialized
 INFO - 2026-02-01 02:15:36 --> File loaded: D:\setup\xammp\htdocs\crm\themes\customer_dashboard/dashboard.php
 INFO - 2026-02-01 02:15:36 --> Final output sent to browser
 DEBUG - 2026-02-01 02:15:36 --> Total execution time: 0.3380
+INFO - 2026-02-01 21:44:52 --> Config Class Initialized
+INFO - 2026-02-01 21:44:52 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:44:52 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:44:52 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:44:52 --> URI Class Initialized
+DEBUG - 2026-02-01 21:44:52 --> No URI present. Default controller set.
+INFO - 2026-02-01 21:44:52 --> Router Class Initialized
+INFO - 2026-02-01 21:44:52 --> Output Class Initialized
+INFO - 2026-02-01 21:44:52 --> Security Class Initialized
+DEBUG - 2026-02-01 21:44:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:44:52 --> CSRF cookie sent
+INFO - 2026-02-01 21:44:52 --> Input Class Initialized
+INFO - 2026-02-01 21:44:52 --> Language Class Initialized
+INFO - 2026-02-01 21:44:52 --> Loader Class Initialized
+INFO - 2026-02-01 21:44:52 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:44:52 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:44:52 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:44:52 --> Parser Class Initialized
+INFO - 2026-02-01 21:44:52 --> Model "Site" initialized
+INFO - 2026-02-01 21:44:52 --> Controller Class Initialized
+DEBUG - 2026-02-01 21:44:52 --> Sma class already loaded. Second attempt ignored.
+DEBUG - 2026-02-01 21:44:52 --> Config file loaded: D:\setup\xammp\htdocs\crm\app\config/ion_auth.php
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "username"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "password"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "first_name"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "last_name"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "username"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "email"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "phone"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "company"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "gender"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "password"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "confirm_password"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "first_name"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "last_name"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "username"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "email"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "phone"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "company"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "gender"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "product_code"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "product_name"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "cname"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "barcode_symbology"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "product_unit"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "product_price"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "contact_person"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "company"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "email_address"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "address"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "city"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "phone"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "first_name"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "last_name"
+ERROR - 2026-02-01 21:44:52 --> Could not find the language line "email"
+INFO - 2026-02-01 21:44:52 --> Form Validation Class Initialized
+INFO - 2026-02-01 21:44:52 --> Language file loaded: language/english/admin/auth_lang.php
+INFO - 2026-02-01 21:44:52 --> Config Class Initialized
+INFO - 2026-02-01 21:44:52 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:44:52 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:44:52 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:44:52 --> URI Class Initialized
+INFO - 2026-02-01 21:44:52 --> Router Class Initialized
+INFO - 2026-02-01 21:44:52 --> Output Class Initialized
+INFO - 2026-02-01 21:44:52 --> Security Class Initialized
+DEBUG - 2026-02-01 21:44:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:44:52 --> CSRF cookie sent
+INFO - 2026-02-01 21:44:52 --> Input Class Initialized
+INFO - 2026-02-01 21:44:52 --> Language Class Initialized
+INFO - 2026-02-01 21:44:52 --> Loader Class Initialized
+INFO - 2026-02-01 21:44:52 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:44:52 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:44:52 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:44:52 --> Parser Class Initialized
+INFO - 2026-02-01 21:44:52 --> Model "Site" initialized
+INFO - 2026-02-01 21:44:52 --> Controller Class Initialized
+INFO - 2026-02-01 21:44:52 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 21:44:52 --> Config Class Initialized
+INFO - 2026-02-01 21:44:52 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:44:52 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:44:52 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:44:52 --> URI Class Initialized
+INFO - 2026-02-01 21:44:52 --> Router Class Initialized
+INFO - 2026-02-01 21:44:52 --> Output Class Initialized
+INFO - 2026-02-01 21:44:52 --> Security Class Initialized
+DEBUG - 2026-02-01 21:44:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:44:52 --> CSRF cookie sent
+INFO - 2026-02-01 21:44:52 --> Input Class Initialized
+INFO - 2026-02-01 21:44:52 --> Language Class Initialized
+INFO - 2026-02-01 21:44:52 --> Loader Class Initialized
+INFO - 2026-02-01 21:44:52 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:44:52 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:44:52 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:44:52 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:44:52 --> Parser Class Initialized
+INFO - 2026-02-01 21:44:52 --> Model "Site" initialized
+INFO - 2026-02-01 21:44:52 --> Controller Class Initialized
+INFO - 2026-02-01 21:44:52 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 21:44:52 --> Language file loaded: language/english/admin/auth_lang.php
+INFO - 2026-02-01 21:44:52 --> Form Validation Class Initialized
+DEBUG - 2026-02-01 21:44:52 --> Config file loaded: D:\setup\xammp\htdocs\crm\app\config/ion_auth.php
+DEBUG - 2026-02-01 21:44:52 --> Unable to find validation rules
+INFO - 2026-02-01 21:44:52 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/auth/login.php
+INFO - 2026-02-01 21:44:52 --> Final output sent to browser
+DEBUG - 2026-02-01 21:44:52 --> Total execution time: 0.0679
+INFO - 2026-02-01 21:44:56 --> Config Class Initialized
+INFO - 2026-02-01 21:44:56 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:44:56 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:44:56 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:44:56 --> URI Class Initialized
+INFO - 2026-02-01 21:44:56 --> Router Class Initialized
+INFO - 2026-02-01 21:44:56 --> Output Class Initialized
+INFO - 2026-02-01 21:44:56 --> Security Class Initialized
+DEBUG - 2026-02-01 21:44:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:44:56 --> CSRF cookie sent
+INFO - 2026-02-01 21:44:56 --> CSRF token verified
+INFO - 2026-02-01 21:44:56 --> Input Class Initialized
+INFO - 2026-02-01 21:44:56 --> Language Class Initialized
+INFO - 2026-02-01 21:44:56 --> Loader Class Initialized
+INFO - 2026-02-01 21:44:56 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:44:56 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:44:56 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:44:56 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:44:56 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:44:56 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:44:56 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:44:56 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:44:56 --> Parser Class Initialized
+INFO - 2026-02-01 21:44:56 --> Model "Site" initialized
+INFO - 2026-02-01 21:44:56 --> Controller Class Initialized
+INFO - 2026-02-01 21:44:56 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 21:44:56 --> Language file loaded: language/english/admin/auth_lang.php
+INFO - 2026-02-01 21:44:56 --> Form Validation Class Initialized
+DEBUG - 2026-02-01 21:44:56 --> Config file loaded: D:\setup\xammp\htdocs\crm\app\config/ion_auth.php
+INFO - 2026-02-01 21:44:56 --> Language file loaded: language/english/form_validation_lang.php
+INFO - 2026-02-01 21:44:56 --> Helper loaded: email_helper
+INFO - 2026-02-01 21:44:56 --> Config Class Initialized
+INFO - 2026-02-01 21:44:56 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:44:56 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:44:56 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:44:56 --> URI Class Initialized
+INFO - 2026-02-01 21:44:56 --> Router Class Initialized
+INFO - 2026-02-01 21:44:56 --> Output Class Initialized
+INFO - 2026-02-01 21:44:56 --> Security Class Initialized
+DEBUG - 2026-02-01 21:44:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:44:56 --> CSRF cookie sent
+INFO - 2026-02-01 21:44:56 --> Input Class Initialized
+INFO - 2026-02-01 21:44:56 --> Language Class Initialized
+INFO - 2026-02-01 21:44:56 --> Loader Class Initialized
+INFO - 2026-02-01 21:44:56 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:44:56 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:44:56 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:44:56 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:44:56 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:44:56 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:44:56 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:44:56 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:44:56 --> Parser Class Initialized
+INFO - 2026-02-01 21:44:56 --> Model "Site" initialized
+INFO - 2026-02-01 21:44:56 --> Controller Class Initialized
+INFO - 2026-02-01 21:44:56 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 21:44:56 --> Language file loaded: language/english/calendar_lang.php
+INFO - 2026-02-01 21:44:56 --> Form Validation Class Initialized
+ERROR - 2026-02-01 21:44:57 --> Could not find the language line "Communication"
+ERROR - 2026-02-01 21:44:57 --> Could not find the language line "List_Communication"
+ERROR - 2026-02-01 21:44:57 --> Could not find the language line "Add_Communication"
+ERROR - 2026-02-01 21:44:57 --> Could not find the language line "Add_Transfer_Fattura_Privati"
+ERROR - 2026-02-01 21:44:57 --> Could not find the language line "List_Payments"
+INFO - 2026-02-01 21:44:57 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/header.php
+INFO - 2026-02-01 21:44:57 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/dashboard.php
+ERROR - 2026-02-01 21:44:57 --> Could not find the language line "Hold"
+ERROR - 2026-02-01 21:44:57 --> Could not find the language line "Work_in_Progress"
+INFO - 2026-02-01 21:44:57 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/footer.php
+INFO - 2026-02-01 21:44:57 --> Final output sent to browser
+DEBUG - 2026-02-01 21:44:57 --> Total execution time: 0.6831
+INFO - 2026-02-01 21:49:38 --> Config Class Initialized
+INFO - 2026-02-01 21:49:38 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:49:38 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:49:38 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:49:38 --> URI Class Initialized
+INFO - 2026-02-01 21:49:38 --> Router Class Initialized
+INFO - 2026-02-01 21:49:38 --> Output Class Initialized
+INFO - 2026-02-01 21:49:38 --> Security Class Initialized
+DEBUG - 2026-02-01 21:49:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:49:38 --> CSRF cookie sent
+INFO - 2026-02-01 21:49:38 --> Input Class Initialized
+INFO - 2026-02-01 21:49:38 --> Language Class Initialized
+INFO - 2026-02-01 21:49:38 --> Loader Class Initialized
+INFO - 2026-02-01 21:49:38 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:49:38 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:49:38 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:49:38 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:49:38 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:49:38 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:49:38 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:49:38 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:49:38 --> Parser Class Initialized
+INFO - 2026-02-01 21:49:38 --> Model "Site" initialized
+INFO - 2026-02-01 21:49:38 --> Controller Class Initialized
+INFO - 2026-02-01 21:49:38 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 21:49:38 --> Language file loaded: language/english/calendar_lang.php
+INFO - 2026-02-01 21:49:38 --> Form Validation Class Initialized
+ERROR - 2026-02-01 21:49:38 --> Could not find the language line "Communication"
+ERROR - 2026-02-01 21:49:38 --> Could not find the language line "List_Communication"
+ERROR - 2026-02-01 21:49:38 --> Could not find the language line "Add_Communication"
+ERROR - 2026-02-01 21:49:38 --> Could not find the language line "Add_Transfer_Fattura_Privati"
+ERROR - 2026-02-01 21:49:38 --> Could not find the language line "List_Payments"
+INFO - 2026-02-01 21:49:38 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/header.php
+INFO - 2026-02-01 21:49:38 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/dashboard.php
+ERROR - 2026-02-01 21:49:38 --> Could not find the language line "Hold"
+ERROR - 2026-02-01 21:49:38 --> Could not find the language line "Work_in_Progress"
+INFO - 2026-02-01 21:49:38 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/footer.php
+INFO - 2026-02-01 21:49:38 --> Final output sent to browser
+DEBUG - 2026-02-01 21:49:38 --> Total execution time: 0.2520
+INFO - 2026-02-01 21:49:42 --> Config Class Initialized
+INFO - 2026-02-01 21:49:42 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:49:42 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:49:42 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:49:42 --> URI Class Initialized
+INFO - 2026-02-01 21:49:42 --> Router Class Initialized
+INFO - 2026-02-01 21:49:42 --> Output Class Initialized
+INFO - 2026-02-01 21:49:42 --> Security Class Initialized
+DEBUG - 2026-02-01 21:49:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:49:42 --> CSRF cookie sent
+INFO - 2026-02-01 21:49:42 --> Input Class Initialized
+INFO - 2026-02-01 21:49:42 --> Language Class Initialized
+INFO - 2026-02-01 21:49:42 --> Loader Class Initialized
+INFO - 2026-02-01 21:49:42 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:49:42 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:49:42 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:49:42 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:49:42 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:49:42 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:49:42 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:49:42 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:49:42 --> Parser Class Initialized
+INFO - 2026-02-01 21:49:42 --> Model "Site" initialized
+INFO - 2026-02-01 21:49:42 --> Controller Class Initialized
+INFO - 2026-02-01 21:49:42 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 21:49:42 --> Language file loaded: language/english/calendar_lang.php
+INFO - 2026-02-01 21:49:42 --> Form Validation Class Initialized
+ERROR - 2026-02-01 21:49:42 --> Could not find the language line "Communication"
+ERROR - 2026-02-01 21:49:42 --> Could not find the language line "List_Communication"
+ERROR - 2026-02-01 21:49:42 --> Could not find the language line "Add_Communication"
+ERROR - 2026-02-01 21:49:42 --> Could not find the language line "Add_Transfer_Fattura_Privati"
+ERROR - 2026-02-01 21:49:42 --> Could not find the language line "List_Payments"
+INFO - 2026-02-01 21:49:42 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/header.php
+INFO - 2026-02-01 21:49:42 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/dashboard.php
+ERROR - 2026-02-01 21:49:42 --> Could not find the language line "Hold"
+ERROR - 2026-02-01 21:49:42 --> Could not find the language line "Work_in_Progress"
+INFO - 2026-02-01 21:49:42 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/footer.php
+INFO - 2026-02-01 21:49:42 --> Final output sent to browser
+DEBUG - 2026-02-01 21:49:42 --> Total execution time: 0.2214
+INFO - 2026-02-01 21:53:15 --> Config Class Initialized
+INFO - 2026-02-01 21:53:15 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:53:15 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:53:15 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:53:15 --> URI Class Initialized
+INFO - 2026-02-01 21:53:15 --> Router Class Initialized
+INFO - 2026-02-01 21:53:15 --> Output Class Initialized
+INFO - 2026-02-01 21:53:15 --> Security Class Initialized
+DEBUG - 2026-02-01 21:53:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:53:15 --> CSRF cookie sent
+INFO - 2026-02-01 21:53:15 --> Input Class Initialized
+INFO - 2026-02-01 21:53:15 --> Language Class Initialized
+INFO - 2026-02-01 21:53:15 --> Loader Class Initialized
+INFO - 2026-02-01 21:53:15 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:53:15 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:53:15 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:53:15 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:53:15 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:53:15 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:53:15 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:53:15 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:53:15 --> Parser Class Initialized
+INFO - 2026-02-01 21:53:15 --> Model "Site" initialized
+INFO - 2026-02-01 21:53:15 --> Controller Class Initialized
+INFO - 2026-02-01 21:53:15 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 21:53:15 --> Language file loaded: language/english/calendar_lang.php
+INFO - 2026-02-01 21:53:15 --> Form Validation Class Initialized
+ERROR - 2026-02-01 21:53:15 --> Could not find the language line "Communication"
+ERROR - 2026-02-01 21:53:15 --> Could not find the language line "List_Communication"
+ERROR - 2026-02-01 21:53:15 --> Could not find the language line "Add_Communication"
+ERROR - 2026-02-01 21:53:15 --> Could not find the language line "Add_Transfer_Fattura_Privati"
+ERROR - 2026-02-01 21:53:15 --> Could not find the language line "List_Payments"
+INFO - 2026-02-01 21:53:15 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/header.php
+INFO - 2026-02-01 21:53:15 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/dashboard.php
+ERROR - 2026-02-01 21:53:15 --> Could not find the language line "Hold"
+ERROR - 2026-02-01 21:53:15 --> Could not find the language line "Work_in_Progress"
+INFO - 2026-02-01 21:53:15 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/footer.php
+INFO - 2026-02-01 21:53:15 --> Final output sent to browser
+DEBUG - 2026-02-01 21:53:15 --> Total execution time: 0.7116
+INFO - 2026-02-01 21:55:09 --> Config Class Initialized
+INFO - 2026-02-01 21:55:09 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:55:09 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:55:09 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:55:09 --> URI Class Initialized
+INFO - 2026-02-01 21:55:09 --> Router Class Initialized
+INFO - 2026-02-01 21:55:09 --> Output Class Initialized
+INFO - 2026-02-01 21:55:09 --> Security Class Initialized
+DEBUG - 2026-02-01 21:55:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:55:09 --> CSRF cookie sent
+INFO - 2026-02-01 21:55:09 --> Input Class Initialized
+INFO - 2026-02-01 21:55:09 --> Language Class Initialized
+INFO - 2026-02-01 21:55:09 --> Loader Class Initialized
+INFO - 2026-02-01 21:55:09 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:55:09 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:55:09 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:55:09 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:55:09 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:55:09 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:55:09 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:55:09 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:55:09 --> Parser Class Initialized
+INFO - 2026-02-01 21:55:09 --> Model "Site" initialized
+INFO - 2026-02-01 21:55:09 --> Controller Class Initialized
+INFO - 2026-02-01 21:55:09 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 21:55:09 --> Language file loaded: language/english/calendar_lang.php
+INFO - 2026-02-01 21:55:09 --> Form Validation Class Initialized
+INFO - 2026-02-01 21:55:09 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/header.php
+INFO - 2026-02-01 21:55:09 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/dashboard.php
+ERROR - 2026-02-01 21:55:09 --> Could not find the language line "Hold"
+ERROR - 2026-02-01 21:55:09 --> Could not find the language line "Work_in_Progress"
+INFO - 2026-02-01 21:55:09 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/footer.php
+INFO - 2026-02-01 21:55:09 --> Final output sent to browser
+DEBUG - 2026-02-01 21:55:09 --> Total execution time: 0.3333
+INFO - 2026-02-01 21:56:59 --> Config Class Initialized
+INFO - 2026-02-01 21:56:59 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:56:59 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:56:59 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:56:59 --> URI Class Initialized
+INFO - 2026-02-01 21:56:59 --> Router Class Initialized
+INFO - 2026-02-01 21:56:59 --> Output Class Initialized
+INFO - 2026-02-01 21:56:59 --> Security Class Initialized
+DEBUG - 2026-02-01 21:56:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:56:59 --> CSRF cookie sent
+INFO - 2026-02-01 21:56:59 --> Input Class Initialized
+INFO - 2026-02-01 21:56:59 --> Language Class Initialized
+INFO - 2026-02-01 21:56:59 --> Loader Class Initialized
+INFO - 2026-02-01 21:56:59 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:56:59 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:56:59 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:56:59 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:56:59 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:56:59 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:56:59 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:56:59 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:56:59 --> Parser Class Initialized
+INFO - 2026-02-01 21:56:59 --> Model "Site" initialized
+INFO - 2026-02-01 21:56:59 --> Controller Class Initialized
+INFO - 2026-02-01 21:56:59 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 21:56:59 --> Language file loaded: language/english/calendar_lang.php
+INFO - 2026-02-01 21:56:59 --> Language file loaded: language/english/admin/settings_lang.php
+INFO - 2026-02-01 21:56:59 --> Form Validation Class Initialized
+DEBUG - 2026-02-01 21:56:59 --> Unable to find validation rules
+INFO - 2026-02-01 21:56:59 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/header.php
+INFO - 2026-02-01 21:56:59 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/settings/email_templates.php
+ERROR - 2026-02-01 21:56:59 --> Could not find the language line "Hold"
+ERROR - 2026-02-01 21:56:59 --> Could not find the language line "Work_in_Progress"
+INFO - 2026-02-01 21:56:59 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/footer.php
+INFO - 2026-02-01 21:56:59 --> Final output sent to browser
+DEBUG - 2026-02-01 21:56:59 --> Total execution time: 0.2742
+INFO - 2026-02-01 21:59:04 --> Config Class Initialized
+INFO - 2026-02-01 21:59:04 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:59:04 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:59:04 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:59:04 --> URI Class Initialized
+DEBUG - 2026-02-01 21:59:04 --> No URI present. Default controller set.
+INFO - 2026-02-01 21:59:04 --> Router Class Initialized
+INFO - 2026-02-01 21:59:04 --> Output Class Initialized
+INFO - 2026-02-01 21:59:04 --> Security Class Initialized
+DEBUG - 2026-02-01 21:59:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:59:04 --> CSRF cookie sent
+INFO - 2026-02-01 21:59:04 --> Input Class Initialized
+INFO - 2026-02-01 21:59:04 --> Language Class Initialized
+INFO - 2026-02-01 21:59:04 --> Loader Class Initialized
+INFO - 2026-02-01 21:59:04 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:59:04 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:59:04 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:59:04 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:59:04 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:59:04 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:59:04 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:59:04 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:59:04 --> Parser Class Initialized
+INFO - 2026-02-01 21:59:04 --> Model "Site" initialized
+INFO - 2026-02-01 21:59:04 --> Controller Class Initialized
+DEBUG - 2026-02-01 21:59:04 --> Sma class already loaded. Second attempt ignored.
+DEBUG - 2026-02-01 21:59:04 --> Sma class already loaded. Second attempt ignored.
+DEBUG - 2026-02-01 21:59:04 --> Config file loaded: D:\setup\xammp\htdocs\crm\app\config/ion_auth.php
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "username"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "password"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "first_name"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "last_name"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "username"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "email"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "phone"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "company"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "gender"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "password"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "confirm_password"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "first_name"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "last_name"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "username"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "email"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "phone"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "company"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "gender"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "product_code"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "product_name"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "cname"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "barcode_symbology"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "product_unit"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "product_price"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "contact_person"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "company"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "email_address"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "address"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "city"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "phone"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "first_name"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "last_name"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "email"
+INFO - 2026-02-01 21:59:04 --> Form Validation Class Initialized
+INFO - 2026-02-01 21:59:04 --> Language file loaded: language/english/admin/auth_lang.php
+INFO - 2026-02-01 21:59:04 --> Config Class Initialized
+INFO - 2026-02-01 21:59:04 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:59:04 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:59:04 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:59:04 --> URI Class Initialized
+INFO - 2026-02-01 21:59:04 --> Router Class Initialized
+INFO - 2026-02-01 21:59:04 --> Output Class Initialized
+INFO - 2026-02-01 21:59:04 --> Security Class Initialized
+DEBUG - 2026-02-01 21:59:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:59:04 --> CSRF cookie sent
+INFO - 2026-02-01 21:59:04 --> Input Class Initialized
+INFO - 2026-02-01 21:59:04 --> Language Class Initialized
+INFO - 2026-02-01 21:59:04 --> Loader Class Initialized
+INFO - 2026-02-01 21:59:04 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:59:04 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:59:04 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:59:04 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:59:04 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:59:04 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:59:04 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:59:04 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:59:04 --> Parser Class Initialized
+INFO - 2026-02-01 21:59:04 --> Model "Site" initialized
+INFO - 2026-02-01 21:59:04 --> Controller Class Initialized
+INFO - 2026-02-01 21:59:04 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 21:59:04 --> Language file loaded: language/english/calendar_lang.php
+INFO - 2026-02-01 21:59:04 --> Form Validation Class Initialized
+INFO - 2026-02-01 21:59:04 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/header.php
+INFO - 2026-02-01 21:59:04 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/dashboard.php
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "Hold"
+ERROR - 2026-02-01 21:59:04 --> Could not find the language line "Work_in_Progress"
+INFO - 2026-02-01 21:59:04 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/footer.php
+INFO - 2026-02-01 21:59:04 --> Final output sent to browser
+DEBUG - 2026-02-01 21:59:04 --> Total execution time: 0.2118
+INFO - 2026-02-01 21:59:07 --> Config Class Initialized
+INFO - 2026-02-01 21:59:07 --> Hooks Class Initialized
+DEBUG - 2026-02-01 21:59:07 --> UTF-8 Support Enabled
+INFO - 2026-02-01 21:59:07 --> Utf8 Class Initialized
+INFO - 2026-02-01 21:59:07 --> URI Class Initialized
+INFO - 2026-02-01 21:59:07 --> Router Class Initialized
+INFO - 2026-02-01 21:59:07 --> Output Class Initialized
+INFO - 2026-02-01 21:59:07 --> Security Class Initialized
+DEBUG - 2026-02-01 21:59:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 21:59:07 --> CSRF cookie sent
+INFO - 2026-02-01 21:59:07 --> Input Class Initialized
+INFO - 2026-02-01 21:59:07 --> Language Class Initialized
+INFO - 2026-02-01 21:59:07 --> Loader Class Initialized
+INFO - 2026-02-01 21:59:07 --> Helper loaded: url_helper
+INFO - 2026-02-01 21:59:07 --> Helper loaded: form_helper
+INFO - 2026-02-01 21:59:07 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 21:59:07 --> Helper loaded: language_helper
+INFO - 2026-02-01 21:59:07 --> Helper loaded: file_helper
+INFO - 2026-02-01 21:59:07 --> Helper loaded: date_helper
+INFO - 2026-02-01 21:59:07 --> Database Driver Class Initialized
+INFO - 2026-02-01 21:59:07 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 21:59:07 --> Parser Class Initialized
+INFO - 2026-02-01 21:59:07 --> Model "Site" initialized
+INFO - 2026-02-01 21:59:07 --> Controller Class Initialized
+INFO - 2026-02-01 21:59:07 --> Model "Customer_case_model" initialized
+INFO - 2026-02-01 21:59:07 --> Model "Customer_appointment_model" initialized
+INFO - 2026-02-01 21:59:07 --> File loaded: D:\setup\xammp\htdocs\crm\themes\customer_dashboard/dashboard.php
+INFO - 2026-02-01 21:59:07 --> Final output sent to browser
+DEBUG - 2026-02-01 21:59:07 --> Total execution time: 0.3070
+INFO - 2026-02-01 22:08:04 --> Config Class Initialized
+INFO - 2026-02-01 22:08:04 --> Hooks Class Initialized
+DEBUG - 2026-02-01 22:08:04 --> UTF-8 Support Enabled
+INFO - 2026-02-01 22:08:04 --> Utf8 Class Initialized
+INFO - 2026-02-01 22:08:04 --> URI Class Initialized
+DEBUG - 2026-02-01 22:08:04 --> No URI present. Default controller set.
+INFO - 2026-02-01 22:08:04 --> Router Class Initialized
+INFO - 2026-02-01 22:08:05 --> Output Class Initialized
+INFO - 2026-02-01 22:08:05 --> Security Class Initialized
+DEBUG - 2026-02-01 22:08:05 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 22:08:05 --> CSRF cookie sent
+INFO - 2026-02-01 22:08:05 --> Input Class Initialized
+INFO - 2026-02-01 22:08:05 --> Language Class Initialized
+INFO - 2026-02-01 22:08:05 --> Loader Class Initialized
+INFO - 2026-02-01 22:08:05 --> Helper loaded: url_helper
+INFO - 2026-02-01 22:08:05 --> Helper loaded: form_helper
+INFO - 2026-02-01 22:08:05 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 22:08:05 --> Helper loaded: language_helper
+INFO - 2026-02-01 22:08:05 --> Helper loaded: file_helper
+INFO - 2026-02-01 22:08:05 --> Helper loaded: date_helper
+INFO - 2026-02-01 22:08:05 --> Database Driver Class Initialized
+INFO - 2026-02-01 22:08:06 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 22:08:06 --> Parser Class Initialized
+INFO - 2026-02-01 22:08:06 --> Model "Site" initialized
+INFO - 2026-02-01 22:08:06 --> Controller Class Initialized
+DEBUG - 2026-02-01 22:08:06 --> Sma class already loaded. Second attempt ignored.
+DEBUG - 2026-02-01 22:08:06 --> Sma class already loaded. Second attempt ignored.
+DEBUG - 2026-02-01 22:08:06 --> Config file loaded: D:\setup\xammp\htdocs\crm\app\config/ion_auth.php
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "username"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "password"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "first_name"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "last_name"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "username"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "email"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "phone"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "company"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "gender"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "password"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "confirm_password"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "first_name"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "last_name"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "username"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "email"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "phone"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "company"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "gender"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "product_code"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "product_name"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "cname"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "barcode_symbology"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "product_unit"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "product_price"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "contact_person"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "company"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "email_address"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "address"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "city"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "phone"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "first_name"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "last_name"
+ERROR - 2026-02-01 22:08:06 --> Could not find the language line "email"
+INFO - 2026-02-01 22:08:06 --> Form Validation Class Initialized
+INFO - 2026-02-01 22:08:06 --> Language file loaded: language/english/admin/auth_lang.php
+INFO - 2026-02-01 22:08:06 --> Config Class Initialized
+INFO - 2026-02-01 22:08:06 --> Hooks Class Initialized
+DEBUG - 2026-02-01 22:08:06 --> UTF-8 Support Enabled
+INFO - 2026-02-01 22:08:06 --> Utf8 Class Initialized
+INFO - 2026-02-01 22:08:06 --> URI Class Initialized
+INFO - 2026-02-01 22:08:06 --> Router Class Initialized
+INFO - 2026-02-01 22:08:06 --> Output Class Initialized
+INFO - 2026-02-01 22:08:06 --> Security Class Initialized
+DEBUG - 2026-02-01 22:08:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 22:08:06 --> CSRF cookie sent
+INFO - 2026-02-01 22:08:06 --> Input Class Initialized
+INFO - 2026-02-01 22:08:06 --> Language Class Initialized
+INFO - 2026-02-01 22:08:06 --> Loader Class Initialized
+INFO - 2026-02-01 22:08:06 --> Helper loaded: url_helper
+INFO - 2026-02-01 22:08:06 --> Helper loaded: form_helper
+INFO - 2026-02-01 22:08:06 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 22:08:06 --> Helper loaded: language_helper
+INFO - 2026-02-01 22:08:06 --> Helper loaded: file_helper
+INFO - 2026-02-01 22:08:06 --> Helper loaded: date_helper
+INFO - 2026-02-01 22:08:06 --> Database Driver Class Initialized
+INFO - 2026-02-01 22:08:06 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 22:08:06 --> Parser Class Initialized
+INFO - 2026-02-01 22:08:06 --> Model "Site" initialized
+INFO - 2026-02-01 22:08:06 --> Controller Class Initialized
+INFO - 2026-02-01 22:08:06 --> Language file loaded: language/english/admin/sma_lang.php
+INFO - 2026-02-01 22:08:06 --> Language file loaded: language/english/calendar_lang.php
+INFO - 2026-02-01 22:08:06 --> Form Validation Class Initialized
+INFO - 2026-02-01 22:08:06 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/header.php
+INFO - 2026-02-01 22:08:07 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/dashboard.php
+ERROR - 2026-02-01 22:08:07 --> Could not find the language line "Hold"
+ERROR - 2026-02-01 22:08:07 --> Could not find the language line "Work_in_Progress"
+INFO - 2026-02-01 22:08:07 --> File loaded: D:\setup\xammp\htdocs\crm\themes\default/admin/views/footer.php
+INFO - 2026-02-01 22:08:07 --> Final output sent to browser
+DEBUG - 2026-02-01 22:08:07 --> Total execution time: 0.7025
+INFO - 2026-02-01 22:36:09 --> Config Class Initialized
+INFO - 2026-02-01 22:36:09 --> Hooks Class Initialized
+DEBUG - 2026-02-01 22:36:09 --> UTF-8 Support Enabled
+INFO - 2026-02-01 22:36:09 --> Utf8 Class Initialized
+INFO - 2026-02-01 22:36:09 --> URI Class Initialized
+INFO - 2026-02-01 22:36:09 --> Router Class Initialized
+INFO - 2026-02-01 22:36:09 --> Output Class Initialized
+INFO - 2026-02-01 22:36:09 --> Security Class Initialized
+DEBUG - 2026-02-01 22:36:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-01 22:36:09 --> CSRF cookie sent
+INFO - 2026-02-01 22:36:09 --> Input Class Initialized
+INFO - 2026-02-01 22:36:09 --> Language Class Initialized
+INFO - 2026-02-01 22:36:09 --> Loader Class Initialized
+INFO - 2026-02-01 22:36:09 --> Helper loaded: url_helper
+INFO - 2026-02-01 22:36:09 --> Helper loaded: form_helper
+INFO - 2026-02-01 22:36:09 --> Helper loaded: cookie_helper
+INFO - 2026-02-01 22:36:09 --> Helper loaded: language_helper
+INFO - 2026-02-01 22:36:09 --> Helper loaded: file_helper
+INFO - 2026-02-01 22:36:09 --> Helper loaded: date_helper
+INFO - 2026-02-01 22:36:09 --> Database Driver Class Initialized
+INFO - 2026-02-01 22:36:09 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-01 22:36:09 --> Parser Class Initialized
+INFO - 2026-02-01 22:36:09 --> Model "Site" initialized
+INFO - 2026-02-01 22:36:09 --> Controller Class Initialized
+INFO - 2026-02-01 22:36:09 --> Model "Customer_case_model" initialized
+INFO - 2026-02-01 22:36:09 --> Model "Customer_appointment_model" initialized
+INFO - 2026-02-01 22:36:11 --> File loaded: D:\setup\xammp\htdocs\crm\themes\customer_dashboard/dashboard.php
+INFO - 2026-02-01 22:36:11 --> Final output sent to browser
+DEBUG - 2026-02-01 22:36:11 --> Total execution time: 2.2473

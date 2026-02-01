@@ -266,7 +266,7 @@ $(document).ready(function() {
                                             }
                                             ?>
                                                 <?php
-                                            if ($Settings->tax1) {
+                                            if (false && $Settings->tax1) {
                                                 echo '<th class="col-md-1">' . lang("product_tax") . '</th>';
                                             }
                                             ?>
@@ -287,7 +287,7 @@ $(document).ready(function() {
 
                         <?php
                         // Hidden fields for removed form fields (needed for backend compatibility)
-                        echo form_hidden('order_tax', $inv->order_tax_id ? $inv->order_tax_id : ($Settings->default_tax_rate2 ? $Settings->default_tax_rate2 : ''));
+                        echo form_hidden('order_tax', '');
                         echo form_hidden('order_discount', $inv->order_discount_id ? $inv->order_discount_id : '');
                         echo form_hidden('shipping', $inv->shipping ? $inv->shipping : '0');
                         echo form_hidden('sale_status', $inv->sale_status ? $inv->sale_status : 'pending');
@@ -347,117 +347,7 @@ $(document).ready(function() {
                         <?php }?>
 
                         <div class="clearfix"></div>
-                        <?php if ($Owner || $Admin || $GP['sales-payments']) { ?>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <?= lang("payment_status", "slpayment_status"); ?>
-                                <?php $pst = array('pending' => lang('pending'), 'due' => lang('due'), 'partial' => lang('partial'), 'paid' => lang('paid'));
-                                echo form_dropdown('payment_status', $pst, $inv->payment_status, 'class="form-control input-tip" required="required" id="slpayment_status"'); ?>
-
-                            </div>
-                        </div>
-                        <?php
-                        } else {
-                            echo form_hidden('payment_status', $inv->payment_status);
-                        }
-                        ?>
-
-                        <div class="clearfix"></div>
-                        <div id="payments" style="display: none;">
-                            <div class="col-md-12">
-                                <div class="well well-sm well_1">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <?= lang("payment_reference_no", "payment_reference_no"); ?>
-                                                    <?= form_input('payment_reference_no', (isset($_POST['payment_reference_no']) ? $_POST['payment_reference_no'] : $payment_ref), 'class="form-control tip" id="payment_reference_no"'); ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="payment">
-                                                    <div class="form-group">
-                                                        <?= lang("amount", "amount_1"); ?>
-                                                        <input name="amount-paid" type="text" id="amount_1"
-                                                            class="pa form-control kb-pad amount" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <?= lang("paying_by", "paid_by_1"); ?>
-                                                    <select name="paid_by" id="paid_by_1" class="form-control paid_by">
-                                                        <?= $this->sma->paid_opts(); ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="pcc_1" style="display:none;">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input name="pcc_no" type="text" id="pcc_no_1"
-                                                            class="form-control" placeholder="<?= lang('cc_no') ?>" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input name="pcc_holder" type="text" id="pcc_holder_1"
-                                                            class="form-control"
-                                                            placeholder="<?= lang('cc_holder') ?>" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <select name="pcc_type" id="pcc_type_1"
-                                                            class="form-control pcc_type"
-                                                            placeholder="<?= lang('card_type') ?>">
-                                                            <option value="Visa"><?= lang("Visa"); ?></option>
-                                                            <option value="MasterCard"><?= lang("MasterCard"); ?>
-                                                            </option>
-                                                            <option value="Amex"><?= lang("Amex"); ?></option>
-                                                            <option value="Discover"><?= lang("Discover"); ?>
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input name="pcc_month" type="text" id="pcc_month_1"
-                                                            class="form-control" placeholder="<?= lang('month') ?>" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input name="pcc_year" type="text" id="pcc_year_1"
-                                                            class="form-control" placeholder="<?= lang('year') ?>" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input name="pcc_ccv" type="text" id="pcc_cvv2_1"
-                                                            class="form-control" placeholder="<?= lang('cvv2') ?>" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="pcheque_1" style="display:none;">
-                                            <div class="form-group"><?= lang("cheque_no", "cheque_no_1"); ?>
-                                                <input name="cheque_no" type="text" id="cheque_no_1"
-                                                    class="form-control cheque_no" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <?= lang('payment_note', 'payment_note_1'); ?>
-                                            <textarea name="payment_note" id="payment_note_1"
-                                                class="pa form-control kb-text payment_note"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <?php echo form_hidden('payment_status', $inv->payment_status); ?>
 
                         <input type="hidden" name="total_items" value="" id="total_items" required="required" />
                         <div class="col-md-12">
@@ -497,7 +387,7 @@ $(document).ready(function() {
             </div>
             <div class="modal-body" id="pr_popover_content">
                 <form class="form-horizontal" role="form">
-                    <?php if ($Settings->tax1) { ?>
+                    <?php if (false && $Settings->tax1) { ?>
                     <div class="form-group">
                         <label class="col-sm-4 control-label"><?= lang('product_tax') ?></label>
                         <div class="col-sm-8">
@@ -561,8 +451,8 @@ $(document).ready(function() {
                         <tr>
                             <th style="width:25%;"><?= lang('net_unit_price'); ?></th>
                             <th style="width:25%;"><span id="net_price"></span></th>
-                            <th style="width:25%;"><?= lang('product_tax'); ?></th>
-                            <th style="width:25%;"><span id="pro_tax"></span></th>
+                            <?php if (false) { ?><th style="width:25%;"><?= lang('product_tax'); ?></th>
+                            <th style="width:25%;"><span id="pro_tax"></span></th><?php } ?>
                         </tr>
                     </table>
                     <input type="hidden" id="punit_price" value="" />
@@ -632,7 +522,7 @@ $(document).ready(function() {
                             <input type="text" class="form-control" id="mname">
                         </div>
                     </div>
-                    <?php if ($Settings->tax1) { ?>
+                    <?php if (false && $Settings->tax1) { ?>
                     <div class="form-group">
                         <label for="mtax" class="col-sm-4 control-label"><?= lang('product_tax') ?> *</label>
 
@@ -699,8 +589,8 @@ $(document).ready(function() {
                         <tr>
                             <th style="width:25%;"><?= lang('net_unit_price'); ?></th>
                             <th style="width:25%;"><span id="mnet_price"></span></th>
-                            <th style="width:25%;"><?= lang('product_tax'); ?></th>
-                            <th style="width:25%;"><span id="mpro_tax"></span></th>
+                            <?php if (false) { ?><th style="width:25%;"><?= lang('product_tax'); ?></th>
+                            <th style="width:25%;"><span id="mpro_tax"></span></th><?php } ?>
                         </tr>
                     </table>
                 </form>

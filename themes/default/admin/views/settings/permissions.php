@@ -92,54 +92,8 @@
                                             <label for="sales-pdf" class="padding05"><?= lang('pdf') ?></label>
                                         </span>
 
-                                        <span style="display:inline-block;">
-                                            <input type="checkbox" value="1" id="sales-payments" class="checkbox" name="sales-payments" <?php echo $p->{'sales-payments'} ? "checked" : ''; ?>>
-                                            <label for="sales-payments" class="padding05"><?= lang('payments') ?></label>
-                                        </span>
-
                                     </td>
                                 </tr>
-                                
-                                   <tr>
-                                    <td><?= lang("Communication"); ?></td>
-                                    <td class="text-center">
-                                        <input type="checkbox" value="1" class="checkbox" name="communication-index" <?php echo $p->{'communication-index'} ? "checked" : ''; ?>>
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" value="1" class="checkbox" name="communication-add" <?php echo $p->{'communication-add'} ? "checked" : ''; ?>>
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" value="1" class="checkbox" name="communication-edit" <?php echo $p->{'communication-edit'} ? "checked" : ''; ?>>
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" value="1" class="checkbox" name="communication-delete" <?php echo $p->{'communication-delete'} ? "checked" : ''; ?>>
-                                    </td>
-                                   
-                                </tr>
-
-
-                                <tr>
-                                    <td><?= lang("purchases"); ?></td>
-                                    <td class="text-center">
-                                    </td>
-                                    <td class="text-center">
-                                    </td>
-                                    <td class="text-center">
-                                    </td>
-                                    <td class="text-center">
-                                    </td>
-                                    <td>
-
-                                        <span style="display:inline-block;">
-                                            <input type="checkbox" value="1" id="purchases-expenses" class="checkbox" name="purchases-expenses" <?php echo $p->{'purchases-expenses'} ? "checked" : ''; ?>>
-                                            <label for="purchases-expenses" class="padding05"><?= lang('expenses') ?></label>
-                                        </span>
-
-                                    </td>
-                                </tr>
-                                
-                        
-
 
                                 <tr>
                                     <td><?= lang("customers"); ?></td>
@@ -243,19 +197,6 @@
                                             <input type="checkbox" value="1" class="checkbox" id="sales" name="reports-sales" <?php echo $p->{'reports-sales'} ? "checked" : ''; ?>>
                                             <label for="sales" class="padding05"><?= lang('sales') ?></label>
                                         </span>
-                                        <span style="display:inline-block;">
-                                            <input type="checkbox" value="1" class="checkbox" id="payments" name="reports-payments" <?php echo $p->{'reports-payments'} ? "checked" : ''; ?>>
-                                            <label for="payments" class="padding05"><?= lang('payments') ?></label>
-                                        </span>
-                                        <span style="display:inline-block;">
-                                            <input type="checkbox" value="1" class="checkbox" id="tax" name="reports-tax" <?php echo $p->{'reports-tax'} ? "checked" : ''; ?>>
-                                            <label for="tax" class="padding05"><?= lang('tax_report') ?></label>
-                                        </span>
-                                        <span style="display:inline-block;">
-                                            <input type="checkbox" value="1" class="checkbox" id="expenses" name="reports-expenses" <?php echo $p->{'reports-expenses'} ? "checked" : ''; ?>>
-                                            <label for="expenses" class="padding05"><?= lang('expenses') ?></label>
-                                        </span>
-
                                         <span style="display:inline-block;">
                                             <input type="checkbox" value="1" class="checkbox" id="customers" name="reports-customers" <?php echo $p->{'reports-customers'} ? "checked" : ''; ?>>
                                             <label for="customers" class="padding05"><?= lang('customers') ?></label>
