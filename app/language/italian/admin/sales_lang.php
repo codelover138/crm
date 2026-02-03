@@ -131,3 +131,4 @@ $lang['topup_added']                        = "Gift card balance successfully up
 $lang['duplicate_sale']                     = "Duplicate Sale";
 $lang['update_customer_email']              = "Please update customer email address";
 $lang['due_date']                           = "Due Date";
+$lang['show_docs']                          = "Mostra documento";

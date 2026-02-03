@@ -65,6 +65,7 @@ class Sales extends MY_Controller
         $email_link = anchor('admin/sales/email/$1', '<i class="fa fa-envelope"></i> ' . lang('email_sale'), 'data-toggle="modal" data-target="#myModal"');
         $edit_link = anchor('admin/sales/edit/$1', '<i class="fa fa-edit"></i> ' . lang('edit_sale'), 'class="sledit"');
         $pdf_link = anchor('admin/sales/pdf/$1', '<i class="fa fa-file-pdf-o"></i> ' . lang('download_pdf'));
+        $docs_link = anchor('admin/sales/docs/$1', '<i class="fa fa-file-text-o"></i> ' . lang('show_docs'), 'target="_blank"');
         $return_link = anchor('admin/sales/return_sale/$1', '<i class="fa fa-angle-double-left"></i> ' . lang('return_sale'));
         $consent_link = anchor('admin/sales/consent/$1', '<i class="fa fa-file-pdf-o"></i> ' . lang('consent_download'));
         $consent_sms_link = anchor('admin/sales/consent_sms/$1', '<i class="fa fa-envelope"></i> ' . lang('SMS'));
@@ -81,6 +82,7 @@ class Sales extends MY_Controller
             <li>' . $add_payment_link . '</li>
             <li>' . $edit_link . '</li>
             <li>' . $pdf_link . '</li>
+            <li>' . $docs_link . '</li>
               <li>' . $consent_link . '</li>
                 <li>' . $consent_sms_link . '</li>
             <li>' . $email_link . '</li>
@@ -185,6 +187,28 @@ class Sales extends MY_Controller
         $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => admin_url('sales'), 'page' => lang('sales')), array('link' => '#', 'page' => lang('view')));
         $meta = array('page_title' => lang('view_sales_details'), 'bc' => $bc);
         $this->page_construct('sales/view', $meta, $this->data);
+    }
+
+    public function docs($id = null)
+    {
+        $this->sma->checkPermissions('index');
+        if ($this->input->get('id')) {
+            $id = $this->input->get('id');
+        }
+        $inv = $this->sales_model->getInvoiceByID($id);
+        if (!$inv) {
+            show_404();
+        }
+        if (!$this->session->userdata('view_right')) {
+            $this->sma->view_rights($inv->created_by);
+        }
+        $this->data['customer'] = $this->site->getCompanyByID($inv->customer_id);
+        $this->data['biller'] = $this->site->getCompanyByID($inv->biller_id);
+        $this->data['created_by'] = $this->site->getUser($inv->created_by);
+        $this->data['warehouse'] = $this->site->getWarehouseByID($inv->warehouse_id);
+        $this->data['inv'] = $inv;
+        $this->data['rows'] = $this->sales_model->getAllInvoiceItems($id);
+        $this->load->view($this->theme . 'sales/docs', $this->data);
     }
 
     public function pdf($id = null, $view = null, $save_bufffer = null)
