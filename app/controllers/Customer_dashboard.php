@@ -58,7 +58,8 @@ class Customer_dashboard extends CI_Controller {
                 } else {
                     $total_days = $sale_date->diff($end_date)->days;
                     $percent_remaining = $total_days > 0 ? min(100, round(($remaining_days / $total_days) * 100)) : 100;
-                    $status_class = $percent_remaining > 30 ? 'green' : ($percent_remaining > 10 ? 'yellow' : 'red');
+                    // As remaining decreases: green (>40%) → yellow (15–40%) → red (0–15%)
+                    $status_class = $percent_remaining > 40 ? 'green' : ($percent_remaining > 15 ? 'yellow' : 'red');
                 }
             }
             $sales_associate_name = '';

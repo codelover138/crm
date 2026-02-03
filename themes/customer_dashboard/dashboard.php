@@ -20,17 +20,21 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
     :root {
-        /* Professional dark slate – easy on the eyes, corporate-friendly */
-        --bg: #0f172a;
-        --surface: #1e293b;
-        --surface2: #334155;
-        --text: #f1f5f9;
-        --text-muted: #94a3b8;
-        --accent: #6366f1;
-        --accent-light: #818cf8;
-        --success: #22c55e;
-        --warning: #f59e0b;
-        --danger: #ef4444;
+        /* White background with USA flag blue & red */
+        --bg: #ffffff;
+        --surface: #f8fafc;
+        --surface2: #e2e8f0;
+        --text: #0f172a;
+        --text-muted: #64748b;
+        --accent: #002868;
+        --accent-light: #1e40af;
+        --usa-blue: #002868;
+        --usa-blue-light: #1e40af;
+        --usa-red: #B22234;
+        --usa-red-light: #DC2626;
+        --success: #16a34a;
+        --warning: #d97706;
+        --danger: #B22234;
         --radius: 14px;
         --radius-sm: 8px;
     }
@@ -77,8 +81,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     body {
         font-family: 'DM Sans', -apple-system, sans-serif;
-        background: linear-gradient(160deg, #0f172a 0%, #0c1222 35%, #0d1324 60%, #0f172a 100%);
-        background-attachment: fixed;
+        background: #ffffff;
         color: var(--text);
         min-height: 100vh;
         line-height: 1.5;
@@ -92,9 +95,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         left: 0;
         right: 0;
         bottom: 0;
-        background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
-                    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(139, 92, 246, 0.06), transparent),
-                    radial-gradient(ellipse 50% 30% at 0% 80%, rgba(59, 130, 246, 0.05), transparent);
+        background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 40, 104, 0.06), transparent),
+                    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(178, 34, 52, 0.04), transparent);
         pointer-events: none;
         z-index: 0;
     }
@@ -112,62 +114,94 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     .dashboard-sidebar {
-        width: 260px;
+        width: 380px;
         flex-shrink: 0;
-        background: var(--surface);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: var(--radius);
-        padding: 1.35rem;
+        background: linear-gradient(180deg, #fafbff 0%, #f8fafc 100%);
+        border: 1px solid var(--surface2);
+        border-radius: 16px;
+        padding: 1.5rem;
         position: sticky;
         top: 1.5rem;
         animation: slideInLeft 0.5s ease-out;
+        box-shadow: 0 2px 12px rgba(0, 40, 104, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
     }
 
     .sidebar-logo-wrap {
         text-align: center;
         margin-bottom: 1.5rem;
-        padding-bottom: 1.25rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 1.35rem 1rem 1.25rem;
+        border-radius: 12px;
+        background: linear-gradient(165deg, rgba(0, 40, 104, 0.06) 0%, rgba(255, 255, 255, 0.9) 40%, rgba(178, 34, 52, 0.06) 100%);
+        border: 1px solid var(--surface2);
+        box-shadow: 0 2px 8px rgba(0, 40, 104, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .sidebar-logo-wrap::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--usa-blue), var(--usa-red));
+        border-radius: 3px;
     }
 
     .sidebar-logo {
-        max-width: 140px;
-        max-height: 60px;
+        max-width: 160px;
+        max-height: 68px;
         width: auto;
         height: auto;
         object-fit: contain;
         display: block;
-        margin: 0 auto 0.5rem;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+        margin: 0 auto 0.75rem;
+        filter: drop-shadow(0 2px 6px rgba(0, 40, 104, 0.12));
     }
 
     .sidebar-site-name {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--text);
-        letter-spacing: -0.01em;
-        margin-top: 0.5rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        margin-top: 0.25rem;
+        margin-bottom: 0.15rem;
+        background: linear-gradient(135deg, var(--usa-blue) 0%, #1e40af 40%, var(--usa-red) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        display: inline-block;
     }
 
     .dashboard-sidebar-title {
-        font-size: 0.7rem;
+        font-size: 0.95rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        color: var(--text-muted);
+        color: var(--text);
         margin-bottom: 1rem;
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        padding: 0.65rem 0.75rem;
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        background: linear-gradient(135deg, rgba(0, 40, 104, 0.08) 0%, rgba(255, 255, 255, 0.5) 45%, rgba(178, 34, 52, 0.08) 100%);
+        border-left: 4px solid var(--usa-blue);
+        border-radius: 0 8px 8px 0;
+        box-shadow: 0 1px 2px rgba(0, 40, 104, 0.06);
     }
 
     .dashboard-sidebar-title i {
-        color: var(--accent);
+        color: var(--usa-blue);
     }
 
     .dashboard-sidebar-item {
         margin-bottom: 1rem;
-        font-size: 0.85rem;
+        font-size: 1.05rem;
     }
 
     .dashboard-sidebar-item:last-child {
@@ -175,7 +209,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     .dashboard-sidebar-item .label {
-        font-size: 0.65rem;
+        font-size: 0.88rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -183,22 +217,23 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         display: flex;
         align-items: center;
         gap: 0.4rem;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.3rem;
     }
 
     .dashboard-sidebar-item .label i {
         color: var(--accent);
-        width: 0.9rem;
-        font-size: 0.7rem;
+        width: 1.05rem;
+        font-size: 0.88rem;
     }
 
     .dashboard-sidebar-item .val {
+        font-size: 1.05rem;
         color: var(--text);
         word-break: break-word;
     }
 
     .dashboard-sidebar-item a.val {
-        color: var(--accent-light);
+        color: var(--usa-blue-light);
         text-decoration: none;
     }
 
@@ -230,37 +265,63 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     .header {
         text-align: center;
-        margin-bottom: 2rem;
-        padding: 2rem 1.5rem;
-        background: var(--surface);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: var(--radius);
-        border-left: 4px solid var(--accent);
+        margin-bottom: 1.75rem;
+        padding: 1.5rem 1.5rem;
+        background: linear-gradient(135deg, rgba(0, 40, 104, 0.12) 0%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0.85) 60%, rgba(178, 34, 52, 0.12) 100%);
+        border: 1px solid var(--surface2);
+        border-radius: 16px;
+        border-left: 5px solid var(--usa-blue);
         animation: fadeInUp 0.5s ease-out;
+        box-shadow: 0 2px 12px rgba(0, 40, 104, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--usa-blue), var(--usa-red));
+        border-radius: 0 0 16px 16px;
     }
 
     .header-badge {
         display: inline-block;
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.1em;
         color: var(--accent-light);
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.35rem;
     }
 
     .header h1 {
-        font-size: 1.6rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.35rem;
         color: var(--text);
+        letter-spacing: -0.02em;
     }
 
     .header p {
         color: var(--text-muted);
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         margin: 0;
-        line-height: 1.5;
+        line-height: 1.4;
+    }
+
+    .header-customer-code {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 0.35rem;
+    }
+
+    .header-customer-code strong {
+        color: var(--accent-light);
+        font-weight: 600;
     }
 
     .header-logo-wrap {
@@ -291,38 +352,46 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         font-size: 1rem;
         font-weight: 600;
         margin-bottom: 1rem;
+        padding: 0.6rem 0.9rem;
         display: flex;
         align-items: center;
         gap: 0.5rem;
         color: var(--text);
+        background: linear-gradient(135deg, rgba(0, 40, 104, 0.08) 0%, rgba(255, 255, 255, 0.5) 45%, rgba(178, 34, 52, 0.08) 100%);
+        border-left: 4px solid var(--usa-blue);
+        border-radius: 0 10px 10px 0;
+        box-shadow: 0 1px 2px rgba(0, 40, 104, 0.06);
     }
 
     .section-title i {
-        color: var(--accent);
+        color: var(--usa-blue);
     }
 
     /* My active Products section – highlighted title */
     .section-title--products {
-        font-size: 1.15rem;
+        font-size: 1.2rem;
         font-weight: 700;
         letter-spacing: -0.02em;
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.35rem;
         position: relative;
-        padding-bottom: 0.75rem;
+        padding: 0.75rem 1rem;
+        padding-bottom: 0.85rem;
         animation: fadeInUp 0.6s ease-out 0.15s backwards;
+        color: var(--text);
+        background: linear-gradient(135deg, rgba(0, 40, 104, 0.08) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(178, 34, 52, 0.08) 100%);
+        border-left: 4px solid var(--usa-blue);
+        border-radius: 0 12px 12px 0;
+        box-shadow: 0 1px 3px rgba(0, 40, 104, 0.06);
     }
 
     .section-title--products i {
-        color: var(--accent-light);
-        font-size: 1.1rem;
-        animation: titleGlow 3s ease-in-out infinite;
+        color: var(--usa-blue);
+        font-size: 1.15rem;
+        margin-right: 0.35rem;
     }
 
     .section-title--products .section-title-text {
-        background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #94a3b8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: var(--text);
     }
 
     .section-title--products::after {
@@ -330,10 +399,10 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 60px;
-        height: 3px;
-        background: linear-gradient(90deg, var(--accent), #8b5cf6);
-        border-radius: 2px;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--usa-blue), var(--usa-red));
+        border-radius: 0 0 12px 0;
         animation: underlineSlide 0.6s ease-out 0.4s backwards;
     }
 
@@ -342,35 +411,54 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1.25rem;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .license-card {
-        background: linear-gradient(165deg, var(--surface) 0%, rgba(18, 18, 26, 0.98) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: #ffffff;
+        border: 1px solid var(--surface2);
         border-radius: 16px;
-        padding: 1.5rem;
-        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        padding: 1.35rem 1.25rem;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 40, 104, 0.04);
         animation: fadeInUp 0.5s ease-out backwards;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .license-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--usa-blue), var(--usa-red));
+        border-radius: 4px 0 0 4px;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+    }
+
+    .license-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(0, 40, 104, 0.2);
+        box-shadow: 0 12px 28px rgba(0, 40, 104, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .license-card:hover::before {
+        opacity: 1;
     }
 
     .licenses-grid .license-card:nth-child(1) { animation-delay: 0.1s; }
     .licenses-grid .license-card:nth-child(2) { animation-delay: 0.2s; }
     .licenses-grid .license-card:nth-child(3) { animation-delay: 0.3s; }
 
-    .license-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(99, 102, 241, 0.2);
-        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
-    }
-
     .license-gauge-top {
-        margin-bottom: 1.25rem;
+        margin-bottom: 0;
     }
     .license-card-header {
         padding-top: 1.25rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--surface2);
     }
 
     .license-card .product-name {
@@ -392,9 +480,9 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--accent-light);
-        background: rgba(99, 102, 241, 0.12);
-        border: 1px solid rgba(99, 102, 241, 0.25);
+        color: var(--usa-blue);
+        background: rgba(0, 40, 104, 0.08);
+        border: 1px solid rgba(0, 40, 104, 0.18);
         padding: 0.3rem 0.6rem;
         border-radius: 8px;
     }
@@ -528,7 +616,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     .progress-label-row .pct.no-expiry {
-        color: var(--accent-light);
+        color: var(--usa-blue);
     }
 
     .progress-bar-outer {
@@ -658,12 +746,12 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     /* Semi-circular gauge – professional & beautiful */
     .gauge-wrap {
-        background: linear-gradient(168deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.99) 100%);
-        border-radius: 16px;
-        padding: 1.75rem 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        margin-bottom: 0.75rem;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+        background: linear-gradient(168deg, #f8fafc 0%, #f1f5f9 100%);
+        border-radius: 14px;
+        padding: 1.25rem 1.2rem;
+        border: 1px solid var(--surface2);
+        margin-bottom: 0;
+        box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(0, 0, 0, 0.05);
         position: relative;
         overflow: hidden;
     }
@@ -675,32 +763,32 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         left: 0;
         right: 0;
         height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        background: linear-gradient(90deg, transparent, rgba(0, 40, 104, 0.12), transparent);
         pointer-events: none;
     }
 
     .gauge-wrap .gauge-title {
-        font-size: 0.625rem;
-        font-weight: 600;
+        font-size: 0.7rem;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.16em;
-        color: var(--text-muted);
-        margin-bottom: 1.1rem;
-        opacity: 0.92;
+        letter-spacing: 0.14em;
+        color: var(--usa-blue);
+        margin-bottom: 0.6rem;
+        opacity: 1;
     }
 
     .gauge-container {
         position: relative;
         width: 100%;
-        max-width: 240px;
-        margin: 0 auto 0.6rem;
+        max-width: 280px;
+        margin: 0 auto 0.35rem;
     }
 
     .gauge-container svg {
         display: block;
         width: 100%;
         height: auto;
-        filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.25));
+        filter: drop-shadow(0 2px 6px rgba(0, 40, 104, 0.12));
     }
 
     .gauge-value-wrap {
@@ -718,53 +806,56 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     .gauge-value-wrap .gauge-value-sublabel { color: var(--text-muted); }
-    .gauge-value-wrap .gauge-value.green + .gauge-value-sublabel { color: #34d399; }
-    .gauge-value-wrap .gauge-value.yellow + .gauge-value-sublabel { color: #fbbf24; }
-    .gauge-value-wrap .gauge-value.red + .gauge-value-sublabel { color: #f87171; }
+    .gauge-value-wrap .gauge-value.green + .gauge-value-sublabel { color: #16a34a !important; }
+    .gauge-value-wrap .gauge-value.yellow + .gauge-value-sublabel { color: #ca8a04 !important; }
+    .gauge-value-wrap .gauge-value.red + .gauge-value-sublabel { color: #dc2626 !important; }
 
     .gauge-value {
         display: inline-block;
-        font-size: 2.4rem;
-        font-weight: 700;
+        font-size: 1.9rem;
+        font-weight: 800;
         letter-spacing: -0.03em;
         line-height: 1.1;
-        padding: 0.5rem 1.25rem;
-        border-radius: 14px;
-        background: rgba(255, 255, 255, 0.035);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        padding: 0.45rem 1rem;
+        border-radius: 12px;
+        background: #ffffff;
+        border: 1px solid var(--surface2);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
+    /* Remaining % colour: green (plenty) → yellow (low) → red (critical) */
     .gauge-value.green,
     .gauge-value.green * {
-        color: #34d399 !important;
+        color: #16a34a !important;
     }
     .gauge-value.green {
-        box-shadow: 0 0 28px rgba(52, 211, 153, 0.2), 0 2px 12px rgba(0, 0, 0, 0.15);
+        border-color: rgba(22, 163, 74, 0.35);
+        box-shadow: 0 2px 10px rgba(22, 163, 74, 0.2), 0 1px 2px rgba(0, 0, 0, 0.06);
     }
 
     .gauge-value.yellow,
     .gauge-value.yellow * {
-        color: #fbbf24 !important;
+        color: #ca8a04 !important;
     }
     .gauge-value.yellow {
-        box-shadow: 0 0 28px rgba(251, 191, 36, 0.2), 0 2px 12px rgba(0, 0, 0, 0.15);
+        border-color: rgba(202, 138, 4, 0.4);
+        box-shadow: 0 2px 10px rgba(202, 138, 4, 0.2), 0 1px 2px rgba(0, 0, 0, 0.06);
     }
 
     .gauge-value.red,
     .gauge-value.red * {
-        color: #f87171 !important;
+        color: #dc2626 !important;
     }
     .gauge-value.red {
-        box-shadow: 0 0 28px rgba(248, 113, 113, 0.2), 0 2px 12px rgba(0, 0, 0, 0.15);
+        border-color: rgba(220, 38, 38, 0.4);
+        box-shadow: 0 2px 10px rgba(220, 38, 38, 0.2), 0 1px 2px rgba(0, 0, 0, 0.06);
     }
 
     .gauge-days {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-bottom: 1rem;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
     }
 
     .gauge-days .passed,
@@ -773,39 +864,39 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 0.85rem 0.6rem;
-        border-radius: 12px;
-        font-size: 0.82rem;
+        padding: 0.6rem 0.5rem;
+        border-radius: 10px;
+        font-size: 0.75rem;
         font-weight: 600;
         text-align: center;
         letter-spacing: 0.02em;
     }
 
     .gauge-days .passed {
-        background: linear-gradient(145deg, rgba(239, 68, 68, 0.1) 0%, rgba(185, 28, 28, 0.06) 100%);
-        border: 1px solid rgba(239, 68, 68, 0.22);
-        color: #fca5a5 !important;
+        background: linear-gradient(145deg, #fef2f2 0%, #fee2e2 100%);
+        border: 1px solid rgba(178, 34, 52, 0.2);
+        color: #B22234 !important;
     }
 
     .gauge-days .passed i {
         display: block;
-        font-size: 1.15rem;
-        margin-bottom: 0.4rem;
-        color: #ef4444 !important;
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+        color: #B22234 !important;
         opacity: 0.95;
     }
 
     .gauge-days .remaining {
-        background: linear-gradient(145deg, rgba(34, 197, 94, 0.1) 0%, rgba(22, 163, 74, 0.06) 100%);
-        border: 1px solid rgba(34, 197, 94, 0.22);
-        color: #6ee7b7 !important;
+        background: linear-gradient(145deg, #f0fdf4 0%, #dcfce7 100%);
+        border: 1px solid rgba(22, 163, 74, 0.2);
+        color: #15803d !important;
     }
 
     .gauge-days .remaining i {
         display: block;
-        font-size: 1.15rem;
-        margin-bottom: 0.4rem;
-        color: #22c55e !important;
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+        color: #16a34a !important;
         opacity: 0.95;
     }
 
@@ -818,19 +909,45 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         margin-top: 0.25rem;
     }
 
-    .gauge-expires {
-        font-size: 0.8rem;
+    .gauge-dates-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem 0.85rem;
+        margin-top: 0.35rem;
+    }
+
+    .gauge-expires,
+    .gauge-start {
+        font-size: 0.78rem;
         font-weight: 600;
-        color: #6ee7b7;
-        padding: 0.55rem 0.9rem;
-        position: center;
+        padding: 0.5rem 0.85rem;
         border-radius: 10px;
-        background: linear-gradient(145deg, rgba(34, 197, 94, 0.1) 0%, rgba(22, 163, 74, 0.06) 100%);
-        border: 1px solid rgba(34, 197, 94, 0.2);
         display: inline-flex;
         align-items: center;
-        gap: 0.45rem;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        gap: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .gauge-start {
+        color: #002868;
+        background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
+        border: 1px solid rgba(0, 40, 104, 0.2);
+    }
+
+    .gauge-start::before {
+        content: '\f133';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        font-size: 0.75rem;
+        opacity: 0.95;
+    }
+
+    .gauge-expires {
+        color: #B22234;
+        background: linear-gradient(145deg, #fef2f2 0%, #fee2e2 100%);
+        border: 1px solid rgba(178, 34, 52, 0.2);
     }
 
     .gauge-expires::before {
@@ -847,14 +964,14 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     .progress-bar-inner.no-expiry {
-        background: linear-gradient(90deg, #4f46e5 0%, #6366f1 50%, #818cf8 100%);
-        box-shadow: 0 0 14px rgba(99, 102, 241, 0.35);
+        background: linear-gradient(90deg, #002868 0%, #1e40af 100%);
+        box-shadow: 0 0 10px rgba(0, 40, 104, 0.3);
     }
 
     .license-status {
-        font-size: 0.85rem;
+        font-size: 0.78rem;
         font-weight: 600;
-        margin-top: 0.35rem;
+        margin-top: 0.2rem;
     }
 
     .license-status.green {
@@ -879,7 +996,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     .license-empty {
         background: var(--surface);
-        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border: 1px dashed var(--surface2);
         border-radius: var(--radius);
         padding: 2rem;
         text-align: center;
@@ -903,7 +1020,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     .stat-box {
         background: var(--surface);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--surface2);
         border-radius: var(--radius-sm);
         padding: 1rem;
         text-align: center;
@@ -946,24 +1063,38 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     .section {
         background: var(--surface);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--surface2);
         border-radius: var(--radius);
         overflow: hidden;
         margin-bottom: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     }
 
     .section-head {
         font-size: 0.95rem;
         font-weight: 600;
         padding: 1rem 1.25rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: none;
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        background: linear-gradient(135deg, rgba(0, 40, 104, 0.08) 0%, rgba(255, 255, 255, 0.5) 45%, rgba(178, 34, 52, 0.08) 100%);
+        border-left: 4px solid var(--usa-blue);
+        border-radius: 0 10px 0 0;
+        box-shadow: 0 1px 2px rgba(0, 40, 104, 0.06);
     }
 
     .section-head i {
-        color: var(--accent);
+        color: var(--usa-blue);
+    }
+
+    .section-head::after {
+        content: '';
+        flex: 1;
+        height: 2px;
+        margin-left: 0.5rem;
+        background: linear-gradient(90deg, transparent, rgba(178, 34, 52, 0.25));
+        border-radius: 2px;
     }
 
     .table-wrap {
@@ -1040,11 +1171,25 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     .footer-note {
         text-align: center;
-        color: var(--text-muted);
-        font-size: 0.78rem;
         margin-top: 2rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--surface2);
+    }
+
+    .footer-note .footer-site {
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .footer-note .footer-sep {
+        margin: 0 0.4rem;
+        color: var(--text-muted);
+    }
+
+    .footer-note .footer-tagline {
+        color: var(--text-muted);
     }
 
     /* Your team – Sales & Technical Associate */
@@ -1053,7 +1198,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         position: relative;
         z-index: 1;
         background: var(--surface);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--surface2);
         border-radius: var(--radius);
         padding: 1.5rem;
     }
@@ -1084,8 +1229,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     .associate-card:hover {
         transform: translateY(-2px);
-        border-color: rgba(99, 102, 241, 0.2);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        border-color: var(--usa-blue);
+        box-shadow: 0 6px 20px rgba(0, 40, 104, 0.1);
     }
 
     .associate-card .icon-wrap {
@@ -1100,8 +1245,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     .associate-card.sales .icon-wrap {
-        background: rgba(99, 102, 241, 0.15);
-        color: var(--accent-light);
+        background: rgba(0, 40, 104, 0.12);
+        color: var(--usa-blue);
     }
 
     .associate-card.tech .icon-wrap {
@@ -1124,7 +1269,71 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         color: var(--text);
     }
 
-    /* Open Case form (sidebar) */
+    /* Main window: Cases and Book appointment */
+    .main-actions-section {
+        margin-bottom: 2rem;
+    }
+
+    .main-actions-grid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 1.5rem;
+        align-items: start;
+    }
+
+    .main-action-block {
+        background: var(--surface);
+        border: 1px solid var(--surface2);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .main-action-block .section-head {
+        margin-bottom: 1rem;
+    }
+
+    .section-subhead {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .section-subhead i {
+        color: var(--usa-blue);
+    }
+
+    .appointment-btn-main {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        padding: 0.9rem 1.75rem;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        min-width: 200px;
+    }
+
+    .sidebar-associates {
+        margin-top: 0.5rem;
+    }
+
+    .sidebar-associates .dashboard-sidebar-item {
+        margin-bottom: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+        .main-actions-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Open Case form (sidebar + main) */
     .case-form-wrap {
         margin-top: 0.5rem;
     }
@@ -1179,8 +1388,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         font-family: inherit;
         font-size: 0.85rem;
         color: var(--text);
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: #ffffff;
+        border: 1px solid var(--surface2);
         border-radius: var(--radius-sm);
         resize: vertical;
         min-height: 80px;
@@ -1194,25 +1403,41 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     .case-form-submit {
         display: inline-flex;
         align-items: center;
-        gap: 0.4rem;
-        padding: 0.55rem 1rem;
-        font-size: 0.85rem;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.7rem 1.35rem;
+        font-size: 0.9rem;
         font-weight: 600;
         color: #fff;
-        background: linear-gradient(135deg, var(--accent), #8b5cf6);
+        letter-spacing: 0.02em;
+        background: linear-gradient(145deg, #1e40af 0%, var(--usa-blue) 50%, #002858 100%);
         border: none;
-        border-radius: var(--radius-sm);
+        border-radius: 12px;
         cursor: pointer;
-        transition: opacity 0.2s;
+        box-shadow: 0 4px 14px rgba(0, 40, 104, 0.35), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    .case-form-submit:hover {
-        opacity: 0.9;
+    .case-form-submit i {
+        font-size: 0.95rem;
+        opacity: 0.95;
+    }
+
+    .case-form-submit:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 40, 104, 0.4), 0 1px 0 rgba(255, 255, 255, 0.25) inset;
+        background: linear-gradient(145deg, #2563eb 0%, #1e40af 50%, var(--usa-blue) 100%);
+    }
+
+    .case-form-submit:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(0, 40, 104, 0.3) inset;
     }
 
     .case-form-submit:disabled {
         opacity: 0.6;
         cursor: not-allowed;
+        transform: none;
     }
 
     .case-form-message {
@@ -1240,8 +1465,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     .status.case-status-in_progress {
-        background: rgba(99, 102, 241, 0.2);
-        color: var(--accent-light);
+        background: rgba(0, 40, 104, 0.15);
+        color: var(--usa-blue);
     }
 
     .status.case-status-closed {
@@ -1253,30 +1478,48 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     .appointment-btn-wrap {
         margin-top: 1.5rem;
         padding-top: 1.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--surface2);
     }
+
     .appointment-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 0.55rem;
         width: 100%;
-        padding: 0.75rem 1rem;
-        font-size: 0.9rem;
+        padding: 0.85rem 1.35rem;
+        font-size: 0.95rem;
         font-weight: 600;
         color: #fff;
-        background: linear-gradient(135deg, #8b5cf6, #6366f1);
+        letter-spacing: 0.02em;
+        background: linear-gradient(145deg, #DC2626 0%, var(--usa-red) 50%, #991b1b 100%);
         border: none;
-        border-radius: var(--radius-sm);
+        border-radius: 12px;
         cursor: pointer;
-        transition: opacity 0.2s, transform 0.2s;
+        box-shadow: 0 4px 14px rgba(178, 34, 52, 0.35), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
-    .appointment-btn:hover {
-        opacity: 0.9;
-        transform: translateY(-1px);
-    }
+
     .appointment-btn i {
-        font-size: 1rem;
+        font-size: 1.05rem;
+        opacity: 0.95;
+    }
+
+    .appointment-btn:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(178, 34, 52, 0.4), 0 1px 0 rgba(255, 255, 255, 0.25) inset;
+        background: linear-gradient(145deg, var(--usa-red-light) 0%, #DC2626 50%, var(--usa-red) 100%);
+    }
+
+    .appointment-btn:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(178, 34, 52, 0.35) inset;
+    }
+
+    .appointment-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
     }
 
     /* Modal Overlay & Container */
@@ -1303,14 +1546,14 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         to { opacity: 1; }
     }
     .modal-container {
-        background: var(--surface);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: #ffffff;
+        border: 1px solid var(--surface2);
         border-radius: var(--radius);
         max-width: 540px;
         width: 100%;
         max-height: 90vh;
         overflow-y: auto;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         animation: slideUp 0.3s ease;
     }
     @keyframes slideUp {
@@ -1319,7 +1562,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
     .modal-header {
         padding: 1.5rem 1.75rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--surface2);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -1334,7 +1577,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         margin: 0;
     }
     .modal-header h3 i {
-        color: var(--accent);
+        color: var(--usa-blue);
     }
     .modal-close {
         background: transparent;
@@ -1351,7 +1594,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         transition: background 0.2s, color 0.2s;
     }
     .modal-close:hover {
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--surface2);
         color: var(--text);
     }
     .modal-body {
@@ -1359,7 +1602,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
     .modal-footer {
         padding: 1.25rem 1.75rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--surface2);
         display: flex;
         gap: 0.75rem;
         justify-content: flex-end;
@@ -1397,8 +1640,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     .appointment-form-select:focus,
     .appointment-form-textarea:focus {
         outline: none;
-        border-color: var(--accent);
-        background: rgba(255, 255, 255, 0.07);
+        border-color: var(--usa-blue);
+        background: #ffffff;
     }
     .appointment-form-textarea {
         resize: vertical;
@@ -1421,40 +1664,51 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
     .appointment-form-submit {
         flex: 1;
-        padding: 0.75rem 1.25rem;
-        font-size: 0.9rem;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
         font-weight: 600;
         color: #fff;
-        background: linear-gradient(135deg, var(--accent), #8b5cf6);
+        letter-spacing: 0.02em;
+        background: linear-gradient(145deg, #DC2626 0%, var(--usa-red) 50%, #991b1b 100%);
         border: none;
-        border-radius: var(--radius-sm);
+        border-radius: 12px;
         cursor: pointer;
-        transition: opacity 0.2s;
+        box-shadow: 0 4px 14px rgba(178, 34, 52, 0.35), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
     }
-    .appointment-form-submit:hover {
-        opacity: 0.9;
+    .appointment-form-submit:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(178, 34, 52, 0.4), 0 1px 0 rgba(255, 255, 255, 0.25) inset;
+        background: linear-gradient(145deg, var(--usa-red-light) 0%, #DC2626 50%, var(--usa-red) 100%);
+    }
+    .appointment-form-submit:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(178, 34, 52, 0.35) inset;
     }
     .appointment-form-submit:disabled {
         opacity: 0.6;
         cursor: not-allowed;
+        transform: none;
     }
     .appointment-form-cancel {
-        padding: 0.75rem 1.25rem;
+        padding: 0.8rem 1.35rem;
         font-size: 0.9rem;
         font-weight: 600;
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        background: #ffffff;
+        border: 1px solid var(--surface2);
+        border-radius: 12px;
         cursor: pointer;
-        transition: background 0.2s;
+        transition: background 0.2s, border-color 0.2s, color 0.2s;
     }
     .appointment-form-cancel:hover {
-        background: rgba(255, 255, 255, 0.08);
+        background: var(--surface);
+        border-color: var(--usa-blue);
+        color: var(--usa-blue);
     }
     .appointment-form-message {
         margin-top: 1rem;
@@ -1483,8 +1737,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         color: var(--success);
     }
     .status.appointment-status-rescheduled {
-        background: rgba(99, 102, 241, 0.2);
-        color: var(--accent-light);
+        background: rgba(0, 40, 104, 0.15);
+        color: var(--usa-blue);
     }
     .status.appointment-status-completed {
         background: rgba(100, 116, 139, 0.2);
@@ -1631,14 +1885,14 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             padding: 0.75rem;
         }
         .header {
-            padding: 1.5rem 1rem;
-            margin-bottom: 1.5rem;
+            padding: 1rem 1rem;
+            margin-bottom: 1.25rem;
         }
         .header h1 {
-            font-size: 1.35rem;
+            font-size: 1.2rem;
         }
         .header p {
-            font-size: 0.85rem;
+            font-size: 0.78rem;
         }
         .section-title {
             font-size: 0.95rem;
@@ -1667,7 +1921,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             padding: 0.4rem 1rem;
         }
         .gauge-container {
-            max-width: 200px;
+            max-width: 240px;
         }
         .gauge-days .passed,
         .gauge-days .remaining {
@@ -1720,26 +1974,29 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             padding: 0.5rem;
         }
         .header {
-            padding: 1.25rem 0.75rem;
+            padding: 0.85rem 0.75rem;
         }
         .header h1 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+        }
+        .header-customer-code {
+            font-size: 0.7rem;
         }
         .section-title--products::after {
             width: 40px;
         }
         .license-card {
-            padding: 1rem;
+            padding: 0.8rem 0.9rem;
         }
         .gauge-value {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
         }
         .gauge-container {
-            max-width: 180px;
+            max-width: 220px;
         }
         .gauge-days {
             grid-template-columns: 1fr;
-            gap: 0.75rem;
+            gap: 0.4rem;
         }
         .stats-strip {
             grid-template-columns: 1fr;
@@ -1783,7 +2040,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             max-width: 120px;
         }
         .sidebar-site-name {
-            font-size: 0.85rem;
+            font-size: 1.05rem;
         }
     }
 
@@ -1863,67 +2120,29 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             </div>
             <?php endif; ?>
 
-            <h2 class="dashboard-sidebar-title" style="margin-top: 1.5rem;"><i class="fas fa-ticket-alt"></i> Open Case
-            </h2>
-            <div class="case-form-wrap">
-                <?php if (empty($can_open_case)): ?>
-                <p class="case-form-blocked"><i class="fas fa-lock"></i> Resolve your current case before opening a new
-                    one.</p>
-                <form id="case-form" class="case-form" action="" method="post" aria-disabled="true">
-                    <input type="hidden" name="customer_code" value="<?= html_escape($customer_code ?? '') ?>">
-                    <div class="case-form-group">
-                        <label for="case-details" class="case-form-label">Details <span
-                                class="required">*</span></label>
-                        <textarea id="case-details" name="details" class="case-form-textarea" rows="4"
-                            placeholder="Describe your issue or request..." disabled></textarea>
-                    </div>
-                    <button type="button" class="case-form-submit" id="case-submit-btn" disabled>
-                        <i class="fas fa-paper-plane"></i> Submit Case
-                    </button>
-                    <div id="case-form-message" class="case-form-message" aria-live="polite"></div>
-                </form>
-                <?php else: ?>
-                <p class="case-form-hint">Case ID is auto-generated on submit (prefix + your code + date).</p>
-                <form id="case-form" class="case-form" action="" method="post">
-                    <input type="hidden" name="customer_code" value="<?= html_escape($customer_code ?? '') ?>">
-                    <div class="case-form-group">
-                        <label for="case-details" class="case-form-label">Details <span
-                                class="required">*</span></label>
-                        <textarea id="case-details" name="details" class="case-form-textarea" rows="4"
-                            placeholder="Describe your issue or request..." required></textarea>
-                    </div>
-                    <button type="submit" class="case-form-submit" id="case-submit-btn">
-                        <i class="fas fa-paper-plane"></i> Submit Case
-                    </button>
-                    <div id="case-form-message" class="case-form-message" aria-live="polite"></div>
-                </form>
-                <?php endif; ?>
-            </div>
-
-            <!-- Book Appointment Button -->
-            <div class="appointment-btn-wrap">
-                <?php if (empty($can_book_appointment)): ?>
-                <p class="case-form-blocked"><i class="fas fa-lock"></i> Complete your current appointment before booking a new one.</p>
-                <button type="button" class="appointment-btn" disabled style="opacity: 0.5; cursor: not-allowed;">
-                    <i class="fas fa-calendar-plus"></i> Book Appointment
-                </button>
-                <?php else: ?>
-                <button type="button" class="appointment-btn" id="open-appointment-modal">
-                    <i class="fas fa-calendar-plus"></i> Book Appointment
-                </button>
-                <?php endif; ?>
+            <!-- Your team (moved to sidebar) -->
+            <h2 class="dashboard-sidebar-title" style="margin-top: 1.5rem;"><i class="fas fa-users"></i> Your team</h2>
+            <div class="sidebar-associates">
+                <div class="dashboard-sidebar-item">
+                    <span class="label"><i class="fas fa-user-tie"></i> Sales Associate</span>
+                    <span class="val"><?= !empty($customer_sales_associate_name) ? html_escape($customer_sales_associate_name) : '—' ?></span>
+                </div>
+                <div class="dashboard-sidebar-item">
+                    <span class="label"><i class="fas fa-user-cog"></i> Technical Associate</span>
+                    <span class="val"><?= !empty($customer_tech_associate_name) ? html_escape($customer_tech_associate_name) : '—' ?></span>
+                </div>
             </div>
         </aside>
 
         <div class="dashboard">
             <header class="header">
-                <span class="header-badge">Licenses &amp; Support</span>
                 <h1>Welcome, <?= html_escape($customer_name) ?></h1>
-                <p>Your active licenses, support status and invoices at a glance.</p>
+                <?php if (!empty($customer->vat_no)): ?>
+                <p class="header-customer-code"><strong>Customer code:</strong> <?= html_escape($customer->vat_no) ?></p>
+                <?php endif; ?>
             </header>
 
             <!-- My licenses / support (last 3 products with feature=1, support duration progress) -->
-            <h2 class="section-title section-title--products"><i class="fas fa-shield-alt"></i> <span class="section-title-text">My active Products, licenses &amp; support</span></h2>
             <?php if (!empty($dashboard_products)): ?>
             <div class="licenses-grid">
                 <?php foreach ($dashboard_products as $lic): ?>
@@ -1941,6 +2160,9 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                             </div>
                         </div>
                         <div class="license-status no-expiry">No expiry set</div>
+                        <div class="gauge-dates-wrap">
+                            <div class="gauge-start">Start <?= date($date_format, strtotime($lic->sale_date)) ?></div>
+                        </div>
                     </div>
                     <?php elseif ($lic->status_class === 'expired'): ?>
                     <div class="license-gauge-top">
@@ -1954,12 +2176,18 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                             </div>
                         </div>
                         <div class="license-status expired">Expired <?= (int)abs($lic->remaining_days) ?> days ago</div>
+                        <div class="gauge-dates-wrap">
+                            <div class="gauge-start">Start <?= date($date_format, strtotime($lic->sale_date)) ?></div>
+                            <?php if (!empty($lic->end_date)): ?>
+                            <div class="gauge-expires">Expires <?= date($date_format, strtotime($lic->end_date)) ?></div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                     <?php else:
                     $passed_days = max(0, (int)$lic->support_duration - (int)$lic->remaining_days);
                     $display_pct = min(100, max(0, (float)$lic->percent_remaining));
-                    $passed_pct = 100 - $display_pct;
-                    $needle_angle = ($passed_pct / 100) * 180 - 90;
+                    /* Needle: 100% remaining → left (-90°), 0% remaining → right (90°) */
+                    $needle_angle = 90 - ($display_pct / 100) * 180;
                     ?>
                     <div class="license-gauge-top">
                         <div class="gauge-wrap">
@@ -1967,12 +2195,13 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                             <div class="gauge-container">
                                 <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
                                     <defs>
-                                        <linearGradient id="gaugeGrad-<?= $lic->sale_id ?>" x1="0%" y1="0%" x2="100%"
+                                        <!-- Arc runs right→left: 0% at right (red), 100% at left (green). Green → yellow → red -->
+                                        <linearGradient id="gaugeGrad-<?= $lic->sale_id ?>" x1="100%" y1="0%" x2="0%"
                                             y2="0%">
-                                            <stop offset="0%" stop-color="#22c55e" />
-                                            <stop offset="35%" stop-color="#eab308" />
-                                            <stop offset="65%" stop-color="#f97316" />
-                                            <stop offset="100%" stop-color="#ef4444" />
+                                            <stop offset="0%" stop-color="#ef4444" />
+                                            <stop offset="35%" stop-color="#f97316" />
+                                            <stop offset="65%" stop-color="#eab308" />
+                                            <stop offset="100%" stop-color="#22c55e" />
                                         </linearGradient>
                                         <filter id="gaugeShadow-<?= $lic->sale_id ?>" x="-20%" y="-20%" width="140%"
                                             height="140%">
@@ -1980,22 +2209,23 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                                                 flood-opacity="0.25" />
                                         </filter>
                                     </defs>
-                                    <path d="M 35 95 A 65 65 0 0 1 165 95" fill="none" stroke="#1e293b" stroke-width="16"
+                                    <!-- Arc anti-clockwise: right (0%) to left (100%) -->
+                                    <path d="M 165 95 A 65 65 0 0 0 35 95" fill="none" stroke="#e2e8f0" stroke-width="16"
                                         stroke-linecap="round" />
-                                    <path d="M 35 95 A 65 65 0 0 1 165 95" fill="none"
+                                    <path d="M 165 95 A 65 65 0 0 0 35 95" fill="none"
                                         stroke="url(#gaugeGrad-<?= $lic->sale_id ?>)" stroke-width="11"
                                         stroke-linecap="round" filter="url(#gaugeShadow-<?= $lic->sale_id ?>)" />
-                                    <circle cx="100" cy="98" r="4" fill="#fff" stroke="rgba(0,0,0,0.15)"
+                                    <circle cx="100" cy="98" r="4" fill="#0f172a" stroke="rgba(0,0,0,0.2)"
                                         stroke-width="0.5" />
                                     <g class="gauge-needle" transform="rotate(<?= $needle_angle ?> 100 98)">
-                                        <line x1="100" y1="98" x2="100" y2="34" stroke="#fff" stroke-width="1.8"
+                                        <line x1="100" y1="98" x2="100" y2="34" stroke="#002868" stroke-width="2"
                                             stroke-linecap="round" />
-                                        <circle cx="100" cy="34" r="2.5" fill="#fff" />
+                                        <circle cx="100" cy="34" r="2.5" fill="#002868" />
                                     </g>
-                                    <text x="36" y="111" fill="rgba(255,255,255,0.65)" font-size="9"
-                                        font-weight="600">0%</text>
-                                    <text x="164" y="111" fill="rgba(255,255,255,0.65)" font-size="9" font-weight="600"
-                                        text-anchor="end">100%</text>
+                                    <text x="36" y="111" fill="#64748b" font-size="9"
+                                        font-weight="600">100%</text>
+                                    <text x="164" y="111" fill="#64748b" font-size="9" font-weight="600"
+                                        text-anchor="end">0%</text>
                                 </svg>
                             </div>
                             <div class="gauge-value-wrap">
@@ -2010,57 +2240,15 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                                     <?= (int)$lic->remaining_days ?> day<?= (int)$lic->remaining_days != 1 ? 's' : '' ?>
                                     remaining</span>
                             </div>
-                            <?php if (!empty($lic->end_date)): ?>
-                            <div class="gauge-expires-wrap">
-                                <div class="gauge-expires">Expires <?= date($date_format, strtotime($lic->end_date)) ?>
-                                </div>
+                            <div class="gauge-dates-wrap">
+                                <div class="gauge-start">Start <?= date($date_format, strtotime($lic->sale_date)) ?></div>
+                                <?php if (!empty($lic->end_date)): ?>
+                                <div class="gauge-expires">Expires <?= date($date_format, strtotime($lic->end_date)) ?></div>
+                                <?php endif; ?>
                             </div>
-                            <?php endif; ?>
                         </div>
                     </div>
                     <?php endif; ?>
-
-                    <?php /* 2. PRODUCT DETAIL SECTION */ ?>
-                    <div class="license-card-header">
-                        <div class="product-name">
-                            <span class="license-badge"><i class="fas fa-id-card"></i> </span>
-                            <span class="product-name-text"><?= html_escape($lic->product_name) ?></span>
-                        </div>
-                        <div class="license-info">
-                            <div class="license-info-item">
-                                <div class="icon-wrap"><i class="fas fa-file-invoice"></i></div>
-                                <div class="content">
-                                    <div class="label">Reference</div>
-                                    <div class="val"><?= html_escape($lic->reference_no) ?></div>
-                                </div>
-                            </div>
-                            <div class="license-info-item">
-                                <div class="icon-wrap calendar"><i class="fas fa-calendar-check"></i></div>
-                                <div class="content">
-                                    <div class="label">Sale date</div>
-                                    <div class="val"><?= date($date_format, strtotime($lic->sale_date)) ?></div>
-                                </div>
-                            </div>
-                            <?php if (!empty($lic->end_date)): ?>
-                            <div class="license-info-item">
-                                <div class="icon-wrap support"><i class="fas fa-calendar-alt"></i></div>
-                                <div class="content">
-                                    <div class="label">Support ends</div>
-                                    <div class="val"><?= date($date_format, strtotime($lic->end_date)) ?></div>
-                                </div>
-                            </div>
-                            <?php endif; ?>
-                        </div>
-                        <?php if ($lic->status_class === 'expired' && !empty($lic->end_date)): ?>
-                        <div class="license-info-item license-info-item-inline" style="margin-top: 0.5rem;">
-                            <div class="icon-wrap support"><i class="fas fa-calendar-alt"></i></div>
-                            <div class="content">
-                                <div class="label">End date</div>
-                                <div class="val"><?= date($date_format, strtotime($lic->end_date)) ?></div>
-                            </div>
-                        </div>
-                        <?php endif; ?>
-                    </div>
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -2072,62 +2260,54 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             </div>
             <?php endif; ?>
 
-            <!-- Your team section -->
-            <section class="associates-section">
-                <h2 class="section-title"><i class="fas fa-users"></i> Your team</h2>
-                <div class="associates-grid">
-                    <div class="associate-card sales">
-                        <div class="icon-wrap"><i class="fas fa-user-tie"></i></div>
-                        <div>
-                            <div class="role">Sales Associate</div>
-                            <div class="name">
-                                <?= !empty($customer_sales_associate_name) ? html_escape($customer_sales_associate_name) : '—' ?>
-                            </div>
+            <!-- Cases and Book Appointment (bottom) -->
+            <section class="section main-actions-section">
+                <div class="main-actions-grid">
+                    <div class="main-action-block case-block">
+                        <h2 class="section-head"><i class="fas fa-ticket-alt"></i> Cases</h2>
+                        <div class="case-form-wrap">
+                            <?php if (empty($can_open_case)): ?>
+                            <p class="case-form-blocked"><i class="fas fa-lock"></i> Resolve your current case before opening a new one.</p>
+                            <form id="case-form" class="case-form" action="" method="post" aria-disabled="true">
+                                <input type="hidden" name="customer_code" value="<?= html_escape($customer_code ?? '') ?>">
+                                <div class="case-form-group">
+                                    <label for="case-details" class="case-form-label">Details <span class="required">*</span></label>
+                                    <textarea id="case-details" name="details" class="case-form-textarea" rows="4" placeholder="Describe your issue or request..." disabled></textarea>
+                                </div>
+                                <button type="button" class="case-form-submit" id="case-submit-btn" disabled><i class="fas fa-paper-plane"></i> Submit Case</button>
+                                <div id="case-form-message" class="case-form-message" aria-live="polite"></div>
+                            </form>
+                            <?php else: ?>
+                            <p class="case-form-hint">Case ID is auto-generated on submit (prefix + your code + date).</p>
+                            <form id="case-form" class="case-form" action="" method="post">
+                                <input type="hidden" name="customer_code" value="<?= html_escape($customer_code ?? '') ?>">
+                                <div class="case-form-group">
+                                    <label for="case-details" class="case-form-label">Details <span class="required">*</span></label>
+                                    <textarea id="case-details" name="details" class="case-form-textarea" rows="4" placeholder="Describe your issue or request..." required></textarea>
+                                </div>
+                                <button type="submit" class="case-form-submit" id="case-submit-btn"><i class="fas fa-paper-plane"></i> Submit Case</button>
+                                <div id="case-form-message" class="case-form-message" aria-live="polite"></div>
+                            </form>
+                            <?php endif; ?>
                         </div>
                     </div>
-                    <div class="associate-card tech">
-                        <div class="icon-wrap"><i class="fas fa-user-cog"></i></div>
-                        <div>
-                            <div class="role">Technical Associate</div>
-                            <div class="name">
-                                <?= !empty($customer_tech_associate_name) ? html_escape($customer_tech_associate_name) : '—' ?>
-                            </div>
-                        </div>
+                    <div class="main-action-block appointment-block">
+                        <h2 class="section-head"><i class="fas fa-calendar-plus"></i> Book appointment</h2>
+                        <?php if (empty($can_book_appointment)): ?>
+                        <p class="case-form-blocked"><i class="fas fa-lock"></i> Complete your current appointment before booking a new one.</p>
+                        <button type="button" class="appointment-btn appointment-btn-main" disabled style="opacity: 0.5; cursor: not-allowed;">
+                            <i class="fas fa-calendar-plus"></i> Book Appointment
+                        </button>
+                        <?php else: ?>
+                        <button type="button" class="appointment-btn appointment-btn-main" id="open-appointment-modal">
+                            <i class="fas fa-calendar-plus"></i> Book Appointment
+                        </button>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>
 
-            <!-- Upcoming Appointments -->
-            <section class="section">
-                <h2 class="section-head"><i class="fas fa-calendar-check"></i> Upcoming Appointments</h2>
-                <div class="table-wrap">
-                    <table id="upcoming-appointments-table"<?= empty($upcoming_appointments) ? ' style="display:none"' : '' ?>>
-                        <thead>
-                            <tr>
-                                <th>Code</th>
-                                <th>Type</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="upcoming-appointments-tbody">
-                            <?php $apt_count = 0; foreach (isset($upcoming_appointments) ? $upcoming_appointments : array() as $apt): if ($apt_count >= 5) break; $apt_count++; ?>
-                            <tr>
-                                <td><?= html_escape($apt->appointment_code) ?></td>
-                                <td><?= html_escape(isset($appointment_types[$apt->appointment_type]) ? $appointment_types[$apt->appointment_type] : $apt->appointment_type) ?></td>
-                                <td><?= date($date_format, strtotime($apt->preferred_date)) ?></td>
-                                <td><?= date('h:i A', strtotime($apt->preferred_time)) ?></td>
-                                <td><span class="status appointment-status-<?= html_escape(str_replace(' ', '_', strtolower($apt->status))) ?>"><?= html_escape($apt->status) ?></span></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <div class="empty-state" id="upcoming-appointments-empty"<?= !empty($upcoming_appointments) ? ' style="display:none"' : '' ?>><i class="fas fa-calendar"></i><br>No upcoming appointments. Click "Book Appointment" to schedule one.</div>
-                </div>
-            </section>
-
-            <p class="footer-note"><?= html_escape($site_name) ?> · Licenses &amp; support dashboard</p>
+            <p class="footer-note"><span class="footer-site"><?= html_escape($site_name) ?></span><span class="footer-sep">·</span><span class="footer-tagline">Licenses &amp; support dashboard</span></p>
         </div>
     </div>
 
@@ -2139,9 +2319,6 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             <?= json_encode(site_url('customer_dashboard/submit_case/'.(isset($customer_code) ? $customer_code : ''))) ?>;
         var csrfName = <?= json_encode(isset($csrf_token_name) ? $csrf_token_name : '') ?>;
         var csrfHash = <?= json_encode(isset($csrf_hash) ? $csrf_hash : '') ?>;
-        var tbody = document.getElementById('case-history-tbody');
-        var table = document.getElementById('case-history-table');
-        var emptyEl = document.getElementById('case-history-empty');
         var messageEl = document.getElementById('case-form-message');
         var submitBtn = document.getElementById('case-submit-btn');
         var detailsInput = document.getElementById('case-details');
@@ -2301,10 +2478,6 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         var form = document.getElementById('appointment-form');
         var messageEl = document.getElementById('appointment-form-message');
         var submitBtn = document.getElementById('appointment-submit-btn');
-        var upcomingTbody = document.getElementById('upcoming-appointments-tbody');
-        var upcomingTable = document.getElementById('upcoming-appointments-table');
-        var upcomingEmpty = document.getElementById('upcoming-appointments-empty');
-
         var submitUrl = <?= json_encode(site_url('customer_dashboard/submit_appointment/'.(isset($customer_code) ? $customer_code : ''))) ?>;
         var csrfName = <?= json_encode(isset($csrf_token_name) ? $csrf_token_name : '') ?>;
         var csrfHash = <?= json_encode(isset($csrf_hash) ? $csrf_hash : '') ?>;
@@ -2342,16 +2515,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         }
 
         function addAppointmentToTable(data) {
-            var tr = document.createElement('tr');
-            tr.innerHTML =
-                '<td>' + escapeHtml(data.appointment_code) + '</td>' +
-                '<td>' + escapeHtml(data.type_label || '') + '</td>' +
-                '<td>' + escapeHtml(data.date_formatted || '') + '</td>' +
-                '<td>' + escapeHtml(data.time_formatted || '') + '</td>' +
-                '<td><span class="status appointment-status-pending">pending</span></td>';
-            if (upcomingTbody) upcomingTbody.insertBefore(tr, upcomingTbody.firstChild);
-            if (upcomingTable) upcomingTable.style.display = '';
-            if (upcomingEmpty) upcomingEmpty.style.display = 'none';
+            // Upcoming Appointments section removed – no DOM update
         }
 
         if (openBtn) {
