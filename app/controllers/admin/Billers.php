@@ -72,7 +72,7 @@ class Billers extends MY_Controller
                 'cf5' => $this->input->post('cf5'),
                 'cf6' => $this->input->post('cf6'),
                 'invoice_footer' => $this->input->post('invoice_footer'),
-                'gst_no' => $this->input->post('gst_no'),
+               // 'gst_no' => $this->input->post('gst_no'),
             );
         } elseif ($this->input->post('add_biller')) {
             $this->session->set_flashdata('error', validation_errors());
@@ -124,7 +124,7 @@ class Billers extends MY_Controller
                 'cf5' => $this->input->post('cf5'),
                 'cf6' => $this->input->post('cf6'),
                 'invoice_footer' => $this->input->post('invoice_footer'),
-                'gst_no' => $this->input->post('gst_no'),
+               // 'gst_no' => $this->input->post('gst_no'),
             );
         } elseif ($this->input->post('edit_biller')) {
             $this->session->set_flashdata('error', validation_errors());
