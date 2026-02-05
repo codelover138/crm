@@ -304,7 +304,7 @@ $(document).ready(function() {
                                             }
                                             ?>
                                                 <?php
-                                            if (false && $Settings->tax1) {
+                                            if (true && $Settings->tax1) {
                                                 echo '<th class="col-md-1">' . lang("product_tax") . '</th>';
                                             }
                                             ?>
@@ -344,15 +344,15 @@ $(document).ready(function() {
                                 <?php if(isset($assign_provider)){ ?>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label
-                                            for="assign_service_provider"><?= lang('Tech_Person', 'Tech Person'); ?></label>
+                                        <label for="assign_service_provider"><?= lang('Tech_Person', 'Tech Person'); ?>
+                                        </label>
                                         <?php
                                     $ts[''] = lang('select').' Tech Person';
                                     foreach ($assign_provider as $provider) {
                                         $ts[$provider->id] = $provider->first_name. ' '.$provider->last_name;
                                     }
                                     $service_provider_value = isset($inv->service_provider) ? $inv->service_provider : '';
-                                    echo form_dropdown('assign_service_provider', $ts, $service_provider_value, 'class="form-control input-tip select" id="assign_service_provider" style="width:100%;"');
+                                    echo form_dropdown('assign_service_provider', $ts, $service_provider_value, 'class="form-control input-tip select" id="assign_service_provider" style="width:100%;" required="required"');
                                     ?>
                                     </div>
                                 </div>
@@ -361,14 +361,15 @@ $(document).ready(function() {
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label
-                                            for="assign_marketing_officers"><?= lang('sales_person', 'sales person'); ?></label>
+                                            for="assign_marketing_officers"><?= lang('sales_person', 'sales person'); ?>
+                                        </label>
                                         <?php
                                     $so[''] = lang('select').' sales person';
                                     foreach ($assign_marketing_officer as $officer) {
                                         $so[$officer->id] = $officer->first_name. ' '.$officer->last_name;
                                     }
                                     $marketing_officer_value = isset($inv->assign_marketing_officers) ? $inv->assign_marketing_officers : '';
-                                    echo form_dropdown('assign_marketing_officers', $so, $marketing_officer_value, 'class="form-control input-tip select" id="assign_marketing_officers" style="width:100%;"');
+                                    echo form_dropdown('assign_marketing_officers', $so, $marketing_officer_value, 'class="form-control input-tip select" id="assign_marketing_officers" style="width:100%;" required="required"');
                                     ?>
                                     </div>
                                 </div>
@@ -377,9 +378,10 @@ $(document).ready(function() {
                                     <div class="form-group">
                                         <label
                                             for="support_duration"><?= lang('Support_duration', 'Support Duration'); ?>
+                                            *
                                             (<?= lang('days', 'days'); ?>)</label>
                                         <input type="number" name="support_duration" id="support_duration" min="0"
-                                            step="1" class="form-control input-tip"
+                                            step="1" class="form-control input-tip" required="required"
                                             value="<?= isset($_POST['support_duration']) ? $_POST['support_duration'] : (isset($inv->support_duration) ? $inv->support_duration : '') ?>" />
                                     </div>
                                 </div>
@@ -390,7 +392,7 @@ $(document).ready(function() {
                         <div class="clearfix"></div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="slpayment_status"><?= lang("payment_status"); ?> *</label>
+                                <label for="slpayment_status"><?= lang("payment_status"); ?> </label>
                                 <?php
                                 $pst = array('pending' => lang('pending'), 'due' => lang('due'), 'partial' => lang('partial'), 'paid' => lang('paid'));
                                 echo form_dropdown('payment_status', $pst, isset($_POST['payment_status']) ? $_POST['payment_status'] : $inv->payment_status, 'class="form-control input-tip" required="required" id="slpayment_status"');

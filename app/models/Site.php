@@ -167,6 +167,21 @@ class Site extends CI_Model
         return FALSE;
     }
 
+    /**
+     * Get all users without warehouse filter (full user list).
+     * Use for technical person / assign_provider dropdown.
+     */
+    public function getAllUsersFull() {
+        $data = array();
+        $q = $this->db->get('users');
+        if ($q->num_rows() > 0) {
+            foreach (($q->result()) as $row) {
+                $data[] = $row;
+            }
+        }
+        return $data;
+    }
+
     public function getProductByID($id) {
         $q = $this->db->get_where('products', array('id' => $id), 1);
         if ($q->num_rows() > 0) {

@@ -25,11 +25,7 @@ class Welcome extends MY_Controller
 
         $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
         $this->data['sales'] = $this->db_model->getLatestSales();
-        $this->data['quotes'] = $this->db_model->getLastestQuotes();
-        $this->data['purchases'] = $this->db_model->getLatestPurchases();
-        $this->data['transfers'] = $this->db_model->getLatestTransfers();
-        $this->data['customers'] = $this->db_model->getLatestCustomers();
-        $this->data['suppliers'] = $this->db_model->getLatestSuppliers();
+      
         $this->data['chatData'] = $this->db_model->getChartData();
         $this->data['stock'] = $this->db_model->getStockValue();
         $this->data['bs'] = $this->db_model->getBestSeller();

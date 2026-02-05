@@ -996,8 +996,21 @@ class Reports extends MY_Controller
     {
         $this->sma->checkPermissions('sales');
         $this->data['error'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('error');
-        $this->data['users'] = $this->reports_model->getStaff();
-        $this->data['warehouses'] = $this->site->getAllWarehouses();
+        if ($this->Owner || $this->Admin) {
+            $this->data['users'] = $this->reports_model->getStaff();
+            $this->data['warehouses'] = $this->site->getAllWarehouses();
+        } else {
+            $user_warehouse_id = $this->session->userdata('warehouse_id');
+            $wh = $user_warehouse_id ? $this->site->getWarehouseByID($user_warehouse_id) : null;
+            $this->data['warehouses'] = $wh ? array($wh) : $this->site->getAllWarehouses();
+            if ($this->session->userdata('view_right') === '2') {
+                $current_user = $this->site->getUser();
+                $this->data['users'] = $current_user ? array($current_user) : array();
+            } else {
+                $staff = $this->reports_model->getStaffByWarehouse($user_warehouse_id);
+                $this->data['users'] = is_array($staff) ? $staff : array();
+            }
+        }
         $this->data['billers'] = $this->site->getAllCompanies('biller');
         $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => admin_url('reports'), 'page' => lang('reports')), array('link' => '#', 'page' => lang('sales_report')));
         $meta = array('page_title' => lang('sales_report'), 'bc' => $bc);
@@ -1024,9 +1037,10 @@ class Reports extends MY_Controller
         /*if (!$this->Owner && !$this->Admin && !$this->session->userdata('view_right')) {
             $user = $this->session->userdata('user_id');
         }*/
-
-        if (!$this->Customer && !$this->Supplier && !$this->Owner && !$this->Admin && $this->session->userdata('view_right') === '2') {
-            $this->datatables->where('sales.service_provider', $this->session->userdata('user_id'))->or_where('sales.created_by', $this->session->userdata('user_id'));
+        // Non-admin/non-owner: only allow last 90 days
+        $min_date_90 = NULL;
+        if (!$this->Owner && !$this->Admin) {
+            $min_date_90 = date('Y-m-d', strtotime('-90 days'));
         }
 
         if ($pdf || $xls) {
@@ -1062,6 +1076,10 @@ class Reports extends MY_Controller
             }
             if ($start_date) {
                 $this->db->where($this->db->dbprefix('sales').'.date BETWEEN "' . $start_date . '" and "' . $end_date . '"');
+            }
+            if (!$this->Customer && !$this->Supplier && !$this->Owner && !$this->Admin && $this->session->userdata('view_right') === '2') {
+                $uid = (int) $this->session->userdata('user_id');
+                $this->db->group_start()->where('sales.service_provider', $uid)->or_where('sales.created_by', $uid)->group_end();
             }
 
             $q = $this->db->get();
@@ -1144,7 +1162,7 @@ class Reports extends MY_Controller
 
         } else {
 
-            $si = "( SELECT sale_id, product_id,SUM(({$this->db->dbprefix('sale_items')}.real_unit_price * ({$this->db->dbprefix('sale_items')}.gst/100))) as pmo,SUM(({$this->db->dbprefix('sale_items')}.real_unit_price * ({$this->db->dbprefix('sale_items')}.cgst/100))) as pmm, serial_no, GROUP_CONCAT(CONCAT({$this->db->dbprefix('sale_items')}.product_name, '__', {$this->db->dbprefix('sale_items')}.quantity) SEPARATOR '___') as item_nane from {$this->db->dbprefix('sale_items')} ";
+            $si = "( SELECT sale_id, MAX({$this->db->dbprefix('sale_items')}.product_id) as product_id, SUM(({$this->db->dbprefix('sale_items')}.real_unit_price * ({$this->db->dbprefix('sale_items')}.gst/100))) as pmo, SUM(({$this->db->dbprefix('sale_items')}.real_unit_price * ({$this->db->dbprefix('sale_items')}.cgst/100))) as pmm, GROUP_CONCAT({$this->db->dbprefix('sale_items')}.serial_no SEPARATOR ' ') as serial_no, GROUP_CONCAT(CONCAT({$this->db->dbprefix('sale_items')}.product_name, '__', {$this->db->dbprefix('sale_items')}.quantity) SEPARATOR '___') as item_nane from {$this->db->dbprefix('sale_items')} ";
             if ($product || $serial) { $si .= " WHERE "; }
             if ($product) {
                 $si .= " {$this->db->dbprefix('sale_items')}.product_id = {$product} ";
@@ -1162,6 +1180,9 @@ class Reports extends MY_Controller
                 ->join('warehouses', 'warehouses.id=sales.warehouse_id', 'left');
                 // ->group_by('sales.id');
 
+            if (!$this->Customer && !$this->Supplier && !$this->Owner && !$this->Admin && $this->session->userdata('view_right') === '2') {
+                $this->datatables->where('sales.service_provider', $this->session->userdata('user_id'))->or_where('sales.created_by', $this->session->userdata('user_id'));
+            }
             if ($user) {
                 $this->datatables->where('sales.created_by', $user);
             }
@@ -1185,6 +1206,9 @@ class Reports extends MY_Controller
             }
             if ($start_date) {
                 $this->datatables->where($this->db->dbprefix('sales').'.date BETWEEN "' . $start_date . '" and "' . $end_date . '"');
+            }
+            if ($min_date_90) {
+                $this->datatables->where($this->db->dbprefix('sales') . '.date >=', $min_date_90);
             }
 
             echo $this->datatables->generate();

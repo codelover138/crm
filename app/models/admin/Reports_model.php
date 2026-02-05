@@ -39,6 +39,31 @@ class Reports_model extends CI_Model
         return FALSE;
     }
 
+    /**
+     * Get staff users in the given warehouse (service center).
+     * Excludes customer (3) and supplier (4) groups; excludes owner (1) if not Admin.
+     */
+    public function getStaffByWarehouse($warehouse_id)
+    {
+        if (!$warehouse_id) {
+            return $this->getStaff();
+        }
+        $this->db->where('warehouse_id', $warehouse_id);
+        if ($this->Admin) {
+            $this->db->where('group_id !=', 1);
+        }
+        $this->db->where('group_id !=', 3)->where('group_id !=', 4);
+        $q = $this->db->get('users');
+        if ($q->num_rows() > 0) {
+            $data = array();
+            foreach (($q->result()) as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return array();
+    }
+
     public function getSalesTotals($customer_id)
     {
 

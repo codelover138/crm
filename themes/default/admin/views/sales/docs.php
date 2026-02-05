@@ -484,9 +484,9 @@ $sale_date_formatted = $this->sma->hrld($inv->date);
                     <div class="field"><span class="field-label">Cardholder Name (as shown on card):</span> <span
                             class="field-value"><?= htmlspecialchars($customer_name); ?></span></div>
                     <div class="field"><span class="field-label">Last 4 digit of Card Number:</span> <span
-                            class="field-value">&nbsp;</span></div>
+                            class="field-value"><?= isset($card_last4) ? htmlspecialchars($card_last4) : '&nbsp;'; ?></span></div>
                     <div class="field"><span class="field-label">Card Type:</span> <span
-                            class="field-value">&nbsp;</span></div>
+                            class="field-value"><?= isset($card_type) ? htmlspecialchars($card_type) : '&nbsp;'; ?></span></div>
                     <div class="field"><span class="field-label">Zip Code:</span> <span
                             class="field-value"><?= htmlspecialchars($customer->postal_code ? $customer->postal_code : ''); ?></span>
                     </div>

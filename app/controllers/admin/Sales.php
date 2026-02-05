@@ -208,6 +208,20 @@ class Sales extends MY_Controller
         $this->data['warehouse'] = $this->site->getWarehouseByID($inv->warehouse_id);
         $this->data['inv'] = $inv;
         $this->data['rows'] = $this->sales_model->getAllInvoiceItems($id);
+        $payments = $this->site->getSalePayments($id);
+        $card_last4 = '';
+        $card_type = '';
+        if ($payments && !empty($payments)) {
+            $first_payment = $payments[0];
+            if (!empty($first_payment->cc_no)) {
+                $card_last4 = strlen($first_payment->cc_no) >= 4 ? substr($first_payment->cc_no, -4) : $first_payment->cc_no;
+            }
+            if (!empty($first_payment->cc_type)) {
+                $card_type = $first_payment->cc_type;
+            }
+        }
+        $this->data['card_last4'] = $card_last4;
+        $this->data['card_type'] = $card_type;
         $this->load->view($this->theme . 'sales/docs', $this->data);
     }
 
@@ -484,6 +498,9 @@ class Sales extends MY_Controller
         $this->form_validation->set_rules('biller', lang("biller"), 'required');
         $this->form_validation->set_rules('sale_status', lang("sale_status"), 'required');
         $this->form_validation->set_rules('payment_status', lang("payment_status"), 'required');
+        $this->form_validation->set_rules('assign_service_provider', lang('Tech_Person') ? lang('Tech_Person') : 'Tech Person', 'required');
+        $this->form_validation->set_rules('assign_marketing_officers', lang('Sales_Person') ? lang('Sales_Person') : 'Sales Person', 'required');
+        $this->form_validation->set_rules('support_duration', lang('Support_duration') ? lang('Support_duration') : 'Support Duration', 'required');
 
         if ($this->form_validation->run() == true) {
 
@@ -700,6 +717,10 @@ class Sales extends MY_Controller
             } else {
                 $payment = array();
             }
+            // Set paid amount on sale when payment is provided (so DB reflects it even before syncSalePayments)
+            if (!empty($payment) && isset($payment['amount'])) {
+                $data['paid'] = $this->sma->formatDecimal($payment['amount']);
+            }
             if (isset($_FILES['document']) && count($_FILES['document']['name']) > 0) {
                 $customer_name = $this->site->getCustomerById($customer_id);
                 $user = $this->site->getUserById($this->session->userdata('user_id'));
@@ -865,8 +886,15 @@ class Sales extends MY_Controller
             $this->data['warehouses'] = $this->site->getAllWarehouses();
             $this->data['tax_rates'] = $this->site->getAllTaxRates();
             $this->data['units'] = $this->site->getAllBaseUnits();
-            $this->data['assign_marketing_officer'] = $this->site->getAllUser();
-            $this->data['assign_provider'] = $this->site->getAllUser();
+            if ($this->Owner || $this->Admin) {
+                $this->data['assign_marketing_officer'] = $this->site->getAllUser();
+                $this->data['default_assign_marketing_officers'] = null;
+            } else {
+                $current_user = $this->site->getUser();
+                $this->data['assign_marketing_officer'] = $current_user ? array($current_user) : $this->site->getAllUser();
+                $this->data['default_assign_marketing_officers'] = $current_user ? $current_user->id : null;
+            }
+            $this->data['assign_provider'] = $this->site->getAllUsersFull(); // Technical person: full user list
             $this->data['users'] = $this->site->getAllUser(); // For agent field
             $this->data['slnumber'] = ''; //$this->site->getReference('so');
             $this->data['payment_ref'] = ''; //$this->site->getReference('pay');
@@ -899,6 +927,9 @@ class Sales extends MY_Controller
         $this->form_validation->set_rules('biller', lang("biller"), 'required');
         $this->form_validation->set_rules('sale_status', lang("sale_status"), 'required');
         $this->form_validation->set_rules('payment_status', lang("payment_status"), 'required');
+        $this->form_validation->set_rules('assign_service_provider', lang('Tech_Person') ? lang('Tech_Person') : 'Tech Person', 'required');
+        $this->form_validation->set_rules('assign_marketing_officers', lang('Sales_Person') ? lang('Sales_Person') : 'Sales Person', 'required');
+        $this->form_validation->set_rules('support_duration', lang('Support_duration') ? lang('Support_duration') : 'Support Duration', 'required');
 
         if ($this->form_validation->run() == true) {
 
@@ -1060,6 +1091,59 @@ class Sales extends MY_Controller
                 $data['igst'] = $total_igst;
             }
 
+            // Build payment array when payment_status is partial or paid (so we can save after updateSale)
+            $edit_payment = array();
+            if ($payment_status == 'partial' || $payment_status == 'paid') {
+                if ($this->input->post('paid_by') == 'deposit') {
+                    if (!$this->site->check_customer_deposit($customer_id, $this->input->post('amount-paid'))) {
+                        $this->session->set_flashdata('error', lang("amount_greater_than_deposit"));
+                        redirect($_SERVER["HTTP_REFERER"]);
+                    }
+                }
+                if ($this->input->post('paid_by') == 'gift_card') {
+                    $gc = $this->site->getGiftCardByNO($this->input->post('gift_card_no'));
+                    $amount_paying = $grand_total >= $gc->balance ? $gc->balance : $grand_total;
+                    $gc_balance = $gc->balance - $amount_paying;
+                    $edit_payment = array(
+                        'date' => $date,
+                        'reference_no' => $this->input->post('payment_reference_no'),
+                        'amount' => $this->sma->formatDecimal($amount_paying),
+                        'paid_by' => $this->input->post('paid_by'),
+                        'cheque_no' => $this->input->post('cheque_no'),
+                        'cc_no' => $this->input->post('gift_card_no'),
+                        'cc_holder' => $this->input->post('pcc_holder'),
+                        'cc_month' => $this->input->post('pcc_month'),
+                        'cc_year' => $this->input->post('pcc_year'),
+                        'cc_type' => $this->input->post('pcc_type'),
+                        'created_by' => $this->session->userdata('user_id'),
+                        'note' => $this->input->post('payment_note'),
+                        'type' => 'received',
+                        'gc_balance' => $gc_balance,
+                    );
+                } else {
+                    $amount_paid = $this->input->post('amount-paid');
+                    $amount_formatted = $this->sma->formatDecimal($amount_paid);
+                    if ($amount_formatted === null || $amount_formatted === '') {
+                        $amount_formatted = $this->sma->formatDecimal($grand_total);
+                    }
+                    $edit_payment = array(
+                        'date' => $date,
+                        'reference_no' => $this->input->post('payment_reference_no'),
+                        'amount' => $amount_formatted,
+                        'paid_by' => $this->input->post('paid_by') ? $this->input->post('paid_by') : 'cash',
+                        'cheque_no' => $this->input->post('cheque_no'),
+                        'cc_no' => $this->input->post('pcc_no'),
+                        'cc_holder' => $this->input->post('pcc_holder'),
+                        'cc_month' => $this->input->post('pcc_month'),
+                        'cc_year' => $this->input->post('pcc_year'),
+                        'cc_type' => $this->input->post('pcc_type'),
+                        'created_by' => $this->session->userdata('user_id'),
+                        'note' => $this->input->post('payment_note'),
+                        'type' => 'received',
+                    );
+                }
+            }
+
             if (isset($_FILES['document']) && count($_FILES['document']['name']) > 0) {
                 $customer_name = $this->site->getCustomerById($customer_id);
                 $user = $this->site->getUserById($this->session->userdata('user_id'));
@@ -1118,6 +1202,27 @@ class Sales extends MY_Controller
         }
 
         if ($this->form_validation->run() == true && $this->sales_model->updateSale($id, $data, $products)) {
+            // Update payments for this sale so paid amount and payment_status are correct
+            $this->db->delete('payments', array('sale_id' => $id));
+            if (!empty($edit_payment)) {
+                if (empty($edit_payment['reference_no'])) {
+                    $edit_payment['reference_no'] = $this->site->getReference('pay');
+                }
+                $edit_payment['sale_id'] = $id;
+                if (isset($edit_payment['gc_balance'])) {
+                    $this->db->update('gift_cards', array('balance' => $edit_payment['gc_balance']), array('card_no' => $edit_payment['cc_no']));
+                    unset($edit_payment['gc_balance']);
+                }
+                if ($edit_payment['paid_by'] == 'deposit') {
+                    $customer = $this->site->getCompanyByID($customer_id);
+                    $this->db->update('companies', array('deposit_amount' => ($customer->deposit_amount - $edit_payment['amount'])), array('id' => $customer->id));
+                }
+                $this->db->insert('payments', $edit_payment);
+                if ($this->site->getReference('pay') == $edit_payment['reference_no']) {
+                    $this->site->updateReference('pay');
+                }
+            }
+            $this->site->syncSalePayments($id);
             $this->session->set_userdata('remove_slls', 1);
             $this->session->set_flashdata('message', lang("sale_updated"));
             admin_redirect($inv->pos ? 'pos/sales' : 'sales');
@@ -1211,8 +1316,13 @@ class Sales extends MY_Controller
             $this->data['units'] = $this->site->getAllBaseUnits();
             $this->data['tax_rates'] = $this->site->getAllTaxRates();
             $this->data['warehouses'] = $this->site->getAllWarehouses();
-            $this->data['assign_marketing_officer'] = $this->site->getAllUser();
-            $this->data['assign_provider'] = $this->site->getAllUser();
+            if ($this->Owner || $this->Admin) {
+                $this->data['assign_marketing_officer'] = $this->site->getAllUser();
+            } else {
+                $current_user = $this->site->getUser();
+                $this->data['assign_marketing_officer'] = $current_user ? array($current_user) : $this->site->getAllUser();
+            }
+            $this->data['assign_provider'] = $this->site->getAllUsersFull(); // Technical person: full user list
             $this->data['payment_ref'] = $this->site->getReference('pay');
             $this->data['allow_discount'] = ($this->Owner || $this->Admin || $this->session->userdata('allow_discount'));
             $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => admin_url('sales'), 'page' => lang('sales')), array('link' => '#', 'page' => lang('edit_sale')));
@@ -2877,7 +2987,7 @@ class Sales extends MY_Controller
         } else {
 
             $this->data['inv'] = $inv;
-            $this->data['assign_provider'] = $this->site->getAllUser();
+            $this->data['assign_provider'] = $this->site->getAllUsersFull(); // Technical person: full user list
             $this->data['returned'] = FALSE;
             if ($this->data['inv']->sale_status == 'returned' || $this->data['inv']->return_id) {
                 $this->data['returned'] = TRUE;
