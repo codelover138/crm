@@ -193,6 +193,27 @@ class Reports_model extends CI_Model
         return $q->num_rows() > 0 ? $q->row() : null;
     }
 
+    /**
+     * Get customer's most recent sale that has support_duration set (for dashboard fixed service gauges).
+     * Prefers the latest sale with support_duration > 0 so "support duration passed" can be shown correctly.
+     * Returns one row: id (sale_id), date (sale_date), support_duration; or null if no sale / no support_duration column.
+     */
+    public function getCustomerLastSaleSupport($customer_id)
+    {
+        $sales = $this->db->dbprefix('sales');
+        if (!$this->db->field_exists('support_duration', 'sales')) {
+            return null;
+        }
+        $this->db->select("{$sales}.id, {$sales}.date, {$sales}.support_duration", FALSE)
+            ->from($sales)
+            ->where('customer_id', (int)$customer_id)
+            ->where("{$sales}.support_duration >", 0)
+            ->order_by($sales . '.id', 'DESC')
+            ->limit(1);
+        $q = $this->db->get();
+        return $q->num_rows() > 0 ? $q->row() : null;
+    }
+
     public function getStockValue()
     {
         $q = $this->db->query("SELECT SUM(by_price) as stock_by_price, SUM(by_cost) as stock_by_cost FROM ( Select COALESCE(sum(" . $this->db->dbprefix('warehouses_products') . ".quantity), 0)*price as by_price, COALESCE(sum(" . $this->db->dbprefix('warehouses_products') . ".quantity), 0)*cost as by_cost FROM " . $this->db->dbprefix('products') . " JOIN " . $this->db->dbprefix('warehouses_products') . " ON " . $this->db->dbprefix('warehouses_products') . ".product_id=" . $this->db->dbprefix('products') . ".id GROUP BY " . $this->db->dbprefix('products') . ".id )a");

@@ -38,30 +38,73 @@ class Customer_dashboard extends CI_Controller {
         $sales_list = $this->reports_model->getCustomerSalesList($customer_id, 15);
         $quotes_list = $this->reports_model->getCustomerQuotesList($customer_id, 10);
 
-        // Active support: last 3 featured products (by product id desc); only if customer has a sale; use latest sale's support duration
-        $dashboard_products_raw = $this->reports_model->getCustomerDashboardProducts($customer_id, 3);
-        $dashboard_products = array();
+        // Fixed service gauges: Support, Security, Firewall — duration from last sale support_duration
+        $last_sale_support = $this->reports_model->getCustomerLastSaleSupport($customer_id);
+        $dashboard_services = array();
         $today = new DateTime('today');
-        foreach ($dashboard_products_raw as $row) {
-            $support_days = isset($row->support_duration) ? (int)$row->support_duration : 0;
-            $sale_date = new DateTime($row->sale_date);
+        $service_names = array('Support', 'Security', 'Firewall');
+        $base_data = array(
+            'sale_id' => 0,
+            'sale_date' => null,
+            'support_duration' => 0,
+            'end_date' => null,
+            'remaining_days' => null,
+            'percent_remaining' => null,
+            'status_class' => 'no-expiry',
+        );
+        if ($last_sale_support) {
+            $support_days = isset($last_sale_support->support_duration) ? (int)$last_sale_support->support_duration : 0;
+            $sale_date = new DateTime($last_sale_support->date);
+            $sale_date->setTime(0, 0, 0);
+            $today->setTime(0, 0, 0);
+            // Expiry = sale date + support_duration (days)
             $end_date = $support_days > 0 ? (clone $sale_date)->modify("+{$support_days} days") : null;
-            $remaining_days = null; // days from today to end_date (negative if expired)
+            $remaining_days = null;
             $percent_remaining = null;
             $status_class = 'no-expiry';
             if ($end_date) {
-                $interval = $today->diff($end_date);
-                $remaining_days = ($end_date < $today) ? -$interval->days : $interval->days;
-                if ($end_date < $today) {
+                $end_date->setTime(0, 0, 0);
+                $today_str = $today->format('Y-m-d');
+                $end_date_str = $end_date->format('Y-m-d');
+                $support_passed = ($end_date_str < $today_str);
+                if ($support_passed) {
                     $percent_remaining = 0;
                     $status_class = 'expired';
+                    $remaining_days = (int) $today->diff($end_date)->days;
+                    $remaining_days = -abs($remaining_days);
                 } else {
-                    $total_days = $sale_date->diff($end_date)->days;
+                    $interval = $today->diff($end_date, true);
+                    $remaining_days = (int) $interval->days;
+                    $total_days = (int) $sale_date->diff($end_date)->days;
                     $percent_remaining = $total_days > 0 ? min(100, round(($remaining_days / $total_days) * 100)) : 100;
-                    // As remaining decreases: green (>40%) → yellow (15–40%) → red (0–15%)
                     $status_class = $percent_remaining > 40 ? 'green' : ($percent_remaining > 15 ? 'yellow' : 'red');
                 }
             }
+            $base_data = array(
+                'sale_id' => (int)$last_sale_support->id,
+                'sale_date' => $last_sale_support->date,
+                'support_duration' => $support_days,
+                'end_date' => $end_date ? $end_date->format('Y-m-d') : null,
+                'remaining_days' => $remaining_days,
+                'percent_remaining' => $percent_remaining,
+                'status_class' => $status_class,
+            );
+        }
+        foreach ($service_names as $name) {
+            $dashboard_services[] = (object)array_merge(array('service_name' => $name), $base_data);
+        }
+
+        // Header expiry: from last sale date + support_duration days (same as gauge)
+        $support_expiry_date_formatted = null;
+        if (!empty($dashboard_services) && !empty($dashboard_services[0]->end_date)) {
+            $df = ($sd = $this->site->getDateFormat($this->Settings->dateformat)) ? $sd->php : 'd/m/Y';
+            $support_expiry_date_formatted = date($df, strtotime($dashboard_services[0]->end_date));
+        }
+
+        // Sales & Technical Associate from most recent sale (for dashboard "Your team" section)
+        $dashboard_products = array();
+        $dashboard_products_raw = $this->reports_model->getCustomerDashboardProducts($customer_id, 1);
+        foreach ($dashboard_products_raw as $row) {
             $sales_associate_name = '';
             $tech_associate_name = '';
             if (!empty($row->assign_marketing_officers)) {
@@ -72,20 +115,7 @@ class Customer_dashboard extends CI_Controller {
                 $u = $this->site->getUserById($row->service_provider);
                 if ($u) $tech_associate_name = trim(($u->first_name ?? '') . ' ' . ($u->last_name ?? ''));
             }
-            $dashboard_products[] = (object)array(
-                'product_name' => $row->product_name,
-                'product_code' => $row->product_code,
-                'sale_id' => $row->sale_id,
-                'reference_no' => $row->reference_no,
-                'sale_date' => $row->sale_date,
-                'support_duration' => $support_days,
-                'end_date' => $end_date ? $end_date->format('Y-m-d') : null,
-                'remaining_days' => $remaining_days,
-                'percent_remaining' => $percent_remaining,
-                'status_class' => $status_class,
-                'sales_associate_name' => $sales_associate_name,
-                'tech_associate_name' => $tech_associate_name,
-            );
+            $dashboard_products[] = (object)array('sales_associate_name' => $sales_associate_name, 'tech_associate_name' => $tech_associate_name);
         }
 
         $total_amount = $totals ? (float)$totals->total_amount : 0;
@@ -93,6 +123,14 @@ class Customer_dashboard extends CI_Controller {
         $balance = $total_amount - $paid_amount;
 
         $customer_name = trim(($customer->company && $customer->company != '-') ? $customer->company : ($customer->name . ' ' . trim($customer->last_name ?? '')));
+        $person_name = trim(($customer->name ?? '') . ' ' . trim($customer->last_name ?? ''));
+        $company_name = ($customer->company && $customer->company != '-') ? trim($customer->company) : '';
+        $header_secondary_name = '';
+        if ($customer_name === $company_name && $person_name !== '') {
+            $header_secondary_name = $person_name;
+        } elseif ($customer_name !== $company_name && $company_name !== '') {
+            $header_secondary_name = $company_name;
+        }
 
         // Sales & Technical Associate from most recent sale (for dashboard "Your team" section)
         $customer_sales_associate_name = '';
@@ -100,7 +138,8 @@ class Customer_dashboard extends CI_Controller {
         if (!empty($dashboard_products)) {
             $customer_sales_associate_name = $dashboard_products[0]->sales_associate_name ?? '';
             $customer_tech_associate_name = $dashboard_products[0]->tech_associate_name ?? '';
-        } else {
+        }
+        if ($customer_sales_associate_name === '' || $customer_tech_associate_name === '') {
             $latest_sale = $this->reports_model->getCustomerLatestSaleAssociates($customer_id);
             if ($latest_sale) {
                 if (!empty($latest_sale->assign_marketing_officers)) {
@@ -116,8 +155,11 @@ class Customer_dashboard extends CI_Controller {
 
         $this->data['customer'] = $customer;
         $this->data['customer_name'] = $customer_name;
+        $this->data['header_secondary_name'] = $header_secondary_name;
         $this->data['customer_sales_associate_name'] = $customer_sales_associate_name;
         $this->data['customer_tech_associate_name'] = $customer_tech_associate_name;
+        $this->data['dashboard_services'] = $dashboard_services;
+        $this->data['support_expiry_date_formatted'] = $support_expiry_date_formatted;
         $this->data['dashboard_products'] = $dashboard_products;
         $this->data['sales_list'] = $sales_list;
         $this->data['quotes_list'] = $quotes_list;
