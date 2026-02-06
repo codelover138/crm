@@ -52,8 +52,9 @@ class Cases extends MY_Controller
         $action .= '</ul></div></div>';
 
         $this->load->library('datatables');
+        $cases_table = $this->db->dbprefix('customer_cases');
         $this->datatables
-            ->select($this->db->dbprefix('customer_cases') . ".id as id, case_code, details, status, created_at, " . $this->db->dbprefix('companies') . ".name as customer_name")
+            ->select($cases_table . ".id as id, case_code, details, status, DATE(" . $cases_table . ".created_at) as created_at, " . $this->db->dbprefix('companies') . ".name as customer_name")
             ->from('customer_cases')
             ->join('companies', 'companies.id = customer_cases.customer_id', 'left')
             ->add_column("Actions", $action, "id");

@@ -96,9 +96,15 @@ class Customer_dashboard extends CI_Controller {
 
         // Header expiry: from last sale date + support_duration days (same as gauge)
         $support_expiry_date_formatted = null;
-        if (!empty($dashboard_services) && !empty($dashboard_services[0]->end_date)) {
+        $support_start_date_formatted = null;
+        if (!empty($dashboard_services)) {
             $df = ($sd = $this->site->getDateFormat($this->Settings->dateformat)) ? $sd->php : 'd/m/Y';
-            $support_expiry_date_formatted = date($df, strtotime($dashboard_services[0]->end_date));
+            if (!empty($dashboard_services[0]->end_date)) {
+                $support_expiry_date_formatted = date($df, strtotime($dashboard_services[0]->end_date));
+            }
+            if (!empty($dashboard_services[0]->sale_date)) {
+                $support_start_date_formatted = date($df, strtotime($dashboard_services[0]->sale_date));
+            }
         }
 
         // Sales & Technical Associate from most recent sale (for dashboard "Your team" section)
@@ -160,6 +166,7 @@ class Customer_dashboard extends CI_Controller {
         $this->data['customer_tech_associate_name'] = $customer_tech_associate_name;
         $this->data['dashboard_services'] = $dashboard_services;
         $this->data['support_expiry_date_formatted'] = $support_expiry_date_formatted;
+        $this->data['support_start_date_formatted'] = $support_start_date_formatted;
         $this->data['dashboard_products'] = $dashboard_products;
         $this->data['sales_list'] = $sales_list;
         $this->data['quotes_list'] = $quotes_list;
@@ -187,6 +194,24 @@ class Customer_dashboard extends CI_Controller {
         $this->data['duration_options'] = $this->customer_appointment_model->getDurationOptions();
         $this->data['can_book_appointment'] = !$this->customer_appointment_model->hasActiveAppointment($customer_id);
 
+        // Support This month – open cases count and appointments this month (for right-side card)
+        $open_cases_count = 0;
+        $appointments_this_month = 0;
+        $this_month = date('Y-m');
+        foreach ($this->data['case_list'] as $c) {
+            if (isset($c->status) && $c->status !== 'closed') {
+                $open_cases_count++;
+            }
+        }
+        foreach ($this->data['appointment_list'] as $a) {
+            $pref = isset($a->preferred_date) ? $a->preferred_date : (isset($a->created_at) ? $a->created_at : null);
+            if ($pref && date('Y-m', strtotime($pref)) === $this_month) {
+                $appointments_this_month++;
+            }
+        }
+        $this->data['support_open_cases_count'] = $open_cases_count;
+        $this->data['support_appointments_this_month'] = $appointments_this_month;
+
         // CSRF token for AJAX case submit
         $this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
         $this->data['csrf_hash'] = $this->security->get_csrf_hash();
@@ -198,31 +223,34 @@ class Customer_dashboard extends CI_Controller {
      * AJAX: Submit a new case. Expects POST details. Returns JSON.
      */
     public function submit_case($code = NULL) {
-        header('Content-Type: application/json');
-        if (empty($code) || !$this->input->is_ajax_request()) {
-            echo json_encode(array('success' => false, 'message' => 'Invalid request.'));
-            return;
+        if (ob_get_level()) {
+            ob_end_clean();
         }
-        $customer = $this->site->getCompanyByCustomerCode($code);
-        if (!$customer) {
-            echo json_encode(array('success' => false, 'message' => 'Customer not found.'));
-            return;
+        ob_start();
+        header('Content-Type: application/json; charset=utf-8');
+        $json = '';
+        if (empty($code)) {
+            $json = json_encode(array('success' => false, 'message' => 'Invalid request.'));
+        } else {
+            $customer = $this->site->getCompanyByCustomerCode($code);
+            if (!$customer) {
+                $json = json_encode(array('success' => false, 'message' => 'Customer not found.'));
+            } else {
+                $details = $this->input->post('details');
+                $customer_code = isset($customer->customer_code) ? $customer->customer_code : $code;
+                $result = $this->customer_case_model->add($customer->id, $details, $customer_code);
+                if (!empty($result['success'])) {
+                    $date_format = ($sd = $this->site->getDateFormat($this->Settings->dateformat)) ? $sd->php : 'd/m/Y';
+                    $result['date_formatted'] = date($date_format, strtotime($result['created_at']));
+                    $result['status'] = 'open';
+                    $email_result = $this->_sendCaseEmails($customer, $result['case_code'], $details, $result['created_at'], $date_format);
+                    $result['email_sent'] = $email_result;
+                }
+                $json = json_encode($result);
+            }
         }
-        if ($this->customer_case_model->hasOpenCase($customer->id)) {
-            echo json_encode(array('success' => false, 'message' => 'You cannot open a new case until your current case is resolved (closed).'));
-            return;
-        }
-        $details = $this->input->post('details');
-        $customer_code = isset($customer->customer_code) ? $customer->customer_code : $code;
-        $result = $this->customer_case_model->add($customer->id, $details, $customer_code);
-        if (!empty($result['success'])) {
-            $date_format = ($sd = $this->site->getDateFormat($this->Settings->dateformat)) ? $sd->php : 'd/m/Y';
-            $result['date_formatted'] = date($date_format, strtotime($result['created_at']));
-            $result['status'] = 'open';
-            $email_result = $this->_sendCaseEmails($customer, $result['case_code'], $details, $result['created_at'], $date_format);
-            $result['email_sent'] = $email_result;
-        }
-        echo json_encode($result);
+        ob_end_clean();
+        echo $json;
     }
 
     /**

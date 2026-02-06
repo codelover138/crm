@@ -45,9 +45,6 @@ class Customer_case_model extends CI_Model {
         if ($details === '') {
             return array('success' => false, 'message' => 'Details are required.');
         }
-        if ($this->hasOpenCase($customer_id)) {
-            return array('success' => false, 'message' => 'You cannot open a new case until your current case is resolved (closed).');
-        }
 
         $slug = $customer_code !== null && $customer_code !== '' 
             ? preg_replace('/[^a-zA-Z0-9\-]/', '', $customer_code) 

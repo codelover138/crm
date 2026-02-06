@@ -308,31 +308,35 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         max-width: 100%;
         min-width: 0;
         margin: 0;
-        padding: 0.4rem 0.5rem;
+        padding: 0.5rem;
         gap: 0.5rem;
         min-height: 0;
         height: 100vh;
         align-items: stretch;
+        box-sizing: border-box;
         background: #E7E8FF;
         z-index: 1;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     }
 
-    /* Same height for both panels so bottoms align (viewport minus wrap padding) */
+    /* Equal gap left/right; full height for all three columns */
     .dashboard-sidebar,
-    .dashboard {
-        min-height: calc(100vh - 0.8rem);
+    .dashboard,
+    .dashboard-right {
+        min-height: calc(100vh - 1rem);
+        font-size: 1.18rem;
     }
 
     .dashboard-sidebar {
-        width: 340px;
-        flex-shrink: 0;
+        width: 23%;
+        /*  flex: 0 0 23%; */
+        min-width: 0;
         display: flex;
         flex-direction: column;
         background: #E7E8FF;
         border: 1px solid var(--surface2);
         border-radius: 10px;
-        margin: 5px;
+        margin: 0;
         /*   padding: 0.5rem 0.6rem; */
         position: relative;
         animation: slideInLeft 0.5s ease-out;
@@ -473,12 +477,6 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         }
     }
 
-    @media (min-width: 993px) {
-        .page-footer {
-            left: calc(340px + 0.5rem + 0.5rem);
-            right: 0.5rem;
-        }
-    }
 
     .sidebar-card {
         background: #ffffff;
@@ -511,20 +509,75 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         border-radius: 3px;
     }
 
-    .sidebar-card-details {
-        padding: 0.75rem 0.6rem 1rem;
-        flex: 1;
+    .sidebar-card-your-details,
+    .sidebar-card-your-team,
+    .sidebar-card-contact {
+        padding: 0rem 0.6rem 1rem;
+    }
+
+    .sidebar-card-your-details {
+        flex: 0 0 auto;
+    }
+
+    .sidebar-card-your-team {
+        flex: 0 0 auto;
         min-height: 0;
         display: flex;
         flex-direction: column;
+        padding-top: 0.5rem;
+        padding-bottom: 0.65rem;
     }
 
-    .sidebar-card-details .dashboard-sidebar-title {
+    .sidebar-card-your-team .dashboard-sidebar-title {
+        margin-bottom: 0.5rem;
+        padding: 0.6rem 1rem;
+    }
+
+    .sidebar-card-your-details .dashboard-sidebar-title,
+    .sidebar-card-your-team .dashboard-sidebar-title,
+    .sidebar-card-contact .dashboard-sidebar-title {
         margin-top: 0;
     }
 
-    .sidebar-card-details .dashboard-sidebar-title.sidebar-title-second {
-        margin-top: 0.75rem;
+    .sidebar-card-your-team .sidebar-associates {
+        margin-top: 0.2rem;
+    }
+
+    .sidebar-card-your-team .sidebar-associates .dashboard-sidebar-item {
+        margin-bottom: 0.4rem;
+        font-size: 0.95rem;
+    }
+
+    .sidebar-card-your-team .sidebar-associates .dashboard-sidebar-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .sidebar-card-your-team .dashboard-sidebar-item .label {
+        font-size: 0.82rem;
+    }
+
+    .sidebar-card-your-team .dashboard-sidebar-item .val {
+        font-size: 0.95rem;
+    }
+
+    .sidebar-contact-line {
+        margin: 0.35rem 0;
+        font-size: 1.08rem;
+        font-weight: 600;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .sidebar-contact-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5rem;
+        min-width: 1.5rem;
+        color: #F04F23;
+        font-size: 0.9rem;
     }
 
     .sidebar-card-brand .sidebar-logo {
@@ -676,12 +729,23 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     .dashboard {
-        flex: 1;
+        flex: 0 0 54%;
+        width: 54%;
         min-width: 0;
         min-height: 0;
         align-self: stretch;
-        max-width: none;
-        margin: 5px;
+        margin: 0;
+        padding: 0.5rem 0.6rem;
+        padding-bottom: 1rem;
+    }
+
+    .dashboard-right {
+        /*  flex: 0 0 23%; */
+        width: 23%;
+        min-width: 0;
+        align-self: stretch;
+        min-height: calc(100vh - 1rem);
+        margin: 0;
         padding: 0.5rem 0.6rem;
         padding-bottom: 1rem;
         display: flex;
@@ -1234,7 +1298,9 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     .gauge-value {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
         font-size: 0.82rem;
         font-weight: 700;
         letter-spacing: -0.02em;
@@ -1244,6 +1310,25 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         background: #ffffff;
         border: 1px solid var(--surface2);
         box-shadow: 0 2px 4px rgba(30, 41, 59, 0.2);
+    }
+
+    .gauge-value-dot {
+        width: 0.4rem;
+        height: 0.4rem;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .gauge-value.green .gauge-value-dot {
+        background: var(--success);
+    }
+
+    .gauge-value.red .gauge-value-dot {
+        background: var(--danger);
+    }
+
+    .gauge-value.yellow .gauge-value-dot {
+        background: #ca8a04;
     }
 
     /* Remaining % colour: green (plenty) → yellow (low) → red (critical) */
@@ -1441,6 +1526,437 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     .footer-note .footer-tagline {
         color: var(--text-muted);
+    }
+
+    /* Right-side support cards (Technical support, Service details, Contact us) */
+    .support-cards-section {
+        margin: 0;
+        flex: 1 1 auto;
+    }
+
+    .support-cards-column {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        height: 100%;
+    }
+
+    .support-card {
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        box-shadow: 0 2px 12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 1;
+        position: relative;
+        transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+        animation: supportCardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+
+    .support-card:nth-child(1) {
+        animation-delay: 0.05s;
+    }
+
+    .support-card:nth-child(2) {
+        animation-delay: 0.15s;
+    }
+
+    .support-card:nth-child(3) {
+        animation-delay: 0.25s;
+    }
+
+    .support-card:nth-child(4) {
+        animation-delay: 0.35s;
+    }
+
+    .support-card::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(0, 71, 255, 0.35), rgba(240, 79, 35, 0.25));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .support-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(0, 71, 255, 0.08);
+        border-color: rgba(0, 40, 104, 0.15);
+    }
+
+    .support-card:hover::before {
+        opacity: 1;
+    }
+
+    .support-card-technical {
+        padding: 0;
+        border-left: 4px solid #002868;
+    }
+
+    .support-card-technical-header {
+        padding: 0.9rem 1rem;
+        background: linear-gradient(135deg, #0047ff 0%, #002868 50%, #001a3d 100%);
+        background-size: 200% 200%;
+        animation: supportHeaderShift 8s ease-in-out infinite;
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 0.75rem;
+    }
+
+    .support-card-icon-header {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.28rem;
+        flex-shrink: 0;
+        animation: supportIconIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.2s backwards;
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .support-card:hover .support-card-icon-header {
+        animation: supportIconRing 0.6s ease;
+    }
+
+    .support-card-icon-header i {
+        color: #fff;
+    }
+
+    .support-card-technical-header::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+        animation: supportShine 3s ease-in-out infinite;
+    }
+
+    .support-card-technical-title {
+        font-size: 1.12rem;
+        font-weight: 600;
+        opacity: 0.95;
+        letter-spacing: 0.02em;
+        position: relative;
+        z-index: 1;
+    }
+
+    .support-card-technical-phone {
+        margin-top: 0.35rem;
+        display: inline-block;
+        padding: 0.35rem 0.9rem;
+        font-size: 1.26rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        background: rgba(255, 255, 255, 0.95);
+        color: #002868;
+        border-radius: 999px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
+        z-index: 1;
+    }
+
+    .support-card-technical-phone:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .support-card-technical-body {
+        padding: 0.75rem 1rem 0.9rem;
+        font-size: 1.08rem;
+        color: var(--text-muted);
+        line-height: 1.45;
+    }
+
+    .support-card-service,
+    .support-card-stats,
+    .support-card-activity {
+        padding: 0.4rem 0.75rem 0.5rem;
+        border-left: 4px solid var(--accent);
+    }
+
+    .support-card-service .support-card-heading,
+    .support-card-stats .support-card-heading,
+    .support-card-activity .support-card-heading {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-bottom: 0.28rem;
+        font-size: 1rem;
+    }
+
+    .support-card-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.9rem;
+        height: 1.9rem;
+        min-width: 1.9rem;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(0, 71, 255, 0.12), rgba(0, 40, 104, 0.08));
+        color: var(--accent);
+        font-size: 0.95rem;
+        margin-right: 0.4rem;
+        animation: supportIconIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+        transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+
+    .support-card-service .support-card-icon,
+    .support-card-stats .support-card-icon,
+    .support-card-activity .support-card-icon {
+        width: 1.45rem;
+        height: 1.45rem;
+        min-width: 1.45rem;
+        font-size: 0.95rem;
+    }
+
+    .support-card-service .support-card-icon {
+        animation-delay: 0.2s;
+    }
+
+    .support-card-activity .support-card-icon {
+        animation-delay: 0.35s;
+    }
+
+    .support-card-contact .support-card-icon {
+        animation-delay: 0.3s;
+    }
+
+    .support-card:hover .support-card-icon {
+        transform: scale(1.1) rotate(-5deg);
+        background: linear-gradient(135deg, rgba(0, 71, 255, 0.2), rgba(0, 40, 104, 0.15));
+        color: #002868;
+    }
+
+    .support-card-heading {
+        margin: 0 0 0.6rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: 0.02em;
+    }
+
+    .support-details-list {
+        margin: 0;
+        padding: 0;
+    }
+
+    .support-details-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.75rem;
+        font-size: 0.98rem;
+        padding: 0.06rem 0;
+        border-bottom: 1px dashed var(--surface2);
+    }
+
+    .support-details-row:last-child {
+        border-bottom: none;
+    }
+
+    .support-details-row dt {
+        margin: 0;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .support-details-row dd {
+        margin: 0;
+        font-weight: 600;
+        color: var(--text);
+        text-align: right;
+    }
+
+    .support-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.25rem 0.55rem;
+        border-radius: 999px;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #374151;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .support-status-dot {
+        width: 0.4rem;
+        height: 0.4rem;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .support-status-badge--active .support-status-dot {
+        background: #22c55e;
+    }
+
+    .support-status-badge--expired .support-status-dot {
+        background: #ef4444;
+    }
+
+    .support-status-badge--inactive .support-status-dot {
+        background: #9ca3af;
+    }
+
+    .support-stats-list {
+        margin: 0;
+        padding: 0;
+    }
+
+    .support-stats-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.12rem 0;
+        font-size: 0.98rem;
+        border-bottom: 1px dashed var(--surface2);
+    }
+
+    .support-stats-row:last-child {
+        border-bottom: none;
+    }
+
+    .support-stats-label {
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .support-stats-label i {
+        margin-right: 0.35rem;
+        color: var(--accent);
+    }
+
+    .support-stats-value {
+        font-weight: 700;
+        color: var(--text);
+        font-size: 1.05rem;
+    }
+
+    .support-activity-list {
+        margin: 0;
+        padding: 0;
+    }
+
+    .support-activity-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.35rem 0;
+        font-size: 0.98rem;
+        font-weight: 500;
+        color: var(--text);
+    }
+
+    .support-activity-row:first-child {
+        padding-top: 0.2rem;
+    }
+
+    .support-activity-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .support-activity-row--success .support-activity-dot {
+        background: #22c55e;
+    }
+
+    .support-activity-text {
+        line-height: 1.35;
+    }
+
+    @keyframes supportCardIn {
+        from {
+            opacity: 0;
+            transform: translateY(14px) scale(0.98);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @keyframes supportHeaderShift {
+
+        0%,
+        100% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+    }
+
+    @keyframes supportShine {
+        0% {
+            left: -100%;
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            left: 100%;
+            opacity: 0;
+        }
+    }
+
+    @keyframes supportIconIn {
+        from {
+            opacity: 0;
+            transform: scale(0.5) rotate(-12deg);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+    }
+
+    @keyframes supportIconRing {
+
+        0%,
+        100% {
+            transform: scale(1) rotate(0deg);
+        }
+
+        25% {
+            transform: scale(1.15) rotate(-8deg);
+        }
+
+        50% {
+            transform: scale(1.1) rotate(4deg);
+        }
+
+        75% {
+            transform: scale(1.15) rotate(-4deg);
+        }
     }
 
     /* Main window: Cases and Book appointment – separate cards */
@@ -2123,11 +2639,21 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
         .dashboard {
             order: 2;
+            flex: 1 1 auto;
             width: 100%;
             padding: 1rem;
             padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
             overflow: visible;
             min-height: min-content;
+        }
+
+        .dashboard-right {
+            order: 3;
+            flex: 1 1 auto;
+            width: 100%;
+            margin: 0;
+            padding: 1rem;
+            padding-top: 0;
         }
 
         .licenses-grid {
@@ -2376,8 +2902,13 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         }
 
         .sidebar-card-brand,
-        .sidebar-card-details {
+        .sidebar-card-your-details,
+        .sidebar-card-contact {
             padding: 0.85rem 0.65rem;
+        }
+
+        .sidebar-card-your-team {
+            padding: 0.5rem 0.65rem 0.65rem;
         }
 
         .sidebar-logo {
@@ -2540,6 +3071,10 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             font-size: 0.95rem;
         }
 
+        .support-cards-section {
+            margin-top: 0.5rem;
+        }
+
         .gauge-container {
             max-width: 140px;
         }
@@ -2562,8 +3097,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                 <div class="sidebar-site-name"><?= html_escape($site_name) ?></div>
             </div>
 
-            <!-- Card 2: Your details + Your team -->
-            <div class="sidebar-card sidebar-card-details">
+            <!-- Card 2: Your Details -->
+            <div class="sidebar-card sidebar-card-your-details">
                 <h2 class="dashboard-sidebar-title"><i class="fas fa-user-circle"></i> Your Details</h2>
                 <?php $contact_name = trim(($customer->name ?? '') . ' ' . ($customer->last_name ?? '')); if ($contact_name !== ''): ?>
                 <div class="dashboard-sidebar-item">
@@ -2576,8 +3111,11 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                     <span
                         class="val"><?= !empty($customer->vat_no) ? html_escape($customer->vat_no) : (isset($customer_code) ? html_escape($customer_code) : '—') ?></span>
                 </div>
+            </div>
 
-                <h2 class="dashboard-sidebar-title sidebar-title-second"><i class="fas fa-users"></i> Your Team</h2>
+            <!-- Card 3: Your Team -->
+            <div class="sidebar-card sidebar-card-your-team">
+                <h2 class="dashboard-sidebar-title"><i class="fas fa-users"></i> Your Team</h2>
                 <div class="sidebar-associates">
                     <div class="dashboard-sidebar-item">
                         <span class="label"><i class="fas fa-user-tie"></i> Sales Associate</span>
@@ -2590,6 +3128,15 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                             class="val"><?= !empty($customer_tech_associate_name) ? html_escape($customer_tech_associate_name) : '—' ?></span>
                     </div>
                 </div>
+            </div>
+
+            <!-- Card 4: Contact us -->
+            <div class="sidebar-card sidebar-card-contact">
+                <h2 class="dashboard-sidebar-title"><i class="fas fa-envelope"></i> Contact us</h2>
+                <p class="sidebar-contact-line"><span class="sidebar-contact-icon" aria-hidden="true"><i
+                            class="fas fa-globe"></i></span> www.geekofstates.com</p>
+                <p class="sidebar-contact-line"><span class="sidebar-contact-icon" aria-hidden="true"><i
+                            class="fas fa-envelope"></i></span> support@geekofstates.com</p>
             </div>
         </aside>
 
@@ -2612,7 +3159,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                 <?php endif; ?>
             </header>
 
-            <!-- Fixed service gauges: Support, Security, Firewall (Support duration = last sale support duration) -->
+            <!-- Fixed service gauges -->
             <div class="licenses-grid">
                 <?php foreach ($dashboard_services as $svc):
                     $gauge_id = 'gauge-' . preg_replace('/[^a-z0-9]/', '', strtolower($svc->service_name));
@@ -2632,12 +3179,20 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                         <div class="license-status no-expiry">No expiry set</div>
                     </div>
                     <?php elseif ($svc->status_class === 'expired'): ?>
+                    <?php $circle_radius_exp = 52; $circle_circ_exp = 2 * M_PI * $circle_radius_exp; ?>
                     <div class="license-gauge-top">
                         <div class="gauge-wrap">
                             <div class="gauge-title"><?= html_escape($svc->service_name) ?></div>
-                            <div class="circle-gauge circle-gauge-expired"></div>
+                            <div class="circle-gauge circle-gauge-expired">
+                                <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="circle-gauge-track" cx="60" cy="60" r="<?= $circle_radius_exp ?>"></circle>
+                                    <circle class="circle-gauge-fill" cx="60" cy="60" r="<?= $circle_radius_exp ?>"
+                                        stroke-dasharray="<?= round($circle_circ_exp, 2) ?>"
+                                        stroke-dashoffset="0"></circle>
+                                </svg>
+                            </div>
                             <div class="gauge-value-wrap">
-                                <div class="gauge-value red">Inactive</div>
+                                <div class="gauge-value red"><span class="gauge-value-dot" aria-hidden="true"></span>Inactive</div>
                             </div>
                         </div>
                     </div>
@@ -2658,18 +3213,16 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                             <div class="circle-gauge<?= $is_active ? '' : ' circle-gauge-inactive' ?>"
                                 style="--gauge-pct: <?= (float)$fill_pct ?>; --circle-circ: <?= round($circle_circ, 2) ?>;">
                                 <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                                    <circle class="circle-gauge-track" cx="60" cy="60"
-                                        r="<?= $circle_radius ?>"></circle>
-                                    <circle class="circle-gauge-fill" cx="60" cy="60"
-                                        r="<?= $circle_radius ?>"
+                                    <circle class="circle-gauge-track" cx="60" cy="60" r="<?= $circle_radius ?>">
+                                    </circle>
+                                    <circle class="circle-gauge-fill" cx="60" cy="60" r="<?= $circle_radius ?>"
                                         stroke-dasharray="<?= round($circle_circ, 2) ?>"
                                         stroke-dashoffset="<?= round($circle_circ - ($fill_pct / 100) * $circle_circ, 2) ?>">
                                     </circle>
                                 </svg>
                             </div>
                             <div class="gauge-value-wrap">
-                                <div class="gauge-value <?= $is_active ? 'green' : 'red' ?>">
-                                    <?= $is_active ? 'Active' : 'Inactive' ?></div>
+                                <div class="gauge-value <?= $is_active ? 'green' : 'red' ?>"><span class="gauge-value-dot" aria-hidden="true"></span><?= $is_active ? 'Active' : 'Inactive' ?></div>
                             </div>
                         </div>
                     </div>
@@ -2678,7 +3231,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                 <?php endforeach; ?>
             </div>
 
-            <!-- Cases and Book Appointment – separate cards -->
+            <!-- Cases and Book appointment -->
             <section class="section main-actions-section">
                 <div class="main-actions-grid">
                     <div class="action-card cases-card main-action-block case-block">
@@ -2715,6 +3268,109 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                 </div>
             </section>
         </div>
+
+        <!-- Right column: Technical support, Service details, Contact us -->
+        <aside class="dashboard-right">
+            <?php $svc_base = !empty($dashboard_services) ? $dashboard_services[0] : null; ?>
+            <section class="section support-cards-section">
+                <div class="support-cards-column">
+                    <article class="support-card support-card-technical">
+                        <div class="support-card-technical-header">
+                            <span class="support-card-icon support-card-icon-header" aria-hidden="true"><i
+                                    class="fas fa-headset"></i></span>
+                            <div class="support-card-technical-title">Need help? </div><br>
+                            <div class="support-card-technical-phone">1-800-755-6599</div>
+                        </div>
+                        <div class="support-card-technical-body">
+                            <p>Need help with your licenses or services? Our technical team is just a call away.</p>
+                            <p> <strong><span class="" aria-hidden="true"><i class="fas fa-clock"></i></span>
+                                    Mon–Fri 9am–6pm
+                                    (local time</strong>)</p>
+                        </div>
+                    </article>
+                    <article class="support-card support-card-service">
+                        <h3 class="support-card-heading"><span class="support-card-icon" aria-hidden="true"><i
+                                    class="fas fa-clipboard-list"></i></span> Service details</h3>
+                        <dl class="support-details-list">
+                            <div class="support-details-row">
+                                <dt>Service start date</dt>
+                                <dd><?= !empty($support_start_date_formatted) ? html_escape($support_start_date_formatted) : '—' ?>
+                                </dd>
+                            </div>
+                            <div class="support-details-row">
+                                <dt>Expiry date</dt>
+                                <dd><?= !empty($support_expiry_date_formatted) ? html_escape($support_expiry_date_formatted) : '—' ?>
+                                </dd>
+                            </div>
+                            <div class="support-details-row">
+                                <dt>Service duration</dt>
+                                <dd><?php $duration_days = ($svc_base && !empty($svc_base->support_duration)) ? (int)$svc_base->support_duration : 0; echo $duration_days > 0 ? $duration_days . ' days' : '—'; ?>
+                                </dd>
+                            </div>
+                            <div class="support-details-row">
+                                <dt>Status</dt>
+                                <dd>
+                                    <?php
+                                    $status_label = '—';
+                                    $status_class = 'inactive';
+                                    if ($svc_base) {
+                                        switch ($svc_base->status_class) {
+                                            case 'expired':
+                                                $status_label = 'Expired';
+                                                $status_class = 'expired';
+                                                break;
+                                            case 'no-expiry':
+                                                $status_label = 'Active (no expiry)';
+                                                $status_class = 'active';
+                                                break;
+                                            default:
+                                                $status_label = 'Active';
+                                                $status_class = 'active';
+                                                break;
+                                        }
+                                    }
+                                    ?>
+                                    <span
+                                        class="support-status-badge support-status-badge--<?= html_escape($status_class) ?>">
+                                        <span class="support-status-dot" aria-hidden="true"></span>
+                                        <span class="support-status-text"><?= html_escape($status_label) ?></span>
+                                    </span>
+                                </dd>
+                            </div>
+                        </dl>
+                    </article>
+                    <article class="support-card support-card-stats">
+                        <h3 class="support-card-heading"><span class="support-card-icon" aria-hidden="true"><i
+                                    class="fas fa-chart-line"></i></span> Support this month</h3>
+                        <div class="support-stats-list">
+                            <div class="support-stats-row">
+                                <span class="support-stats-label"><i class="fas fa-ticket-alt"></i> Open cases</span>
+                                <span class="support-stats-value"><?= (int)($support_open_cases_count ?? 0) ?></span>
+                            </div>
+                            <div class="support-stats-row">
+                                <span class="support-stats-label"><i class="fas fa-calendar-check"></i>
+                                    Appointments</span>
+                                <span
+                                    class="support-stats-value"><?= (int)($support_appointments_this_month ?? 0) ?></span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="support-card support-card-activity">
+                        <h3 class="support-card-heading"><span class="support-card-icon" aria-hidden="true"><i class="fas fa-bolt"></i></span> Activity</h3>
+                        <div class="support-activity-list">
+                            <div class="support-activity-row support-activity-row--success">
+                                <span class="support-activity-dot" aria-hidden="true"></span>
+                                <span class="support-activity-text">Firewall enabled</span>
+                            </div>
+                            <div class="support-activity-row support-activity-row--success">
+                                <span class="support-activity-dot" aria-hidden="true"></span>
+                                <span class="support-activity-text">Scan completed • No threats</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </aside>
     </div>
 
     <footer class="page-footer">
@@ -2774,45 +3430,58 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             xhr.onreadystatechange = function() {
                 if (xhr.readyState !== 4) return;
                 if (submitBtn) submitBtn.disabled = false;
+                var res = null;
                 try {
-                    var res = JSON.parse(xhr.responseText || '{}');
-                    if (res.success) {
-                        var msg = 'Case ' + (res.case_code || '') + ' submitted.';
-                        if (res.email_sent) {
-                            if (res.email_sent.staff_ok && res.email_sent.customer_ok) {
-                                msg += ' Emails sent to support and to you.';
-                            } else if (res.email_sent.staff_ok) {
-                                msg += ' Email sent to support.';
-                                if (res.email_sent.customer_error) {
-                                    msg += ' Your confirmation email failed: ' + (res.email_sent
-                                        .customer_error || '').substring(0, 150);
-                                }
-                            } else if (res.email_sent.customer_ok) {
-                                msg += ' Confirmation sent to you. Support email failed: ' + (res
-                                    .email_sent.staff_error || '').substring(0, 150);
-                            } else {
-                                msg += ' Emails could not be sent.';
-                                if (res.email_sent.protocol_used) msg += ' (Protocol: ' + res.email_sent
-                                    .protocol_used + '.)';
-                                if (res.email_sent.staff_error) msg += ' Error: ' + (res.email_sent
-                                    .staff_error || '').substring(0, 200);
-                            }
-                        } else {
-                            msg += ' A confirmation email has been sent to you and to support.';
+                    res = JSON.parse(xhr.responseText || '{}');
+                } catch (e) {
+                    if (xhr.status === 200 && xhr.responseText) {
+                        var start = xhr.responseText.indexOf('{');
+                        var end = xhr.responseText.lastIndexOf('}') + 1;
+                        if (start !== -1 && end > start) {
+                            try {
+                                res = JSON.parse(xhr.responseText.substring(start, end));
+                            } catch (e2) {}
                         }
-                        setMessage(msg);
-                        if (detailsInput) detailsInput.value = '';
-                        addRowToTable({
-                            case_code: res.case_code || '',
-                            date_formatted: res.date_formatted || '',
-                            status: res.status || 'open',
-                            details: details
-                        });
-                    } else {
-                        setMessage(res.message || 'Failed to submit case.', true);
                     }
-                } catch (err) {
-                    setMessage('Request failed. Please try again.', true);
+                    if (!res) {
+                        setMessage('Request failed. Your case may have been created—please refresh the page to check.', true);
+                        return;
+                    }
+                }
+                if (res.success) {
+                    var msg = 'Case ' + (res.case_code || '') + ' submitted.';
+                    if (res.email_sent) {
+                        if (res.email_sent.staff_ok && res.email_sent.customer_ok) {
+                            msg += ' Emails sent to support and to you.';
+                        } else if (res.email_sent.staff_ok) {
+                            msg += ' Email sent to support.';
+                            if (res.email_sent.customer_error) {
+                                msg += ' Your confirmation email failed: ' + (res.email_sent
+                                    .customer_error || '').substring(0, 150);
+                            }
+                        } else if (res.email_sent.customer_ok) {
+                            msg += ' Confirmation sent to you. Support email failed: ' + (res
+                                .email_sent.staff_error || '').substring(0, 150);
+                        } else {
+                            msg += ' Emails could not be sent.';
+                            if (res.email_sent.protocol_used) msg += ' (Protocol: ' + res.email_sent
+                                .protocol_used + '.)';
+                            if (res.email_sent.staff_error) msg += ' Error: ' + (res.email_sent
+                                .staff_error || '').substring(0, 200);
+                        }
+                    } else {
+                        msg += ' A confirmation email has been sent to you and to support.';
+                    }
+                    setMessage(msg);
+                    if (detailsInput) detailsInput.value = '';
+                    addRowToTable({
+                        case_code: res.case_code || '',
+                        date_formatted: res.date_formatted || '',
+                        status: res.status || 'open',
+                        details: details
+                    });
+                } else {
+                    setMessage(res.message || 'Failed to submit case.', true);
                 }
             };
             var postData = 'details=' + encodeURIComponent(details);
