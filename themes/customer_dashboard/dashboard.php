@@ -1154,67 +1154,53 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         margin: 0 auto 0.2rem;
     }
 
-    .gauge-container svg {
+    /* Circular gauge (donut style) */
+    .circle-gauge {
+        position: relative;
+        width: 100%;
+        max-width: 110px;
+        aspect-ratio: 1 / 1;
+        margin: 0.35rem auto 0.35rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .circle-gauge svg {
         display: block;
         width: 100%;
         height: auto;
-        filter: drop-shadow(0 2px 6px rgba(0, 40, 104, 0.12));
     }
 
-    /* Single arc (expired state: full red) */
-    .gauge-arc:not(.gauge-arc-passed):not(.gauge-arc-remaining) {
-        stroke-dasharray: 204 204;
-        animation: gaugeArcIn 2.5s ease-in-out infinite alternate;
+    .circle-gauge-track {
+        fill: none;
+        stroke: #e5e7eb;
+        stroke-width: 10;
     }
 
-    /* Gauge active: passed = blank (hidden); remaining = green only */
-    .gauge-arc-passed {
-        stroke: none !important;
-        pointer-events: none;
+    .circle-gauge-fill {
+        fill: none;
+        stroke: #16a34a;
+        stroke-width: 10;
+        stroke-linecap: round;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
     }
 
-    /* Gauge: remaining days = green on RIGHT only (path starts at right); draw first filled_len units */
-    .gauge-arc-remaining {
-        stroke-dasharray: var(--filled-len, 0) var(--path-len, 204);
-        stroke-dashoffset: 0;
+    .circle-gauge-expired .circle-gauge-fill {
+        stroke: #ef4444;
     }
 
-    @keyframes gaugeArcIn {
-        from {
-            stroke-dashoffset: 204;
-        }
-
-        to {
-            stroke-dashoffset: calc(204 - var(--filled-len, 204));
-        }
+    .circle-gauge-inactive .circle-gauge-fill {
+        stroke: #ef4444;
     }
 
-    /* Needle: go and back automatically (loops) */
-    .gauge-needle {
-        transform-origin: 100px 98px;
-        animation: needleSettle 3s ease-in-out infinite;
-    }
-
-    @keyframes needleSettle {
-        0% {
-            transform: rotate(90deg);
-        }
-
-        25% {
-            transform: rotate(calc(var(--needle) * 1deg + 8deg));
-        }
-
-        40% {
-            transform: rotate(calc(var(--needle) * 1deg));
-        }
-
-        55% {
-            transform: rotate(calc(var(--needle) * 1deg));
-        }
-
-        100% {
-            transform: rotate(90deg);
-        }
+    .circle-gauge::after {
+        content: '';
+        position: absolute;
+        inset: 13px;
+        border-radius: 50%;
+        background: #ffffff;
     }
 
     .gauge-value-wrap {
@@ -2645,45 +2631,11 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                         </div>
                         <div class="license-status no-expiry">No expiry set</div>
                     </div>
-                    <?php elseif ($svc->status_class === 'expired'):
-                    $gauge_path_len = 204;
-                    $gauge_filled_len = 204;
-                    ?>
+                    <?php elseif ($svc->status_class === 'expired'): ?>
                     <div class="license-gauge-top">
                         <div class="gauge-wrap">
                             <div class="gauge-title"><?= html_escape($svc->service_name) ?></div>
-                            <div class="gauge-container"
-                                style="--path-len: <?= $gauge_path_len ?>; --filled-len: <?= $gauge_filled_len ?>;">
-                                <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <linearGradient id="gaugeGrad-<?= $gauge_id ?>" x1="100%" y1="0%" x2="0%"
-                                            y2="0%">
-                                            <stop offset="0%" stop-color="#ef4444" />
-                                            <stop offset="100%" stop-color="#b91c1c" />
-                                        </linearGradient>
-                                        <filter id="gaugeShadow-<?= $gauge_id ?>" x="-20%" y="-20%" width="140%"
-                                            height="140%">
-                                            <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#ffffff"
-                                                flood-opacity="0.25" />
-                                        </filter>
-                                    </defs>
-                                    <path d="M 165 95 A 65 65 0 0 0 35 95" fill="none" stroke="#e2e8f0"
-                                        stroke-width="16" stroke-linecap="round" />
-                                    <path class="gauge-arc" d="M 165 95 A 65 65 0 0 0 35 95" fill="none"
-                                        stroke="url(#gaugeGrad-<?= $gauge_id ?>)" stroke-width="11"
-                                        stroke-linecap="round" filter="url(#gaugeShadow-<?= $gauge_id ?>)" />
-                                    <circle cx="100" cy="98" r="4" fill="#0f172a" stroke="rgba(30,41,59,0.2)"
-                                        stroke-width="0.5" />
-                                    <g class="gauge-needle" style="--needle: 90;">
-                                        <line x1="100" y1="98" x2="100" y2="34" stroke="#002868" stroke-width="2"
-                                            stroke-linecap="round" />
-                                        <circle cx="100" cy="34" r="2.5" fill="#002868" />
-                                    </g>
-                                    <text x="36" y="111" fill="#64748b" font-size="9" font-weight="600">On</text>
-                                    <text x="164" y="111" fill="#64748b" font-size="9" font-weight="600"
-                                        text-anchor="end">Off</text>
-                                </svg>
-                            </div>
+                            <div class="circle-gauge circle-gauge-expired"></div>
                             <div class="gauge-value-wrap">
                                 <div class="gauge-value red">Inactive</div>
                             </div>
@@ -2696,45 +2648,23 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                     $is_active = $display_pct > 0;
                     ?>
                     <?php
-                    $gauge_path_len = 204;
-                    $gauge_filled_len = $is_active ? (($display_pct / 100) * $gauge_path_len) : $gauge_path_len;
-                    $gauge_passed_len = $gauge_path_len - $gauge_filled_len;
+                    $circle_radius = 52;
+                    $circle_circ = 2 * M_PI * $circle_radius;
+                    $fill_pct = $is_active ? $display_pct : 100;
                     ?>
                     <div class="license-gauge-top">
                         <div class="gauge-wrap">
                             <div class="gauge-title"><?= html_escape($svc->service_name) ?></div>
-                            <div class="gauge-container"
-                                style="--path-len: <?= $gauge_path_len ?>; --filled-len: <?= round($gauge_filled_len, 2) ?>; --passed-len: <?= round($gauge_passed_len, 2) ?>;">
-                                <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <linearGradient id="gaugeGradGreen-<?= $gauge_id ?>" x1="100%" y1="0%" x2="0%"
-                                            y2="0%">
-                                            <stop offset="0%" stop-color="#22c55e" />
-                                            <stop offset="100%" stop-color="#16a34a" />
-                                        </linearGradient>
-                                        <filter id="gaugeShadow-<?= $gauge_id ?>" x="-20%" y="-20%" width="140%"
-                                            height="140%">
-                                            <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#ffffff"
-                                                flood-opacity="0.25" />
-                                        </filter>
-                                    </defs>
-                                    <path d="M 165 95 A 65 65 0 0 0 35 95" fill="none" stroke="#e2e8f0"
-                                        stroke-width="16" stroke-linecap="round" />
-                                    <path class="gauge-arc gauge-arc-passed" d="M 165 95 A 65 65 0 0 0 35 95"
-                                        fill="none" stroke="none" stroke-width="11" stroke-linecap="round" />
-                                    <path class="gauge-arc gauge-arc-remaining" d="M 165 95 A 65 65 0 0 0 35 95"
-                                        fill="none" stroke="url(#gaugeGradGreen-<?= $gauge_id ?>)" stroke-width="11"
-                                        stroke-linecap="round" filter="url(#gaugeShadow-<?= $gauge_id ?>)" />
-                                    <circle cx="100" cy="98" r="4" fill="#0f172a" stroke="rgba(30,41,59,0.2)"
-                                        stroke-width="0.5" />
-                                    <g class="gauge-needle" style="--needle: <?= $needle_angle ?>;">
-                                        <line x1="100" y1="98" x2="100" y2="34" stroke="#002868" stroke-width="2"
-                                            stroke-linecap="round" />
-                                        <circle cx="100" cy="34" r="2.5" fill="#002868" />
-                                    </g>
-                                    <text x="36" y="111" fill="#64748b" font-size="9" font-weight="600">On</text>
-                                    <text x="164" y="111" fill="#64748b" font-size="9" font-weight="600"
-                                        text-anchor="end">Off</text>
+                            <div class="circle-gauge<?= $is_active ? '' : ' circle-gauge-inactive' ?>"
+                                style="--gauge-pct: <?= (float)$fill_pct ?>; --circle-circ: <?= round($circle_circ, 2) ?>;">
+                                <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="circle-gauge-track" cx="60" cy="60"
+                                        r="<?= $circle_radius ?>"></circle>
+                                    <circle class="circle-gauge-fill" cx="60" cy="60"
+                                        r="<?= $circle_radius ?>"
+                                        stroke-dasharray="<?= round($circle_circ, 2) ?>"
+                                        stroke-dashoffset="<?= round($circle_circ - ($fill_pct / 100) * $circle_circ, 2) ?>">
+                                    </circle>
                                 </svg>
                             </div>
                             <div class="gauge-value-wrap">
@@ -2754,23 +2684,6 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                     <div class="action-card cases-card main-action-block case-block">
                         <h2 class="section-head"><i class="fas fa-ticket-alt"></i> Cases</h2>
                         <div class="case-form-wrap">
-                            <?php if (empty($can_open_case)): ?>
-                            <p class="case-form-blocked"><i class="fas fa-lock"></i> Resolve your current case before
-                                opening a new one.</p>
-                            <form id="case-form" class="case-form" action="" method="post" aria-disabled="true">
-                                <input type="hidden" name="customer_code"
-                                    value="<?= html_escape($customer_code ?? '') ?>">
-                                <div class="case-form-group">
-                                    <label for="case-details" class="case-form-label">Details <span
-                                            class="required">*</span></label>
-                                    <textarea id="case-details" name="details" class="case-form-textarea" rows="3"
-                                        placeholder="Describe your issue or request..." disabled></textarea>
-                                </div>
-                                <button type="button" class="case-form-submit" id="case-submit-btn" disabled><i
-                                        class="fas fa-paper-plane"></i> Submit Case</button>
-                                <div id="case-form-message" class="case-form-message" aria-live="polite"></div>
-                            </form>
-                            <?php else: ?>
                             <p class="case-form-hint">Case ID is auto-generated on submit (prefix + your code + date).
                             </p>
                             <form id="case-form" class="case-form" action="" method="post">
@@ -2786,7 +2699,6 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                                         class="fas fa-paper-plane"></i> Submit Case</button>
                                 <div id="case-form-message" class="case-form-message" aria-live="polite"></div>
                             </form>
-                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="action-card appointments-card main-action-block appointment-block">
@@ -2794,19 +2706,10 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                         <div class="appointment-card-body">
                             <p class="appointment-card-desc">Schedule a call or meeting with our team at a time that
                                 works for you.</p>
-                            <?php if (empty($can_book_appointment)): ?>
-                            <p class="case-form-blocked"><i class="fas fa-lock"></i> Complete your current appointment
-                                before booking a new one.</p>
-                            <button type="button" class="appointment-btn appointment-btn-main" disabled
-                                style="opacity: 0.5; cursor: not-allowed;">
-                                <i class="fas fa-calendar-plus"></i> Book Appointment
-                            </button>
-                            <?php else: ?>
                             <button type="button" class="appointment-btn appointment-btn-main"
                                 id="open-appointment-modal">
                                 <i class="fas fa-calendar-plus"></i> Book Appointment
                             </button>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
