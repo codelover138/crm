@@ -1259,6 +1259,37 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         stroke: #ef4444;
     }
 
+    .circle-gauge-expired {
+        position: relative;
+    }
+
+    .gauge-center-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .gauge-center-icon--expired {
+        color: #b91c1c;
+        font-size: 1.5rem;
+    }
+
+    .gauge-center-icon--active {
+        color: #16a34a;
+        font-size: 1.5rem;
+    }
+
+    .gauge-center-icon--inactive {
+        color: #b91c1c;
+        font-size: 1.5rem;
+    }
+
     .circle-gauge::after {
         content: '';
         position: absolute;
@@ -1851,6 +1882,21 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         font-weight: 700;
         color: var(--text);
         font-size: 1.05rem;
+    }
+
+    .support-stats-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.75rem;
+        height: 1.75rem;
+        padding: 0 0.5rem;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #ffffff;
+        background: linear-gradient(135deg, #F04F23 0%, #e04820 50%, #c93d1a 100%);
+        border-radius: 999px;
+        box-shadow: 0 2px 6px rgba(240, 79, 35, 0.35);
     }
 
     .support-activity-list {
@@ -3190,9 +3236,10 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                                         stroke-dasharray="<?= round($circle_circ_exp, 2) ?>"
                                         stroke-dashoffset="0"></circle>
                                 </svg>
+                                <span class="gauge-center-icon gauge-center-icon--expired" aria-hidden="true"><i class="fas fa-battery-empty"></i></span>
                             </div>
                             <div class="gauge-value-wrap">
-                                <div class="gauge-value red"><span class="gauge-value-dot" aria-hidden="true"></span>Inactive</div>
+                                <div class="gauge-value red"><span class="gauge-value-dot" aria-hidden="true"></span>Expired</div>
                             </div>
                         </div>
                     </div>
@@ -3201,6 +3248,19 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                     $display_pct = min(100, max(0, (float)$svc->percent_remaining));
                     $needle_angle = 90 - ($display_pct / 100) * 180;
                     $is_active = $display_pct > 0;
+                    if ($is_active) {
+                        if ($display_pct > 75) {
+                            $battery_icon = 'fa-battery-full';
+                        } elseif ($display_pct > 50) {
+                            $battery_icon = 'fa-battery-three-quarters';
+                        } elseif ($display_pct > 25) {
+                            $battery_icon = 'fa-battery-half';
+                        } else {
+                            $battery_icon = 'fa-battery-quarter';
+                        }
+                    } else {
+                        $battery_icon = 'fa-battery-empty';
+                    }
                     ?>
                     <?php
                     $circle_radius = 52;
@@ -3220,6 +3280,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                                         stroke-dashoffset="<?= round($circle_circ - ($fill_pct / 100) * $circle_circ, 2) ?>">
                                     </circle>
                                 </svg>
+                                <span class="gauge-center-icon gauge-center-icon--<?= $is_active ? 'active' : 'inactive' ?>" aria-hidden="true"><i class="fas <?= $battery_icon ?>"></i></span>
                             </div>
                             <div class="gauge-value-wrap">
                                 <div class="gauge-value <?= $is_active ? 'green' : 'red' ?>"><span class="gauge-value-dot" aria-hidden="true"></span><?= $is_active ? 'Active' : 'Inactive' ?></div>
@@ -3345,13 +3406,11 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                         <div class="support-stats-list">
                             <div class="support-stats-row">
                                 <span class="support-stats-label"><i class="fas fa-ticket-alt"></i> Open cases</span>
-                                <span class="support-stats-value"><?= (int)($support_open_cases_count ?? 0) ?></span>
+                                <span class="support-stats-badge"><?= (int)($support_open_cases_count ?? 0) ?></span>
                             </div>
                             <div class="support-stats-row">
-                                <span class="support-stats-label"><i class="fas fa-calendar-check"></i>
-                                    Appointments</span>
-                                <span
-                                    class="support-stats-value"><?= (int)($support_appointments_this_month ?? 0) ?></span>
+                                <span class="support-stats-label"><i class="fas fa-calendar-check"></i> Appointments</span>
+                                <span class="support-stats-badge"><?= (int)($support_appointments_this_month ?? 0) ?></span>
                             </div>
                         </div>
                     </article>
