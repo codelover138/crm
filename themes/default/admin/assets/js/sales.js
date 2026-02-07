@@ -1,3 +1,4 @@
+var shipping = 0;
 $(document).ready(function (e) {
     $('body a, body button').attr('tabindex', -1);
     check_add_item_val();
@@ -14,12 +15,19 @@ $(document).ready(function (e) {
             minimumInputLength: 1,
             data: [],
             initSelection: function (element, callback) {
+                if (window.__editSaleCustomer && window.__editSaleCustomer.id == $(element).val()) {
+                    callback(window.__editSaleCustomer);
+                    return;
+                }
                 $.ajax({
                     type: "get", async: false,
                     url: site.base_url+"customers/getCustomer/" + $(element).val(),
                     dataType: "json",
                     success: function (data) {
-                        callback(data[0]);
+                        callback(data && data[0] ? data[0] : { id: $(element).val(), text: $(element).val() });
+                    },
+                    error: function () {
+                        callback({ id: $(element).val(), text: window.__editSaleCustomer ? window.__editSaleCustomer.text : $(element).val() });
                     }
                 });
             },
@@ -42,6 +50,12 @@ $(document).ready(function (e) {
                 }
             }
         });
+        if (window.__editSaleCustomer && window.__editSaleCustomer.id == slcustomer) {
+            try {
+                $customer.select2('data', window.__editSaleCustomer);
+            } catch (e) {}
+            delete window.__editSaleCustomer;
+        }
     } else {
         nsCustomer();
     }
@@ -68,7 +82,8 @@ $('#slpayment_status').change(function (e) {
     localStorage.setItem('slpayment_status', ps);
     if (ps == 'partial' || ps == 'paid') {
         if(ps == 'paid') {
-            $('#amount_1').val(formatDecimal(parseFloat(((total + invoice_tax) - order_discount) + shipping)));
+            var ship = (typeof shipping !== 'undefined' && !isNaN(shipping)) ? shipping : (parseFloat(localStorage.getItem('slshipping')) || 0);
+            $('#amount_1').val(formatDecimal(parseFloat(((total + invoice_tax) - order_discount) + ship)));
         }
         $('#payments').slideDown();
         $('#pcc_no_1').focus();
@@ -84,7 +99,8 @@ if (slpayment_status = localStorage.getItem('slpayment_status')) {
         if (ps == 'paid') {
             var storedAmount = localStorage.getItem('amount_1');
             if (!storedAmount || parseFloat(storedAmount) == 0) {
-                var calculatedAmount = formatDecimal(parseFloat(((total + invoice_tax) - order_discount) + shipping));
+                var ship = (typeof shipping !== 'undefined' && !isNaN(shipping)) ? shipping : (parseFloat(localStorage.getItem('slshipping')) || 0);
+                var calculatedAmount = formatDecimal(parseFloat(((total + invoice_tax) - order_discount) + ship));
                 if (!isNaN(calculatedAmount) && calculatedAmount > 0) {
                     $('#amount_1').val(calculatedAmount);
                 }
@@ -932,25 +948,61 @@ if (slwarehouse = localStorage.getItem('slwarehouse')) {
         old_row_qty = $(this).val();
     }).on("change", '.rquantity', function () {
         var row = $(this).closest('tr');
-            console.log(is_numeric($(this).val()));
         if (!is_numeric($(this).val())) {
             $(this).val(old_row_qty);
             bootbox.alert(lang.unexpected_value);
             return;
         }
         var new_qty = parseFloat($(this).val()),
-        item_id = row.attr('data-item-id');
-        slitems[item_id].row.base_quantity = new_qty;
-        if(slitems[item_id].row.unit != slitems[item_id].row.base_unit) {
-            $.each(slitems[item_id].units, function(){
-                if (this.id == slitems[item_id].row.unit) {
-                    slitems[item_id].row.base_quantity = unitToBaseQty(new_qty, this);
+            item_id = row.attr('data-item-id');
+        if (typeof slitems === 'undefined' || !item_id) {
+            return;
+        }
+        // Resolve key: edit sale uses object keyed by id (string or number from PHP)
+        var key = item_id;
+        if (slitems[key] === undefined && slitems[Number(item_id)] !== undefined) {
+            key = Number(item_id);
+        }
+        if (slitems[key] === undefined) {
+            var foundKey = null;
+            $.each(slitems, function (k, v) {
+                if (v && (String(v.id) === String(item_id) || (v.item_id != null && String(v.item_id) === String(item_id)) || (v.row && v.row.id != null && String(v.row.id) === String(item_id)))) {
+                    foundKey = k;
+                    return false;
+                }
+            });
+            if (foundKey !== null) key = foundKey;
+        }
+        if (!slitems[key]) {
+            return;
+        }
+        slitems[key].row.base_quantity = new_qty;
+        if (slitems[key].row.unit != slitems[key].row.base_unit && slitems[key].units) {
+            $.each(slitems[key].units, function(){
+                if (this.id == slitems[key].row.unit) {
+                    slitems[key].row.base_quantity = unitToBaseQty(new_qty, this);
                 }
             });
         }
-        slitems[item_id].row.qty = new_qty;
-        localStorage.setItem('slitems', JSON.stringify(slitems));
-        loadItems();
+        slitems[key].row.qty = new_qty;
+        try {
+            localStorage.setItem('slitems', JSON.stringify(slitems));
+            loadItems();
+            // Force refresh totals DOM (edit sale: ensure amount and total update)
+            if (typeof total !== 'undefined' && !isNaN(total)) {
+                $('#total').text(formatMoney(total));
+            }
+            if (typeof gtotal !== 'undefined' && !isNaN(gtotal)) {
+                $('#gtotal').text(formatMoney(gtotal));
+            }
+            var countVal = (typeof count !== 'undefined' && !isNaN(count)) ? count : 0;
+            var anVal = (typeof an !== 'undefined' && !isNaN(an)) ? an : 1;
+            if ($('#titems').length) {
+                $('#titems').text((anVal - 1) + ' (' + formatQty(parseFloat(countVal) - 1) + ')');
+            }
+        } catch (e) {
+            console.error('rquantity change', e);
+        }
     });
 
     /* --------------------------
@@ -1028,6 +1080,16 @@ function loadItems() {
 
         $("#slTable tbody").empty();
         slitems = JSON.parse(localStorage.getItem('slitems'));
+        // Normalize: edit page may send items as array; quantity change expects object keyed by product id
+        if (Array.isArray(slitems)) {
+            var byId = {};
+            $.each(slitems, function (i, it) {
+                var id = (site.settings.item_addition == 1) ? (it.item_id != null ? it.item_id : it.row.id) : (it.id != null ? it.id : it.row.id);
+                byId[id] = it;
+            });
+            slitems = byId;
+            localStorage.setItem('slitems', JSON.stringify(slitems));
+        }
         sortedItems = (site.settings.item_addition == 1) ? _.sortBy(slitems, function(o) { return [parseInt(o.order)]; }) : slitems;
         $('#add_sale, #edit_sale').attr('disabled', false);
         $.each(sortedItems, function () {
@@ -1094,11 +1156,13 @@ function loadItems() {
             item_price = item_tax_method == 0 ? formatDecimal(unit_price-pr_tax_val, 4) : formatDecimal(unit_price);
             unit_price = formatDecimal(unit_price+item_discount, 4);
             var sel_opt = '';
-            $.each(item.options, function () {
-                if(this.id == item_option) {
-                    sel_opt = this.name;
-                }
-            });
+            if (item.options && item.options !== false) {
+                $.each(item.options, function () {
+                    if(this.id == item_option) {
+                        sel_opt = this.name;
+                    }
+                });
+            }
             var row_no = item.id;
             var newTr = $('<tr id="row_' + row_no + '" class="row_' + item_id + '" data-item-id="' + item_id + '"></tr>');
             tr_html = '<td><input name="product_id[]" type="hidden" class="rid" value="' + product_id + '"><input name="product_type[]" type="hidden" class="rtype" value="' + item_type + '"><input name="product_code[]" type="hidden" class="rcode" value="' + item_code + '"><input name="product_name[]" type="hidden" class="rname" value="' + item_name + '"><input name="product_option[]" type="hidden" class="roption" value="' + item_option + '"><span class="sname" id="name_' + row_no + '">' + item_code +' - '+ item_name +(sel_opt != '' ? ' ('+sel_opt+')' : '')+'</span> <i class="pull-right fa fa-edit tip pointer edit" id="' + row_no + '" data-item="' + item_id + '" title="Edit" style="cursor:pointer;"></i><i class="pull-right fa fa-info-circle tip pointer product_info" id="' + row_no + '" data-item="' + item_id + '" title="Product Info" style="cursor:pointer;"></i></td>';
@@ -1192,8 +1256,9 @@ function loadItems() {
         }
 
         total_discount = parseFloat(order_discount + product_discount);
-        // Totals calculations after item addition
-        var gtotal = parseFloat(((total + invoice_tax) - order_discount) + shipping);
+        // Totals calculations after item addition (shipping may be undefined if loadItems runs before top-level init)
+        var shipVal = (typeof shipping !== 'undefined' && typeof shipping === 'number' && !isNaN(shipping)) ? shipping : (parseFloat(localStorage.getItem('slshipping')) || 0);
+        var gtotal = parseFloat(((total + invoice_tax) - order_discount) + shipVal);
         $('#total').text(formatMoney(total));
         $('#titems').text((an - 1) + ' (' + formatQty(parseFloat(count) - 1) + ')');
         $('#total_items').val((parseFloat(count) - 1));
@@ -1202,7 +1267,7 @@ function loadItems() {
         if (site.settings.tax2 != 0) {
             $('#ttax2').text(formatMoney(invoice_tax));
         }
-        $('#tship').text(formatMoney(shipping));
+        $('#tship').text(formatMoney(shipVal));
         $('#gtotal').text(formatMoney(gtotal));
         
         // Update payment amount if payment status is 'paid' and amount is empty or 0

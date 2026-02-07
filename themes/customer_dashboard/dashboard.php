@@ -3144,7 +3144,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                 <h1><span class="user-name"><?= html_escape($customer_name) ?></span></h1>
                 <?php $display_code = !empty($customer->vat_no) ? $customer->vat_no : (isset($customer_code) ? $customer_code : ''); if ($display_code !== ''): ?>
                 <p class="header-meta header-customer-code">
-                    <span class="header-meta-label">Code</span>
+                    <span class="header-meta-label">CODE : </span>
                     <span class="header-meta-value header-customer-code-value"><?= html_escape($display_code) ?></span>
                 </p>
                 <?php endif; ?>

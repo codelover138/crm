@@ -3833,3 +3833,61 @@ INFO - 2026-02-07 21:05:06 --> Model "Customer_appointment_model" initialized
 INFO - 2026-02-07 21:05:06 --> File loaded: D:\setup\xammp\htdocs\crm\themes\customer_dashboard/dashboard.php
 INFO - 2026-02-07 21:05:06 --> Final output sent to browser
 DEBUG - 2026-02-07 21:05:06 --> Total execution time: 0.2524
+INFO - 2026-02-07 21:55:54 --> Config Class Initialized
+INFO - 2026-02-07 21:55:54 --> Hooks Class Initialized
+DEBUG - 2026-02-07 21:55:54 --> UTF-8 Support Enabled
+INFO - 2026-02-07 21:55:54 --> Utf8 Class Initialized
+INFO - 2026-02-07 21:55:54 --> URI Class Initialized
+INFO - 2026-02-07 21:55:54 --> Router Class Initialized
+INFO - 2026-02-07 21:55:55 --> Output Class Initialized
+INFO - 2026-02-07 21:55:55 --> Security Class Initialized
+DEBUG - 2026-02-07 21:55:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-07 21:55:55 --> CSRF cookie sent
+INFO - 2026-02-07 21:55:55 --> Input Class Initialized
+INFO - 2026-02-07 21:55:55 --> Language Class Initialized
+INFO - 2026-02-07 21:55:55 --> Loader Class Initialized
+INFO - 2026-02-07 21:55:55 --> Helper loaded: url_helper
+INFO - 2026-02-07 21:55:55 --> Helper loaded: form_helper
+INFO - 2026-02-07 21:55:55 --> Helper loaded: cookie_helper
+INFO - 2026-02-07 21:55:55 --> Helper loaded: language_helper
+INFO - 2026-02-07 21:55:55 --> Helper loaded: file_helper
+INFO - 2026-02-07 21:55:55 --> Helper loaded: date_helper
+INFO - 2026-02-07 21:55:55 --> Database Driver Class Initialized
+INFO - 2026-02-07 21:55:55 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-07 21:55:55 --> Parser Class Initialized
+INFO - 2026-02-07 21:55:55 --> Model "Site" initialized
+INFO - 2026-02-07 21:55:55 --> Controller Class Initialized
+INFO - 2026-02-07 21:55:55 --> Model "Customer_case_model" initialized
+INFO - 2026-02-07 21:55:55 --> Model "Customer_appointment_model" initialized
+INFO - 2026-02-07 21:55:55 --> File loaded: D:\setup\xammp\htdocs\crm\themes\customer_dashboard/dashboard.php
+INFO - 2026-02-07 21:55:55 --> Final output sent to browser
+DEBUG - 2026-02-07 21:55:55 --> Total execution time: 0.3545
+INFO - 2026-02-07 21:56:09 --> Config Class Initialized
+INFO - 2026-02-07 21:56:09 --> Hooks Class Initialized
+DEBUG - 2026-02-07 21:56:09 --> UTF-8 Support Enabled
+INFO - 2026-02-07 21:56:09 --> Utf8 Class Initialized
+INFO - 2026-02-07 21:56:09 --> URI Class Initialized
+INFO - 2026-02-07 21:56:09 --> Router Class Initialized
+INFO - 2026-02-07 21:56:09 --> Output Class Initialized
+INFO - 2026-02-07 21:56:09 --> Security Class Initialized
+DEBUG - 2026-02-07 21:56:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-02-07 21:56:09 --> CSRF cookie sent
+INFO - 2026-02-07 21:56:09 --> Input Class Initialized
+INFO - 2026-02-07 21:56:09 --> Language Class Initialized
+INFO - 2026-02-07 21:56:09 --> Loader Class Initialized
+INFO - 2026-02-07 21:56:09 --> Helper loaded: url_helper
+INFO - 2026-02-07 21:56:09 --> Helper loaded: form_helper
+INFO - 2026-02-07 21:56:09 --> Helper loaded: cookie_helper
+INFO - 2026-02-07 21:56:09 --> Helper loaded: language_helper
+INFO - 2026-02-07 21:56:09 --> Helper loaded: file_helper
+INFO - 2026-02-07 21:56:09 --> Helper loaded: date_helper
+INFO - 2026-02-07 21:56:09 --> Database Driver Class Initialized
+INFO - 2026-02-07 21:56:09 --> Session: Class initialized using 'database' driver.
+INFO - 2026-02-07 21:56:09 --> Parser Class Initialized
+INFO - 2026-02-07 21:56:09 --> Model "Site" initialized
+INFO - 2026-02-07 21:56:09 --> Controller Class Initialized
+INFO - 2026-02-07 21:56:09 --> Model "Customer_case_model" initialized
+INFO - 2026-02-07 21:56:09 --> Model "Customer_appointment_model" initialized
+INFO - 2026-02-07 21:56:09 --> File loaded: D:\setup\xammp\htdocs\crm\themes\customer_dashboard/dashboard.php
+INFO - 2026-02-07 21:56:09 --> Final output sent to browser
+DEBUG - 2026-02-07 21:56:09 --> Total execution time: 0.1755

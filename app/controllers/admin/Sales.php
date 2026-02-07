@@ -1091,9 +1091,9 @@ class Sales extends MY_Controller
                 $data['igst'] = $total_igst;
             }
 
-            // Build payment array when payment_status is partial or paid (so we can save after updateSale)
+            // Build payment array only when payment form is submitted (edit sale form may hide payment section)
             $edit_payment = array();
-            if ($payment_status == 'partial' || $payment_status == 'paid') {
+            if (($payment_status == 'partial' || $payment_status == 'paid') && $this->input->post('amount-paid') !== null && $this->input->post('amount-paid') !== '') {
                 if ($this->input->post('paid_by') == 'deposit') {
                     if (!$this->site->check_customer_deposit($customer_id, $this->input->post('amount-paid'))) {
                         $this->session->set_flashdata('error', lang("amount_greater_than_deposit"));
@@ -1202,9 +1202,9 @@ class Sales extends MY_Controller
         }
 
         if ($this->form_validation->run() == true && $this->sales_model->updateSale($id, $data, $products)) {
-            // Update payments for this sale so paid amount and payment_status are correct
-            $this->db->delete('payments', array('sale_id' => $id));
+            // Update payments only when payment form was submitted (edit sale may not show payment section)
             if (!empty($edit_payment)) {
+                $this->db->delete('payments', array('sale_id' => $id));
                 if (empty($edit_payment['reference_no'])) {
                     $edit_payment['reference_no'] = $this->site->getReference('pay');
                 }
