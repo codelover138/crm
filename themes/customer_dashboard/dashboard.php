@@ -210,12 +210,9 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        height: auto;
+        height: 100%;
+        overflow: hidden;
         overflow-x: hidden;
-        overflow-y: auto;
         max-width: 100vw;
     }
 
@@ -307,13 +304,14 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     .dashboard-wrap {
         display: flex;
         flex-wrap: nowrap;
-        flex: 1 1 auto;
-        min-height: 0;
         width: 100%;
         max-width: 100%;
+        min-width: 0;
         margin: 0;
         padding: 0.5rem;
         gap: 0.5rem;
+        min-height: 0;
+        height: 100vh;
         align-items: stretch;
         box-sizing: border-box;
         background: #E7E8FF;
@@ -434,7 +432,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         min-height: 0;
         display: flex;
         flex-direction: column;
-        padding-top: 0.5rem;
+        /*  padding-top: 0.5rem; */
         padding-bottom: 0.65rem;
     }
 
@@ -1734,7 +1732,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         border-radius: 999px;
         background: #ffffff;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        font-size: 0.95rem;
+        font-size: 0.8rem;
         font-weight: 600;
         color: #374151;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -2864,7 +2862,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         }
 
         .sidebar-card-your-team {
-            padding: 0.5rem 0.65rem 0.65rem;
+            padding: 0rem 0.65rem 0.65rem;
         }
 
         .sidebar-logo {
@@ -3106,13 +3104,6 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                     <span>Welcome</span>
                 </div>
                 <h1><span class="user-name"><?= html_escape($customer_name) ?></span></h1>
-                <?php if (!empty($support_expiry_date_formatted)): ?>
-                <p class="header-meta">
-                    <span class="header-meta-item" title="Based on last sale date + support duration (days)"><span
-                            class="header-meta-label">Expiry date:</span> <span
-                            class="header-meta-value header-expiry-date-value"><?= html_escape($support_expiry_date_formatted) ?></span></span>
-                </p>
-                <?php endif; ?>
             </header>
 
             <!-- Fixed service gauges -->
@@ -3141,15 +3132,18 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                             <div class="gauge-title"><?= html_escape($svc->service_name) ?></div>
                             <div class="circle-gauge circle-gauge-expired">
                                 <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                                    <circle class="circle-gauge-track" cx="60" cy="60" r="<?= $circle_radius_exp ?>"></circle>
+                                    <circle class="circle-gauge-track" cx="60" cy="60" r="<?= $circle_radius_exp ?>">
+                                    </circle>
                                     <circle class="circle-gauge-fill" cx="60" cy="60" r="<?= $circle_radius_exp ?>"
-                                        stroke-dasharray="<?= round($circle_circ_exp, 2) ?>"
-                                        stroke-dashoffset="0"></circle>
+                                        stroke-dasharray="<?= round($circle_circ_exp, 2) ?>" stroke-dashoffset="0">
+                                    </circle>
                                 </svg>
-                                <span class="gauge-center-icon gauge-center-icon--expired" aria-hidden="true"><i class="fas fa-battery-empty"></i></span>
+                                <span class="gauge-center-icon gauge-center-icon--expired" aria-hidden="true"><i
+                                        class="fas fa-battery-empty"></i></span>
                             </div>
                             <div class="gauge-value-wrap">
-                                <div class="gauge-value red"><span class="gauge-value-dot" aria-hidden="true"></span>Expired</div>
+                                <div class="gauge-value red"><span class="gauge-value-dot"
+                                        aria-hidden="true"></span>Expired</div>
                             </div>
                         </div>
                     </div>
@@ -3190,10 +3184,14 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                                         stroke-dashoffset="<?= round($circle_circ - ($fill_pct / 100) * $circle_circ, 2) ?>">
                                     </circle>
                                 </svg>
-                                <span class="gauge-center-icon gauge-center-icon--<?= $is_active ? 'active' : 'inactive' ?>" aria-hidden="true"><i class="fas <?= $battery_icon ?>"></i></span>
+                                <span
+                                    class="gauge-center-icon gauge-center-icon--<?= $is_active ? 'active' : 'inactive' ?>"
+                                    aria-hidden="true"><i class="fas <?= $battery_icon ?>"></i></span>
                             </div>
                             <div class="gauge-value-wrap">
-                                <div class="gauge-value <?= $is_active ? 'green' : 'red' ?>"><span class="gauge-value-dot" aria-hidden="true"></span><?= $is_active ? 'Active' : 'Inactive' ?></div>
+                                <div class="gauge-value <?= $is_active ? 'green' : 'red' ?>"><span
+                                        class="gauge-value-dot"
+                                        aria-hidden="true"></span><?= $is_active ? 'Active' : 'Inactive' ?></div>
                             </div>
                         </div>
                     </div>
@@ -3249,8 +3247,9 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                         <div class="support-card-technical-header">
                             <span class="support-card-icon support-card-icon-header" aria-hidden="true"><i
                                     class="fas fa-headset"></i></span>
-                            <div class="support-card-technical-title">Need help? </div><br>
+                            <div class="support-card-technical-title">Need help? </div>
                             <div class="support-card-technical-phone">1-800-755-6599</div>
+
                         </div>
                         <div class="support-card-technical-body">
                             <p>Need help with your licenses or services? Our technical team is just a call away.</p>
@@ -3319,13 +3318,16 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                                 <span class="support-stats-badge"><?= (int)($support_open_cases_count ?? 0) ?></span>
                             </div>
                             <div class="support-stats-row">
-                                <span class="support-stats-label"><i class="fas fa-calendar-check"></i> Appointments</span>
-                                <span class="support-stats-badge"><?= (int)($support_appointments_this_month ?? 0) ?></span>
+                                <span class="support-stats-label"><i class="fas fa-calendar-check"></i>
+                                    Appointments</span>
+                                <span
+                                    class="support-stats-badge"><?= (int)($support_appointments_this_month ?? 0) ?></span>
                             </div>
                         </div>
                     </article>
                     <article class="support-card support-card-activity">
-                        <h3 class="support-card-heading"><span class="support-card-icon" aria-hidden="true"><i class="fas fa-bolt"></i></span> Activity</h3>
+                        <h3 class="support-card-heading"><span class="support-card-icon" aria-hidden="true"><i
+                                    class="fas fa-bolt"></i></span> Activity Log</h3>
                         <div class="support-activity-list">
                             <div class="support-activity-row support-activity-row--success">
                                 <span class="support-activity-dot" aria-hidden="true"></span>
@@ -3341,6 +3343,12 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             </section>
         </aside>
     </div>
+
+    <footer class="page-footer">
+        <span class="page-footer-site"><?= html_escape($site_name) ?></span><span class="page-footer-sep"> -
+        </span><span class="page-footer-tagline"></span>
+        <span class="page-footer-copyright"><strong>Copyright &copy; 2026</strong></span>
+    </footer>
 
     <script>
     (function() {
@@ -3407,7 +3415,9 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                         }
                     }
                     if (!res) {
-                        setMessage('Request failed. Your case may have been created—please refresh the page to check.', true);
+                        setMessage(
+                            'Request failed. Your case may have been created—please refresh the page to check.',
+                            true);
                         return;
                     }
                 }
