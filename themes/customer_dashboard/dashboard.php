@@ -210,9 +210,12 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     body {
-        height: 100%;
-        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        height: auto;
         overflow-x: hidden;
+        overflow-y: auto;
         max-width: 100vw;
     }
 
@@ -266,8 +269,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         }
 
         .dashboard {
-            margin-top: 1.25rem;
-            padding-top: 0.5rem;
+            margin-top: 0;
         }
 
         .main-actions-section {
@@ -304,14 +306,13 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     .dashboard-wrap {
         display: flex;
         flex-wrap: nowrap;
+        flex: 1 1 auto;
+        min-height: 0;
         width: 100%;
         max-width: 100%;
-        min-width: 0;
         margin: 0;
         padding: 0.5rem;
         gap: 0.5rem;
-        min-height: 0;
-        height: 100vh;
         align-items: stretch;
         box-sizing: border-box;
         background: #E7E8FF;
@@ -319,17 +320,15 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     }
 
-    /* Equal gap left/right; full height for all three columns */
+    /* Equal gap left/right; columns size to content */
     .dashboard-sidebar,
     .dashboard,
     .dashboard-right {
-        min-height: calc(100vh - 1rem);
         font-size: 1.18rem;
     }
 
     .dashboard-sidebar {
         width: 23%;
-        /*  flex: 0 0 23%; */
         min-width: 0;
         display: flex;
         flex-direction: column;
@@ -337,10 +336,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         border: 1px solid var(--surface2);
         border-radius: 10px;
         margin: 0;
-        /*   padding: 0.5rem 0.6rem; */
         position: relative;
         animation: slideInLeft 0.5s ease-out;
-        /*  box-shadow: 0 2px 4px rgba(30, 41, 59, 0.2); */
     }
 
     .dashboard-sidebar .footer-note.sidebar-footer {
@@ -399,6 +396,10 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         margin-bottom: 0;
     }
 
+    .sidebar-card.sidebar-card-contact {
+        overflow: visible;
+    }
+
     .sidebar-card-brand {
         text-align: center;
         padding: 1rem 0.75rem;
@@ -421,6 +422,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     .sidebar-card-your-team,
     .sidebar-card-contact {
         padding: 0rem 0.6rem 1rem;
+        overflow: visible;
+        min-width: 0;
     }
 
     .sidebar-card-your-details {
@@ -476,6 +479,13 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        min-width: 0;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .sidebar-contact-line .sidebar-contact-icon {
+        flex-shrink: 0;
     }
 
     .sidebar-contact-icon {
@@ -643,7 +653,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         min-height: 0;
         align-self: stretch;
         margin: 0;
-        padding: 0.5rem 0.6rem;
+        /*  padding: 0rem 0.6rem; */
         padding-bottom: 1rem;
     }
 
@@ -652,9 +662,8 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         width: 23%;
         min-width: 0;
         align-self: stretch;
-        min-height: calc(100vh - 1rem);
         margin: 0;
-        padding: 0.5rem 0.6rem;
+        /*  padding: 0rem 0.6rem; */
         padding-bottom: 1rem;
         display: flex;
         flex-direction: column;
@@ -1539,6 +1548,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     .support-card-technical {
         padding: 0;
         border-left: 4px solid #002868;
+        text-align: center;
     }
 
     .support-card-technical-header {
@@ -1552,6 +1562,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         display: flex;
         flex-wrap: wrap;
         align-items: center;
+        justify-content: center;
         gap: 0.5rem 0.75rem;
     }
 
@@ -1623,6 +1634,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         font-size: 1.08rem;
         color: var(--text-muted);
         line-height: 1.45;
+        text-align: center;
     }
 
     .support-card-service,
@@ -1653,7 +1665,6 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         background: linear-gradient(135deg, rgba(0, 71, 255, 0.12), rgba(0, 40, 104, 0.08));
         color: var(--accent);
         font-size: 0.95rem;
-        margin-right: 0.4rem;
         animation: supportIconIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
         transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
     }
@@ -2587,26 +2598,26 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             width: 100%;
             position: static;
             order: 1;
-            padding: 1rem;
-            padding-top: max(1rem, env(safe-area-inset-top, 0px));
+            padding: 0.5rem 0.5rem 0;
+            padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
         }
 
         .dashboard {
             order: 2;
-            flex: 1 1 auto;
+            flex: 0 0 auto;
             width: 100%;
-            padding: 1rem;
-            padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+            padding: 0 0.5rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
+            padding-top: 0;
             overflow: visible;
-            min-height: min-content;
+            min-height: 0;
         }
 
         .dashboard-right {
             order: 3;
-            flex: 1 1 auto;
+            flex: 0 0 auto;
             width: 100%;
             margin: 0;
-            padding: 1rem;
+            padding: 0 0.5rem 0.5rem;
             padding-top: 0;
         }
 
@@ -2642,17 +2653,24 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     @media (max-width: 768px) {
 
         .dashboard-sidebar,
-        .dashboard {
-            padding-left: 0.75rem;
-            padding-right: 0.75rem;
+        .dashboard,
+        .dashboard-right {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
         }
 
         .dashboard-sidebar {
-            padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+            padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
+            padding-bottom: 0.5rem;
         }
 
         .dashboard {
-            padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+            padding-top: 0.5rem;
+            padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+        }
+
+        .dashboard-right {
+            padding-top: 0.5rem;
         }
 
         .header {
@@ -2747,9 +2765,23 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     @media (max-width: 576px) {
         .dashboard-wrap {
-            padding: 0.5rem;
+            padding: 0.25rem;
             padding-bottom: calc(2.5rem + env(safe-area-inset-bottom, 0px));
-            gap: 1rem;
+            gap: 0;
+        }
+
+        .dashboard-sidebar,
+        .dashboard,
+        .dashboard-right {
+            padding: 0.4rem;
+        }
+
+        .dashboard-sidebar {
+            padding-top: max(0.4rem, env(safe-area-inset-top, 0px));
+        }
+
+        .dashboard {
+            padding-bottom: calc(0.4rem + env(safe-area-inset-bottom, 0px));
         }
 
         .main-actions-section {
@@ -2890,8 +2922,23 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         }
 
         .dashboard-wrap {
-            padding: 0.4rem;
+            padding: 0.2rem;
             padding-bottom: calc(3rem + env(safe-area-inset-bottom, 0px));
+            gap: 0;
+        }
+
+        .dashboard-sidebar,
+        .dashboard,
+        .dashboard-right {
+            padding: 0.35rem;
+        }
+
+        .dashboard-sidebar {
+            padding-top: max(0.35rem, env(safe-area-inset-top, 0px));
+        }
+
+        .dashboard {
+            padding-bottom: calc(0.35rem + env(safe-area-inset-bottom, 0px));
         }
 
         .main-actions-section {
@@ -3010,7 +3057,14 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
 
     @media (max-width: 360px) {
         .dashboard-wrap {
-            padding: 0.35rem;
+            padding: 0.15rem;
+            gap: 0;
+        }
+
+        .dashboard-sidebar,
+        .dashboard,
+        .dashboard-right {
+            padding: 0.25rem;
         }
 
         .header h1 {
@@ -3051,23 +3105,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                 <div class="sidebar-site-name"><?= html_escape($site_name) ?></div>
             </div>
 
-            <!-- Card 2: Your Details -->
-            <div class="sidebar-card sidebar-card-your-details">
-                <h2 class="dashboard-sidebar-title"><i class="fas fa-user-circle"></i> Your Details</h2>
-                <?php $contact_name = trim(($customer->name ?? '') . ' ' . ($customer->last_name ?? '')); if ($contact_name !== ''): ?>
-                <div class="dashboard-sidebar-item">
-                    <span class="label"><i class="fas fa-user"></i> Name</span>
-                    <span class="val"><?= html_escape($contact_name) ?></span>
-                </div>
-                <?php endif; ?>
-                <div class="dashboard-sidebar-item">
-                    <span class="label"><i class="fas fa-barcode"></i> Code</span>
-                    <span
-                        class="val"><?= !empty($customer->vat_no) ? html_escape($customer->vat_no) : (isset($customer_code) ? html_escape($customer_code) : '—') ?></span>
-                </div>
-            </div>
-
-            <!-- Card 3: Your Team -->
+            <!-- Card 2: Your Team -->
             <div class="sidebar-card sidebar-card-your-team">
                 <h2 class="dashboard-sidebar-title"><i class="fas fa-users"></i> Your Team</h2>
                 <div class="sidebar-associates">
@@ -3084,7 +3122,7 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                 </div>
             </div>
 
-            <!-- Card 4: Contact us -->
+            <!-- Card 3: Contact us -->
             <div class="sidebar-card sidebar-card-contact">
                 <h2 class="dashboard-sidebar-title"><i class="fas fa-envelope"></i> Contact us</h2>
                 <p class="sidebar-contact-line"><span class="sidebar-contact-icon" aria-hidden="true"><i
@@ -3104,6 +3142,12 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                     <span>Welcome</span>
                 </div>
                 <h1><span class="user-name"><?= html_escape($customer_name) ?></span></h1>
+                <?php $display_code = !empty($customer->vat_no) ? $customer->vat_no : (isset($customer_code) ? $customer_code : ''); if ($display_code !== ''): ?>
+                <p class="header-meta header-customer-code">
+                    <span class="header-meta-label">Code</span>
+                    <span class="header-meta-value header-customer-code-value"><?= html_escape($display_code) ?></span>
+                </p>
+                <?php endif; ?>
             </header>
 
             <!-- Fixed service gauges -->
@@ -3245,17 +3289,11 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                 <div class="support-cards-column">
                     <article class="support-card support-card-technical">
                         <div class="support-card-technical-header">
-                            <span class="support-card-icon support-card-icon-header" aria-hidden="true"><i
-                                    class="fas fa-headset"></i></span>
-                            <div class="support-card-technical-title">Need help? </div>
-                            <div class="support-card-technical-phone">1-800-755-6599</div>
+                            <div class="support-card-technical-title"><span
+                                    class="support-card-icon support-card-icon-header" aria-hidden="true"><i
+                                        class="fas fa-headset"></i></span> Need help? </div>
+                            <div class="support-card-technical-phone text-center">1-800-755-6599</div>
 
-                        </div>
-                        <div class="support-card-technical-body">
-                            <p>Need help with your licenses or services? Our technical team is just a call away.</p>
-                            <p> <strong><span class="" aria-hidden="true"><i class="fas fa-clock"></i></span>
-                                    Mon–Fri 9am–6pm
-                                    (local time</strong>)</p>
                         </div>
                     </article>
                     <article class="support-card support-card-service">
@@ -3309,46 +3347,10 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
                             </div>
                         </dl>
                     </article>
-                    <article class="support-card support-card-stats">
-                        <h3 class="support-card-heading"><span class="support-card-icon" aria-hidden="true"><i
-                                    class="fas fa-chart-line"></i></span> Support this month</h3>
-                        <div class="support-stats-list">
-                            <div class="support-stats-row">
-                                <span class="support-stats-label"><i class="fas fa-ticket-alt"></i> Open cases</span>
-                                <span class="support-stats-badge"><?= (int)($support_open_cases_count ?? 0) ?></span>
-                            </div>
-                            <div class="support-stats-row">
-                                <span class="support-stats-label"><i class="fas fa-calendar-check"></i>
-                                    Appointments</span>
-                                <span
-                                    class="support-stats-badge"><?= (int)($support_appointments_this_month ?? 0) ?></span>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="support-card support-card-activity">
-                        <h3 class="support-card-heading"><span class="support-card-icon" aria-hidden="true"><i
-                                    class="fas fa-bolt"></i></span> Activity Log</h3>
-                        <div class="support-activity-list">
-                            <div class="support-activity-row support-activity-row--success">
-                                <span class="support-activity-dot" aria-hidden="true"></span>
-                                <span class="support-activity-text">Firewall enabled</span>
-                            </div>
-                            <div class="support-activity-row support-activity-row--success">
-                                <span class="support-activity-dot" aria-hidden="true"></span>
-                                <span class="support-activity-text">Scan completed • No threats</span>
-                            </div>
-                        </div>
-                    </article>
                 </div>
             </section>
         </aside>
     </div>
-
-    <footer class="page-footer">
-        <span class="page-footer-site"><?= html_escape($site_name) ?></span><span class="page-footer-sep"> -
-        </span><span class="page-footer-tagline"></span>
-        <span class="page-footer-copyright"><strong>Copyright &copy; 2026</strong></span>
-    </footer>
 
     <script>
     (function() {
