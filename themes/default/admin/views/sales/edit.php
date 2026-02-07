@@ -34,6 +34,9 @@ $(document).ready(function() {
     localStorage.setItem('slshipping', '<?= $inv->shipping ?>');
     localStorage.setItem('slitems', JSON.stringify(<?= $inv_items; ?>));
     <?php } ?>
+    if (localStorage.getItem('slitems') && typeof loadItems === 'function') {
+        loadItems();
+    }
     <?php if ($Owner || $Admin) { ?>
     $(document).on('change', '#sldate', function(e) {
         localStorage.setItem('sldate', $(this).val());

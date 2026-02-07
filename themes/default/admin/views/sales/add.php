@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <script type="text/javascript">
+localStorage.setItem('slpayment_status', 'pending');
 var count = 1,
     an = 1,
     product_variant = 0,

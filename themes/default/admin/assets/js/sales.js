@@ -310,10 +310,12 @@ $(document).on('change', '.rserial', function () {
     localStorage.setItem('slitems', JSON.stringify(slitems));
 });
 
-// If there is any item in localStorage
-if (localStorage.getItem('slitems')) {
-    loadItems();
-}
+// If there is any item in localStorage, load after DOM ready (so edit/add view has set slitems when payment is pending)
+$(document).ready(function () {
+    if (localStorage.getItem('slitems')) {
+        loadItems();
+    }
+});
 
     // clear localStorage and reload
     $('#reset').click(function (e) {

@@ -210,9 +210,12 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     }
 
     body {
-        height: 100%;
-        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        height: auto;
         overflow-x: hidden;
+        overflow-y: auto;
         max-width: 100vw;
     }
 
@@ -304,14 +307,13 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
     .dashboard-wrap {
         display: flex;
         flex-wrap: nowrap;
+        flex: 1 1 auto;
+        min-height: 0;
         width: 100%;
         max-width: 100%;
-        min-width: 0;
         margin: 0;
         padding: 0.5rem;
         gap: 0.5rem;
-        min-height: 0;
-        height: 100vh;
         align-items: stretch;
         box-sizing: border-box;
         background: #E7E8FF;
@@ -385,98 +387,6 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
         background: var(--success);
         z-index: 2;
     }
-
-    .page-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 1;
-        text-align: center;
-        padding: 0.75rem 1.25rem 0.9rem;
-        padding-bottom: calc(0.9rem + 3px + env(safe-area-inset-bottom, 0px));
-        font-size: 0.95rem;
-        line-height: 1.4;
-        color: #000000;
-        background: linear-gradient(135deg, rgba(255, 248, 246, 0.97) 0%, rgba(231, 232, 255, 0.95) 50%, rgba(255, 248, 246, 0.97) 100%);
-        background-size: 200% 200%;
-        animation: footerGradientShift 8s ease infinite;
-        pointer-events: none;
-        overflow: hidden;
-        box-shadow: 0 -4px 20px rgba(240, 79, 35, 0.06);
-    }
-
-    .page-footer::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, transparent 0%, #F04F23 20%, #c93d1a 50%, #F04F23 80%, transparent 100%);
-        background-size: 200% 100%;
-        animation: footerLineShine 4s ease-in-out infinite;
-    }
-
-    .page-footer-site {
-        font-weight: 700;
-        letter-spacing: 0.06em;
-        color: #000000;
-        animation: footerTextIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
-    }
-
-    .page-footer-sep {
-        margin: 0 0.2rem;
-        color: #000000;
-        animation: footerTextIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s backwards;
-    }
-
-    .page-footer-tagline {
-        font-weight: 500;
-        color: #000000;
-        animation: footerTextIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s backwards;
-    }
-
-    .page-footer-copyright {
-        animation: footerTextIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
-    }
-
-    @keyframes footerGradientShift {
-
-        0%,
-        100% {
-            background-position: 0% 50%;
-        }
-
-        50% {
-            background-position: 100% 50%;
-        }
-    }
-
-    @keyframes footerLineShine {
-
-        0%,
-        100% {
-            background-position: 0% 50%;
-        }
-
-        50% {
-            background-position: 100% 50%;
-        }
-    }
-
-    @keyframes footerTextIn {
-        from {
-            opacity: 0;
-            transform: translateY(8px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
 
     .sidebar-card {
         background: #ffffff;
@@ -3431,12 +3341,6 @@ $format_amount = function($n) use ($currency_symbol) { return $currency_symbol .
             </section>
         </aside>
     </div>
-
-    <footer class="page-footer">
-        <span class="page-footer-site"><?= html_escape($site_name) ?></span><span class="page-footer-sep"> -
-        </span><span class="page-footer-tagline"></span>
-        <span class="page-footer-copyright"><strong>Copyright &copy; 2026</strong></span>
-    </footer>
 
     <script>
     (function() {
